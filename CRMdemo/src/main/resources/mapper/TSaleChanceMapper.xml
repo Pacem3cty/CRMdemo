@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.crmdemo.modules.sales.mapper.TSaleChanceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.crmdemo.modules.sales.model.TSaleChance">
+        <id column="id" property="id" />
+        <result column="change_source" property="changeSource" />
+        <result column="customer_name" property="customerName" />
+        <result column="probability" property="probability" />
+        <result column="overview" property="overview" />
+        <result column="contract_person" property="contractPerson" />
+        <result column="contract_phone" property="contractPhone" />
+        <result column="description" property="description" />
+        <result column="create_person" property="createPerson" />
+        <result column="create_date" property="createDate" />
+        <result column="assign_person" property="assignPerson" />
+        <result column="assign_date" property="assignDate" />
+        <result column="state" property="state" />
+        <result column="dev_result" property="devResult" />
+        <result column="is_valid" property="isValid" />
+        <result column="update_date" property="updateDate" />
+    </resultMap>
+
+</mapper>

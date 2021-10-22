@@ -1,0 +1,61 @@
+
+  .el-header, .el-footer {
+    border-bottom: 1px solid #b4b7b7;
+    background-color: #000000;
+    color: #333;
+    text-align: center;
+    line-height: 3em;
+  }
+  
+  .el-aside {
+    background-color: #ffffff;
+    color: #333;
+    text-align: left;
+    line-height: 200px;
+    border-right: solid 1px #e6e6e6;
+  }
+  
+  .el-main {
+    background-color: #E9EEF3;
+    color: #333;
+    text-align: center;
+    padding: 0px;
+  }
+  
+  body > .el-container {
+    margin-bottom: 40px;
+
+  }
+
+.el-dropdown-link {
+  color: #ffffff;
+}
+
+.el-main-font-left{
+    font-size: 20px;
+    font-weight: bold;
+    color: #00a6d8;
+    font-style: italic;
+    float: left;
+    width: 10%;
+    height: 46px;
+}
+.el-main-font-right {
+    float: right;
+    width: 10%;
+    height: 46px;
+}
+
+.el-menu {
+  border: 0px;
+}
+.main-nav {
+    padding: 0 20px;
+    position: relative;
+    z-index: 99;
+    border-bottom: 1px solid #e5e5e5;
+    line-height: 39px;
+    height: 39px;
+    overflow: hidden;
+    background: #fff;
+}

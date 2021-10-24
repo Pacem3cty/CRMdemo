@@ -1,6 +1,6 @@
 <template>
  <el-row :gutter="24">
-    <div class="el-main-font-left">客户关系管理系统</div>
+    <div class="el-main-font-left"><img alt="icon" width="40" height="40" src="../assets/icon.png">CRM</div>
     <div class="el-main-font-right">
         <el-dropdown>
             <span class="el-dropdown-link">

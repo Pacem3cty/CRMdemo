@@ -150,7 +150,7 @@ $cursor: #fff;
 /* reset element-ui css */
 .login-container {
   height: 100vh;
-  background: url('../assets/3.jpg') no-repeat 100%;
+  background: url('../assets/LoginBackground.jpg') no-repeat 100%;
 
   .el-input {
     display: inline-block;

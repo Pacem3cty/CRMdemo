@@ -25,12 +25,12 @@ public interface TSaleChanceService extends IService<TSaleChance> {
     /**
      * 新增营销机会信息
      */
-    boolean add(TSaleChance esopCustomerCenter);
+    boolean add(TSaleChance tSaleChance);
 
     /**
      * 修改营销机会信息
      */
-    boolean update(TSaleChance esopCustomerCenter);
+    boolean update(TSaleChance tSaleChance);
 
     /**
      * 删除营销机会信息(物理删除)

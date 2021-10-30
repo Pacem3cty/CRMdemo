@@ -2,11 +2,11 @@
   <div>
     <el-breadcrumb separator="/" class="main-nav">
       <el-breadcrumb-item>首页</el-breadcrumb-item>
-      <el-breadcrumb-item>业务管理</el-breadcrumb-item>
-      <el-breadcrumb-item>客户中心</el-breadcrumb-item>
+      <el-breadcrumb-item>营销管理</el-breadcrumb-item>
+      <el-breadcrumb-item>营销机会管理</el-breadcrumb-item>
       <div style="font-size: 25px; float: right; margin-right: 25px">
         <i
-          class="el-icon-document-checked"
+          class="el-icon-document-add"
           style="margin-right: 6px; cursor: pointer"
           @click="outerVisible = true"
           title="新增"
@@ -20,7 +20,7 @@
         <i
           class="el-icon-delete"
           style="margin-right: 6px; cursor: pointer"
-          @click="onDel"
+          @click="checkDialog"
           title="删除"
         ></i>
       </div>
@@ -28,16 +28,15 @@
 
     <div class="demo-input-size">
       <div class="i-div">
-        <label class="i-label">客户名</label>
+        <label class="i-label">客户名称</label>
         <!-- <el-input v-model="customerName" placeholder="请输入客户名"></el-input> -->
         <el-autocomplete
           popper-class="my-autocomplete"
           v-model="customerName"
-          value-key="customerName"
           :fetch-suggestions="querySearchCustomerName"
           :trigger-on-focus="false"
           :clearable="false"
-          placeholder="请输入客户名"
+          placeholder="请输入客户名称"
           @select="handleSelect"
         >
           <!-- <template slot-scope="{ item }">
@@ -58,9 +57,6 @@
           placeholder="请输入创建人"
           @select="handleSelect"
         >
-          <template slot-scope="{ item }">
-            <div class="name">{{ item.createPerson }}</div>
-          </template>
         </el-autocomplete>
       </div>
 
@@ -90,7 +86,7 @@
       </div>
       <div class="i-div">
         <el-button type="primary" style="margin-top: 9px" @click="this.queryAll"
-          >搜索</el-button
+          >查询</el-button
         >
       </div>
     </div>
@@ -101,7 +97,7 @@
         element-loading-spinner="el-icon-loading"
         element-loading-background="rgba(0, 0, 0, 0.8)"
         :data="tableData"
-        height="70vh"
+        height="700"
         border
         @selection-change="handleSelectionChange"
       >
@@ -128,7 +124,7 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page.sync="currentPage"
-          :page-sizes="[10, 20, 30]"
+          :page-sizes="[5, 10, 20, 30]"
           :page-size="size"
           layout="sizes, prev, pager, next"
           :total="total"
@@ -136,30 +132,51 @@
         </el-pagination>
       </div>
     </div>
-   <!-- 新增 -->
-    <el-dialog title="新增营销机会信息" :visible.sync="outerVisible" v-if="outerVisible">
-       <SaleChanceAdd @onAdd="onAdd" @getfindAll='queryAll'></SaleChanceAdd>
+    <!-- 删除提示 -->
+    <el-dialog
+      :close-on-click-modal="false"
+      :visible.sync="dialogVisible"
+      width="30%"
+      ><i slot="title" class="el-icon-warning">警告</i>
+      <span>确认删除该信息？</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="onDel">确定</el-button>
+      </span>
+    </el-dialog>
+    <!-- 新增 -->
+    <el-dialog
+      title="新增营销机会信息"
+      :visible.sync="outerVisible"
+      v-if="outerVisible"
+      :close-on-click-modal="false"
+    >
+      <SaleChanceAdd @onAdd="onAdd" @getfindAll="queryAll"></SaleChanceAdd>
     </el-dialog>
     <!-- 修改 -->
-    <el-dialog title="修改营销机会信息" :visible.sync="outerUpdateVisible">
-        <SaleChanceUpdate @onAdd="onAdd" @getfindAll='queryAll' :multiple="this.multipleSelection"></SaleChanceUpdate>
+    <el-dialog title="修改营销机会信息" :visible.sync="outerUpdateVisible" :close-on-click-modal="false"  v-if="outerUpdateVisible">
+      <SaleChanceUpdate
+        @onAdd="onAdd"
+        @getfindAll="queryAll"
+        :multiple="this.multipleSelection"
+      ></SaleChanceUpdate>
     </el-dialog>
-
   </div>
 </template>
 
 <script>
-import SaleChanceAdd from '../management/SaleChanceAdd.vue'
-import SaleChanceUpdate from '../management/SaleChanceUpdate.vue'
+import SaleChanceAdd from "../management/SaleChanceAdd.vue";
+import SaleChanceUpdate from "../management/SaleChanceUpdate.vue";
 
 export default {
-  components:{
-      SaleChanceAdd,
-      SaleChanceUpdate
+  components: {
+    SaleChanceAdd,
+    SaleChanceUpdate,
   },
   data() {
     return {
-      restaurants: [],
+      restaurantsCustomerName: [],
+      restaurantsCreatePerson: [],
       options: [
         {
           value: null,
@@ -178,22 +195,23 @@ export default {
       tableData: [],
       tableColumns: [
         { key: "id", name: "编号", width: 50 },
-        { key: "changeSource", name: "机会来源", width: 80 },
+        { key: "chanceSource", name: "机会来源", width: 80 },
         { key: "customerName", name: "客户名称", width: 100 },
         { key: "probability", name: "成功概率(%)", width: 55 },
-        { key: "overview", name: "概述", width: 237.5 },
+        { key: "overview", name: "概述", width: 228 },
         { key: "contractPerson", name: "联系人", width: 80 },
         { key: "contractPhone", name: "联系电话", width: 150 },
-        { key: "description", name: "机会描述", width: 237.5 },
+        { key: "description", name: "机会描述", width: 228 },
         { key: "createPerson", name: "创建人", width: 80 },
-        { key: "createDate", name: "创建时间", width: 100 },
+        { key: "createDate", name: "创建日期", width: 100 },
         { key: "assignPerson", name: "指派人", width: 80 },
-        { key: "assigneDate", name: "分配时间", width: 100 },
+        { key: "assignDate", name: "分配日期", width: 100 },
         // { key: 'state', name: '分配状态', width: 250 },
         // { key: 'devResult', name: '开发状态', width: 250 }
       ],
       loading: true,
       input: "",
+      dialogVisible: false,
       outerVisible: false,
       innerVisible: false,
       outerUpdateVisible: false,
@@ -219,6 +237,8 @@ export default {
   },
   created() {
     this.queryAll();
+    this.listCustomerName();
+    this.listCreatePerson();
   },
   mounted() {},
   destroyed() {
@@ -238,34 +258,38 @@ export default {
       this.queryAll();
     },
     querySearchCustomerName(queryString, cb) {
-      var restaurants = this.restaurants;
+      var restaurantsCustomerName = this.restaurantsCustomerName;
       var results = queryString
-        ? restaurants.filter(this.createFilterCustomerName(queryString))
-        : restaurants;
+        ? restaurantsCustomerName.filter(
+            this.createFilterCustomerName(queryString)
+          )
+        : restaurantsCustomerName;
       // 调用 callback 返回建议列表的数据
       cb(results);
     },
     createFilterCustomerName(queryString) {
-      return (restaurants) => {
+      return (restaurantsCustomerName) => {
         return (
-          restaurants.customerName
+          restaurantsCustomerName.customerName
             .toLowerCase()
             .indexOf(queryString.toLowerCase()) === 0
         );
       };
     },
     querySearchCreatePerson(queryString, cb) {
-      var restaurants = this.restaurants;
+      var restaurantsCreatePerson = this.restaurantsCreatePerson;
       var results = queryString
-        ? restaurants.filter(this.createFilterCreatePerson(queryString))
-        : restaurants;
+        ? restaurantsCreatePerson.filter(
+            this.createFilterCreatePerson(queryString)
+          )
+        : restaurantsCreatePerson;
       // 调用 callback 返回建议列表的数据
       cb(results);
     },
     createFilterCreatePerson(queryString) {
-      return (restaurants) => {
+      return (restaurantsCreatePerson) => {
         return (
-          restaurants.createPerson
+          restaurantsCreatePerson.createPerson
             .toLowerCase()
             .indexOf(queryString.toLowerCase()) === 0
         );
@@ -289,6 +313,44 @@ export default {
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
+    },
+    listCustomerName() {
+      this.$store
+        .dispatch("Sales/listCustomerName", null)
+        .then(() => {
+          if (this.$store.state.Sales.customerNameInfo.code === 200) {
+            this.loading = false; //取消加载状态
+            this.$store.state.Sales.customerNameInfo.data.forEach((e) => {
+              const records = {
+                //可根据需求更改
+                customerName: e.customerName,
+              };
+              this.restaurantsCustomerName.push(records);
+            });
+          }
+        })
+        .catch((e) => {
+          this.$message.error("发生错误：" + e);
+        });
+    },
+    listCreatePerson() {
+      this.$store
+        .dispatch("Sales/listCreatePerson", null)
+        .then(() => {
+          if (this.$store.state.Sales.createPersonInfo.code === 200) {
+            this.loading = false; //取消加载状态
+            this.$store.state.Sales.createPersonInfo.data.forEach((e) => {
+              const records = {
+                //可根据需求更改
+                createPerson: e.createPerson,
+              };
+              this.restaurantsCreatePerson.push(records);
+            });
+          }
+        })
+        .catch((e) => {
+          this.$message.error("发生错误：" + e);
+        });
     },
     queryAll() {
       this.loading = true;
@@ -314,14 +376,14 @@ export default {
             this.loading = false; //取消加载状态
             this.tableData = this.$store.state.Sales.salesInfo.data.records;
 
-            this.tableData.forEach((e) => {
-              const records = {
-                //可根据需求更改
-                customerName: e.customerName,
-                createPerson: e.createPerson,
-              };
-              this.restaurants.push(records);
-            });
+            // this.tableData.forEach((e) => {
+            //   const records = {
+            //     //可根据需求更改
+            //     customerName: e.customerName,
+            //     createPerson: e.createPerson,
+            //   };
+            //   this.restaurants.push(records);
+            // });
 
             this.total = this.$store.state.Sales.salesInfo.data.total;
             this.currentPage = this.$store.state.Sales.salesInfo.data.current;
@@ -333,7 +395,7 @@ export default {
           this.$message.error("发生错误：" + e);
         });
     },
-    onDel: function () {
+    checkDialog() {
       if (
         this.multipleSelection === undefined ||
         this.multipleSelection.length === 0
@@ -344,6 +406,11 @@ export default {
         });
         return;
       }
+      this.dialogVisible = true;
+    },
+    onDel: function () {
+      this.dialogVisible = false;
+
       let arrayId = "";
       this.multipleSelection.forEach((element) => {
         console.log(element);
@@ -361,30 +428,43 @@ export default {
             this.$store.state.Sales.delInfo.data === true
           ) {
             this.$message({
-              message: this.$store.state.Sales.delInfo.message,
+              message: "删除操作成功！",
               type: "success",
             });
             this.queryAll();
+            this.listCustomerName();
+            this.listCreatePerson();
           } else {
-            this.$message.error(this.$store.state.Sales.delInfo.message);
+            this.$message.error("执行删除操作失败！");
           }
         })
-        .catch(() => {});
+        .catch((e) => {
+          this.$message.error("执行删除操作失败！发生错误：" + e);
+        });
     },
     onAdd: function () {
       this.outerVisible = false;
       this.outerUpdateVisible = false;
+      this.queryAll();
+      this.listCreatePerson();
+      this.listCustomerName();
     },
     ondetails: function () {
       if (
         this.multipleSelection === undefined ||
         this.multipleSelection.length === 0
       ) {
-        this.$message("请选择一条信息执行修改操作");
+        this.$message({
+          message: "请选择一条信息执行修改操作",
+          type: "warning",
+        });
         return;
       }
       if (this.multipleSelection.length > 1) {
-        this.$message("最多只能选择一条信息执行修改操作");
+        this.$message({
+          message: "最多只能选择一条信息执行修改操作",
+          type: "warning",
+        });
         return;
       }
       this.outerUpdateVisible = true;

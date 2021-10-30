@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h5 style="color: red">*编号项不得修改</h5>
     <el-row :gutter="15">
       <el-form
         ref="addForm"
@@ -124,7 +125,7 @@ export default {
       innerVisible: false,
       addForm: {
         id: "",
-        changeSource: "",
+        chanceSource: "",
         customerName: "",
         probability: "",
         overview: "",
@@ -133,9 +134,9 @@ export default {
         description: "",
         assignPerson: "",
       },
-      state: "",
-      devResult: "",
-      isValid: 0,
+      assignDate: "",
+      createDate: "",
+      state: 0,
       updateDate: "",
       rules: {
         id: [
@@ -198,53 +199,83 @@ export default {
   },
   created() {
     this.outerVisible = this.outerVisible1;
-    this.loadComments();
+    this.init();
     console.log(this.outerVisible1); //我是字符串
   },
-  methods: {//方法区规划 新增编号获取（当前记录最大编号+1）、新增请求、指派人信息不存在时为未分配并不设置分配时间
-    getId() {
-      let chineseName = localStorage.getItem("trueName");
-      this.addForm.createName = chineseName;
+  methods: {
+    //方法区规划 新增编号获取（当前记录最大编号+1）、新增请求、指派人信息不存在时为未分配并不设置分配日期
+    setAssignDate() {
+      let date = new Date();
+      this.assignDate =
+        date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     },
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+    init() {
+      let date = new Date();
+      this.createDate =
+        date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+      this.$store
+        .dispatch("Sales/getCurrentId", null) //从API中匹配相应的路径发送请求以及请求参数
+        .then(() => {
+          if (this.$store.state.Sales.currentIdInfo.code === 200) {
+            //状态码为200 即请求成功
+            this.addForm.id = this.$store.state.Sales.currentIdInfo.data;
+          } else {
+            this.$emit("onAdd");
+            this.$message.error("获取编号失败导致无法执行添加操作！");
+          }
+        })
+        .catch((e) => {
+          this.$emit("onAdd");
+          this.$message.error(
+            "获取编号失败导致无法执行添加操作！发生错误：" + e
+          );
+        });
+    },
+    submitForm() {
+      let date = new Date();
+      if (this.addForm.assignPerson !== "") {
+        this.state = 1;
+        this.setAssignDate();
+      }
+      this.createDate =
+        date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+      this.$refs["addForm"].validate((valid) => {
         if (valid) {
           const params = {
-            "id": this.addForm.id,
-            "changeSource": this.addForm.changeSource,
-            "customerName": this.addForm.customerName,
-           " probability": this.addForm.probability,
-            "overview": this.addForm.overview,
-            "contractPerson": this.addForm.contractPerson,
-            "contractPhone": this.addForm.contractPhone,
-            "description": this.addForm.description,
-            "createPerson": localStorage.getItem("trueName"),
-            "createDate": '',
-            "assignPerson": this.addForm.assignPerson,
-            "assigneDate": '',
+            id: this.addForm.id,
+            chanceSource: this.addForm.chanceSource,
+            customerName: this.addForm.customerName,
+            probability: this.addForm.probability,
+            overview: this.addForm.overview,
+            contractPerson: this.addForm.contractPerson,
+            contractPhone: this.addForm.contractPhone,
+            description: this.addForm.description,
+            createPerson: localStorage.getItem("trueName"),
+            createDate: this.createDate,
+            assignPerson: this.addForm.assignPerson,
+            assignDate: this.assignDate,
+            state: this.state,
+            devResult: 0,
+            isValid: 0,
+            updateDate: "",
           };
           this.$store
-            .dispatch("CustomerCenter/add", params)
+            .dispatch("Sales/add", params)
             .then(() => {
-              if (
-                this.$store.state.CustomerCenter.addInfo.code === 200 &&
-                this.$store.state.CustomerCenter.addInfo.data === true
-              ) {
+              if (this.$store.state.Sales.addInfo.data === true) {
                 this.$emit("onAdd");
+                this.$emit("queryAll"); //未知原因不能执行 代码迁移至0nAdd
                 this.$message({
-                  message: this.$store.state.CustomerCenter.addInfo.message,
+                  message: "新增操作成功！",
                   type: "success",
                 });
-
-                this.$emit("getfindAll");
               } else {
-                this.$message.error(
-                  this.$store.state.CustomerCenter.addInfo.message
-                );
+                this.$message.error("新增操作失败！");
+                this.$refs["addForm"].resetFields();
               }
             })
-            .catch(() => {});
-          this.resetForm(formName);
+            .catch((e) => {this.$message.error("新增操作失败！发生错误："+e);});
+          this.$refs["addForm"].resetFields();
         } else {
           console.log("error submit!!");
           return false;

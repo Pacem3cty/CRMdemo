@@ -14,3 +14,7 @@ export function updateUserInfo(params) {
   return post("/api/user/updateInfo",params)
 }
 
+export function queryAllUserInfo(params) {
+  return post("/api/user/queryAll",params)
+}
+

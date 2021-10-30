@@ -16,10 +16,10 @@
           <span>营销管理</span>
         </template>
         <el-menu-item index="/SaleChance">
-           <span slot="title" >营销机会管理</span>
+           <span slot="title"><i class="el-icon-s-opportunity"></i>营销机会管理</span>
         </el-menu-item>
-        <el-menu-item index="/customerCenter">
-            <span slot="title" >客户开发计划</span>
+        <el-menu-item index="/CusDevPlan">
+            <span slot="title" ><i class="el-icon-aim"></i>客户开发计划</span>
         </el-menu-item>
       </el-submenu>
       
@@ -30,33 +30,33 @@
         </template>
 
         <el-menu-item index="/equipment">
-          <span slot="title">客户信息管理</span>
+          <span slot="title"><i class="el-icon-s-management"></i>客户信息管理</span>
         </el-menu-item>
 
          <el-menu-item index="/dict">
-          <span slot="title">客户流失管理</span>
+          <span slot="title"><i class="el-icon-s-release"></i>客户流失管理</span>
         </el-menu-item>
       </el-submenu>
 
       <el-submenu index="3">
         <template slot="title">
-          <i class="el-icon-s-order"></i>
+          <i class="el-icon-service"></i>
           <span >服务管理</span>
         </template>
         <el-menu-item index="/equipment">
-          <span slot="title">服务创建</span>
+          <span slot="title"><i class="el-icon-plus"></i>服务创建</span>
         </el-menu-item>
          <el-menu-item index="/dict">
-          <span slot="title">服务分配</span>
+          <span slot="title"><i class="el-icon-s-order"></i>服务分配</span>
         </el-menu-item>
         <el-menu-item index="/equipment">
-          <span slot="title">服务处理</span>
+          <span slot="title"><i class="el-icon-finished"></i>服务处理</span>
         </el-menu-item>
         <el-menu-item index="/equipment">
-          <span slot="title">服务反馈</span>
+          <span slot="title"><i class="el-icon-receiving"></i>服务反馈</span>
         </el-menu-item>
         <el-menu-item index="/equipment">
-          <span slot="title">服务归档</span>
+          <span slot="title"><i class="el-icon-collection"></i>服务归档</span>
         </el-menu-item>
       </el-submenu>
       
@@ -66,16 +66,16 @@
           <span >统计报表</span>
         </template>
         <el-menu-item index="/equipment">
-          <span slot="title">客户贡献分析</span>
+          <span slot="title"><i class="el-icon-data-line"></i>客户贡献分析</span>
         </el-menu-item>
          <el-menu-item index="/dict">
-          <span slot="title">客户构成分析</span>
+          <span slot="title"><i class="el-icon-pie-chart"></i>客户构成分析</span>
         </el-menu-item>
         <el-menu-item index="/dict">
-          <span slot="title">客户服务分析</span>
+          <span slot="title"><i class="el-icon-data-line"></i>客户服务分析</span>
         </el-menu-item>
         <el-menu-item index="/dict">
-          <span slot="title">客户流失分析</span>
+          <span slot="title"><i class="el-icon-data-line"></i>客户流失分析</span>
         </el-menu-item>
       </el-submenu>
 
@@ -84,12 +84,24 @@
           <i class="el-icon-setting"></i>
           <span >系统设置</span>
         </template>
-        <el-menu-item index="/account">
-          <span slot="title">资料修改</span>
+         <el-menu-item index="/Account">
+          <span slot="title"><i class="el-icon-s-tools"></i>资料修改</span>
+        </el-menu-item>
+        
+         <el-menu-item index="/Account">
+          <span slot="title"><i class="el-icon-notebook-2"></i>字典管理</span>
+        </el-menu-item>
+
+         <el-menu-item index="/User">
+          <span slot="title"><i class="el-icon-user"></i>用户管理</span>
         </el-menu-item>
 
          <el-menu-item index="/">
-          <span slot="title">权限管理</span>
+          <span slot="title"><i class="el-icon-key"></i>权限管理</span>
+        </el-menu-item>
+
+        <el-menu-item index="/">
+          <span slot="title"><i class="el-icon-notebook-2"></i>菜单管理</span>
         </el-menu-item>
 
       </el-submenu>
@@ -111,7 +123,5 @@ export default({
       },
       
     }
-
-   
 })
 </script>

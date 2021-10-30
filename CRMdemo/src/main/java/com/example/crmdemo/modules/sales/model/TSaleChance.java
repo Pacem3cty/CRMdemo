@@ -30,7 +30,7 @@ public class TSaleChance implements Serializable {
     private Integer id;
 
     @ApiModelProperty(value = "机会来源")
-    private String changeSource;
+    private String chanceSource;
 
     @ApiModelProperty(value = "客户名称")
     private String customerName;
@@ -67,7 +67,7 @@ public class TSaleChance implements Serializable {
     @ApiModelProperty(value = "分配状态 0 未分配 1 已分配")
     private Integer state;
 
-    @ApiModelProperty(value = "开发结果")
+    @ApiModelProperty(value = "开发结果 0 开发中 1 开发成功 2 开发失败")
     private Integer devResult;
 
     @ApiModelProperty(value = "有效状态 0 有效 1 无效")

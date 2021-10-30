@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.crmdemo.modules.permission.mapper.TModuleMapper">
+<mapper namespace="com.example.crmdemo.modules.system.mapper.TModuleMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.example.crmdemo.modules.permission.model.TModule">
+    <resultMap id="BaseResultMap" type="com.example.crmdemo.modules.system.model.TModule">
         <id column="id" property="id" />
         <result column="module_name" property="moduleName" />
         <result column="url" property="url" />

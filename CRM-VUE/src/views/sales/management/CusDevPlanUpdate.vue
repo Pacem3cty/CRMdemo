@@ -1,0 +1,143 @@
+<template>
+  <div>
+    <el-row :gutter="15">
+      <el-form ref="addForm" :model="addForm" :rules="rules" size="medium" label-width="100px">
+        <el-col :span="12">
+          <el-form-item label="编号" prop="id">
+            <el-input v-model="addForm.id" placeholder="请输入编号" readonly  :style="{width: '100%'}">
+            </el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="机会编号" prop="saleChanceId">
+            <el-input v-model="addForm.saleChanceId" placeholder="请输入机会编号" readonly
+              :style="{width: '100%'}"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="24">
+          <el-form-item label="计划项" prop="planItem">
+            <el-input v-model="addForm.planItem" placeholder="请输入计划项" clearable :style="{width: '100%'}">
+            </el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="24">
+          <el-form-item label="计划日期" prop="planDate">
+            <el-date-picker v-model="addForm.planDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
+              :style="{width: '100%'}" placeholder="请选择计划日期" clearable></el-date-picker>
+          </el-form-item>
+        </el-col>
+        <el-col :span="24">
+          <el-form-item label="执行效果" prop="exeAffect">
+            <el-input v-model="addForm.exeAffect" placeholder="请输入执行效果" clearable :style="{width: '100%'}">
+            </el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="24">
+          <el-form-item size="large">
+            <el-button type="primary" @click="submitForm">提交</el-button>
+            <el-button @click="resetForm">重置</el-button>
+          </el-form-item>
+        </el-col>
+      </el-form>
+    </el-row>
+  </div>
+</template>
+<script>
+export default {
+  props: ["multiple"],
+  data() {
+    return {
+      addForm: {
+        id: this.$props.multiple[0].id,
+        saleChanceId: this.$props.multiple[0].saleChanceId,
+        planItem: this.$props.multiple[0].planItem,
+        planDate: this.$props.multiple[0].planDate,
+        exeAffect: this.$props.multiple[0].exeAffect,
+      },
+      createDate:'',
+      rules: {
+        id: [{
+          required: true,
+          message: '请输入编号',
+          trigger: 'blur'
+        }],
+        saleChanceId: [{
+          required: true,
+          message: '请输入机会编号',
+          trigger: 'blur'
+        }],
+        planItem: [{
+          required: true,
+          message: '请输入计划项',
+          trigger: 'blur'
+        }],
+        planDate: [{
+          required: true,
+          message: '请选择计划日期',
+          trigger: 'change'
+        }],
+        exeAffect: [{
+          required: true,
+          message: '请输入执行效果',
+          trigger: 'blur'
+        }],
+      },
+    }
+  },
+  computed: {},
+  watch: {},
+  created() {
+      this.init();
+  },
+  mounted() {},
+  methods: {
+    init() {
+      let date = new Date();
+      this.updateDate =
+        date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+    },
+    submitForm() {
+      this.$refs["addForm"].validate((valid) => {
+        if (valid) {
+          const params = {
+            id: this.addForm.id,
+            saleChanceId: this.addForm.saleChanceId,
+            planItem: this.addForm.planItem,
+            planDate: this.addForm.planDate,
+            exeAffect: this.addForm.exeAffect,
+            createDate:this.$props.multiple[0].createDate,
+            updateDate: this.updateDate,
+            isValid: 0,
+          };
+          this.$store
+            .dispatch("Sales/updateCusDevPlan", params)
+            .then(() => {
+              if (this.$store.state.Sales.updateCusDevPlanInfo.data === true) {
+                this.$emit("onAdd");
+                // this.$emit("queryAll"); //未知原因不能执行 代码迁移至onAdd
+                this.$message({
+                  message: "新增操作成功！",
+                  type: "success",
+                });
+              } else {
+                this.$message.error("新增操作失败！");
+                this.$refs["addForm"].resetFields();
+              }
+            })
+            .catch((e) => {this.$message.error("新增操作失败！发生错误："+e);});
+          this.$refs["addForm"].resetFields();
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    resetForm() {
+      this.$refs['addForm'].resetFields()
+    },
+  }
+}
+</script>
+<style>
+</style>
+

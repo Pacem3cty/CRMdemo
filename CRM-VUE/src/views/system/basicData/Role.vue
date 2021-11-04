@@ -3,7 +3,7 @@
     <el-breadcrumb separator="/" class="main-nav">
       <el-breadcrumb-item>首页</el-breadcrumb-item>
       <el-breadcrumb-item>系统设置</el-breadcrumb-item>
-      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+      <el-breadcrumb-item>角色管理</el-breadcrumb-item>
       <div style="font-size: 25px; float: right; margin-right: 25px">
         <i
           class="el-icon-document-add"
@@ -28,48 +28,18 @@
 
     <div class="demo-input-size">
       <div class="i-div">
-        <label class="i-label">用户名称</label>
+        <label class="i-label">角色名称</label>
         <el-autocomplete
           popper-class="my-autocomplete"
-          v-model="userName"
-          value-key="userName"
-          :fetch-suggestions="querySearchUserName"
+          v-model="roleName"
+          value-key="roleName"
+          :fetch-suggestions="querySearchRoleName"
           :trigger-on-focus="false"
           :clearable="false"
           placeholder="请输入用户名称"
           @select="handleSelect"
         >
         </el-autocomplete>
-      </div>
-
-      <div class="i-div">
-        <label class="i-label">邮箱</label>
-       <el-input v-model="email" placeholder="请输入邮箱"></el-input>
-      </div>
-
-      <div class="i-div">
-        <label class="i-label">电话</label>
-        <el-input v-model="phone" placeholder="请输入电话"></el-input>
-      </div>
-
-      <div class="i-div">
-        <label class="i-label">真实姓名</label>
-        <el-autocomplete
-          popper-class="my-autocomplete"
-          v-model="trueName"
-           value-key="trueName"
-          :fetch-suggestions="querySearchTrueName"
-          :trigger-on-focus="false"
-          :clearable="false"
-          placeholder="请输入真实姓名"
-          @select="handleSelect"
-        >
-        </el-autocomplete>
-      </div>
-
-      <div class="i-div">
-        <label class="i-label">备注</label>
-       <el-input v-model="remark" placeholder="请输入备注"></el-input>
       </div>
 
       <div class="i-div">
@@ -125,17 +95,17 @@
       </span>
     </el-dialog>
     <!-- 新增 -->
-    <el-dialog
-      title="新增用户信息"
+    <!-- <el-dialog
+      title="新增角色信息"
       :visible.sync="outerVisible"
       v-if="outerVisible"
       :close-on-click-modal="false"
     >
       <UserAdd @onAdd="onAdd" @reInit="reInit"></UserAdd>
-    </el-dialog>
+    </el-dialog> -->
     <!-- 修改 -->
-    <el-dialog
-      title="修改用户信息"
+    <!-- <el-dialog
+      title="修改角色信息"
       :visible.sync="outerUpdateVisible"
       :close-on-click-modal="false"
     >
@@ -144,35 +114,30 @@
         @reInit="reInit"
         :multiple="this.multipleSelection"
       ></UserUpdate>
-    </el-dialog>
+    </el-dialog> -->
   </div>
 </template>
 
 <script>
-import UserAdd from "../management/UserAdd.vue";
-import UserUpdate from "../management/UserUpdate.vue";
+// import UserAdd from "../management/UserAdd.vue";
+// import UserUpdate from "../management/UserUpdate.vue";
 
 export default {
   components: {
-    UserAdd,
-    UserUpdate,
+    // UserAdd,
+    // UserUpdate,
   },
   data() {
     return {
-      restaurantsUserName: [],
-      restaurantsTrueName: [],
+      restaurantsRoleName: [],
       value: "",
       tableData: [],
       tableColumns: [
-        { key: "id", name: "编号", width: 50 },
-        { key: "userName", name: "用户名称", width: 150 },
-        { key: "userPwd", name: "用户密码", width: 265 },
-        { key: "trueName", name: "真实姓名", width: 80 },
-        { key: "email", name: "邮箱", width: 240 },
-        { key: "phone", name: "电话", width: 150 },
-        { key: "remark", name: "备注", width: 295 },
-        { key: "createDate", name: "创建日期", width: 100 },
-        { key: "updateDate", name: "修改日期", width: 100 },
+        { key: "id", name: "编号", width: 286 },
+        { key: "roleName", name: "角色名称", width: 286 },
+        { key: "roleRemark", name: "角色备注", width: 286 },
+        { key: "createDate", name: "创建日期", width: 286 },
+        { key: "updateDate", name: "修改日期", width: 286 },
       ],
       loading: false,
       input: "",
@@ -181,12 +146,8 @@ export default {
       innerVisible: false,
       outerUpdateVisible: false,
       id: "",
-      userName: "",
-      userPwd: "",
-      trueName: "",
-      email: "",
-      phone: "",
-      remark: "",
+      roleName: "",
+      roleRemark: "",
       createDate: "",
       updateDate: "",
       currentPage: 1,
@@ -215,47 +176,27 @@ export default {
       this.currentPage = val;
       this.queryAll();
     },
-    querySearchUserName(queryString, cb) {
-      var restaurantsUserName = this.restaurantsUserName;
+    querySearchRoleName(queryString, cb) {
+      var restaurantsRoleName = this.restaurantsRoleName;
       var results = queryString
-        ? restaurantsUserName.filter(
-            this.createFilterUserName(queryString)
+        ? restaurantsRoleName.filter(
+            this.createFilterRoleName(queryString)
           )
-        : restaurantsUserName;
+        : restaurantsRoleName;
       // 调用 callback 返回建议列表的数据
       cb(results);
     },
-    createFilterUserName(queryString) {
-      return (restaurantsUserName) => {
+    createFilterRoleName(queryString) {
+      return (restaurantsRoleName) => {
         return (
-          restaurantsUserName.userName
-            .toLowerCase()
-            .indexOf(queryString.toLowerCase()) === 0
-        );
-      };
-    },
-    querySearchTrueName(queryString, cb) {
-      var restaurantsTrueName = this.restaurantsTrueName;
-      var results = queryString
-        ? restaurantsTrueName.filter(
-            this.createFilterTrueName(queryString)
-          )
-        : restaurantsTrueName;
-      // 调用 callback 返回建议列表的数据
-      cb(results);
-    },
-    createFilterTrueName(queryString) {
-      return (restaurantsTrueName) => {
-        return (
-          restaurantsTrueName.trueName
+          restaurantsRoleName.roleName
             .toLowerCase()
             .indexOf(queryString.toLowerCase()) === 0
         );
       };
     },
     handleSelect(item) {
-      this.userName = item.userName;
-      this.trueName = item.trueName;
+      this.roleName = item.roleName;
     },
     toggleSelection(rows) {
       if (rows) {
@@ -269,39 +210,19 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
-    listUserName() {
-      this.restaurantsUserName = [];//清空数组 否则将导致后续记录添加导致重复
+    listRoleName() {
+      this.restaurantsRoleName = [];//清空数组 否则将导致后续记录添加导致重复
       this.$store
-        .dispatch("User/listUserNameInfo", null)
+        .dispatch("Role/listRoleNameInfo", null)
         .then(() => {
-          if (this.$store.state.User.userNameInfo.code === 200) {
+          if (this.$store.state.Role.roleNameInfo.code === 200) {
             this.loading = false; //取消加载状态
-            this.$store.state.User.userNameInfo.data.forEach((e) => {
+            this.$store.state.Role.roleNameInfo.data.forEach((e) => {
               const records = {
                 //可根据需求更改
-                userName: e.userName,
+                roleName: e.roleName,
               };
-              this.restaurantsUserName.push(records);
-            });
-          }
-        })
-        .catch((e) => {
-          this.$message.error("发生错误：" + e);
-        });
-    },
-    listTrueName() {
-      this.restaurantsTrueName = [];//清空数组 否则将导致后续记录添加导致重复
-      this.$store
-        .dispatch("User/listTrueNameInfo", null)
-        .then(() => {
-          if (this.$store.state.User.trueNameInfo.code === 200) {
-            this.loading = false; //取消加载状态
-            this.$store.state.User.trueNameInfo.data.forEach((e) => {
-              const records = {
-                //可根据需求更改
-                trueName: e.trueName,
-              };
-              this.restaurantsTrueName.push(records);
+              this.restaurantsRoleName.push(records);
             });
           }
         })
@@ -314,22 +235,18 @@ export default {
       const params = {
         current: this.currentPage,
         pageSize: this.size,
-        userName: this.userName,
-        email: this.email,
-        phone: this.phone,
-        trueName: this.trueName,
-        remark: this.remark
+        roleName: this.roleName,
       };
       this.$store
-        .dispatch("User/queryAllUserInfo", params)
+        .dispatch("Role/queryAllRoleInfo", params)
         .then(() => {
-          if (this.$store.state.User.userInfo.code === 200) {
+          if (this.$store.state.Role.roleInfo.code === 200) {
             this.loading = false; //取消加载状态
-            this.tableData = this.$store.state.User.userInfo.data.records;
+            this.tableData = this.$store.state.Role.roleInfo.data.records;
 
-            this.total = this.$store.state.User.userInfo.data.total;
-            this.currentPage = this.$store.state.User.userInfo.data.current;
-            this.size = this.$store.state.User.userInfo.data.size;
+            this.total = this.$store.state.Role.roleInfo.data.total;
+            this.currentPage = this.$store.state.Role.roleInfo.data.current;
+            this.size = this.$store.state.Role.roleInfo.data.size;
           }
         })
         .catch((e) => {
@@ -362,11 +279,11 @@ export default {
         ids: arrayId,
       };
       this.$store
-        .dispatch("User/del", params)
+        .dispatch("Role/del", params)
         .then(() => {
           if (
-            this.$store.state.User.delInfo.code === 200 &&
-            this.$store.state.User.delInfo.data === true
+            this.$store.state.Role.delInfo.code === 200 &&
+            this.$store.state.Role.delInfo.data === true
           ) {
             this.$message({
               message: "删除操作成功！",
@@ -387,8 +304,7 @@ export default {
     },
     reInit() {
       this.queryAll();
-      this.listUserName();
-      this.listTrueName();
+      this.listRoleName();
     },
     ondetails: function () {
       if (

@@ -1,12 +1,15 @@
 package com.example.crmdemo.modules.system.controller;
 
 
+
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.crmdemo.common.api.CommonResult;
 import com.example.crmdemo.modules.sales.model.TCusDevPlan;
 import com.example.crmdemo.modules.sales.model.TSaleChance;
+
 import com.example.crmdemo.modules.system.dto.TUserDTO;
 import com.example.crmdemo.modules.system.model.Info;
 import com.example.crmdemo.modules.system.model.Login;
@@ -109,6 +112,7 @@ public class TUserController {
         System.err.println(loginInfo);//避免前端无法获取数据
         return CommonResult.success(loginInfo);
     }
+
     @ApiOperation(value= "更改密码")
     @RequestMapping(value = "/updatePwd",method = RequestMethod.POST)
     @ResponseBody
@@ -151,6 +155,7 @@ public class TUserController {
         if(!tUserService.update(tUser)){
             result = 3;
         }
+        System.err.println(result);//避免前端无法获取数据
         return CommonResult.success(result);
     }
 
@@ -183,6 +188,7 @@ public class TUserController {
         if(!tUserService.update(tUser)){
             result = 3;
         }
+        System.err.println(result);//避免前端无法获取数据
         return CommonResult.success(result);
     }
 
@@ -232,7 +238,7 @@ public class TUserController {
     @ResponseBody
     public CommonResult listUserName() {//不另提供筛选查询分配状态已分配的信息 避免冗余
         QueryWrapper<TUser> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("DISTINCT user_name");
+        queryWrapper.select("DISTINCT user_name").eq("is_valid",0);
         List<TUser> tUserList =tUserService.findAll(queryWrapper);
         return CommonResult.success(tUserList);
     }
@@ -240,11 +246,49 @@ public class TUserController {
     @ApiOperation(value = "查询真实姓名信息")
     @RequestMapping(value = "/listTrueName", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult listTrueName() {//不另提供筛选查询分配状态已分配的信息 避免冗余
+    public CommonResult listTrueName() {
         QueryWrapper<TUser> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("DISTINCT true_name");
+        queryWrapper.select("DISTINCT true_name").eq("is_valid",0);
         List<TUser> tUserList =tUserService.findAll(queryWrapper);
         return CommonResult.success(tUserList);
+    }
+
+    @ApiOperation(value = "新增用户信息")
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult<Boolean> add(@RequestBody TUser tUser) {
+        return CommonResult.success(tUserService.add(tUser));
+    }
+
+    @ApiOperation(value = "修改用户信息")
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult<Boolean> update(@RequestBody TUser tUser) {
+        return CommonResult.success(tUserService.update(tUser));
+    }
+
+    @ApiOperation(value = "获取新增用户编号")
+    @RequestMapping(value = "/getCurrentId", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult getCurrentId() {
+        Integer currentId = 0;
+        QueryWrapper<TUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("MAX(id) as id");
+        List<TUser> tUserList =tUserService.findAll(queryWrapper);
+        if(tUserList.size()>0){
+            currentId = tUserList.get(0).getId();
+        }
+        currentId++;
+        return CommonResult.success(currentId);
+    }
+
+    @ApiOperation(value = "软删除营销机会信息")
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult<Boolean> delete(@RequestBody String ids) {
+        JSONObject object = JSONObject.parseObject(ids);
+        ids = object.get("ids").toString();
+        return CommonResult.success(tUserService.updateById(ids));
     }
 }
 

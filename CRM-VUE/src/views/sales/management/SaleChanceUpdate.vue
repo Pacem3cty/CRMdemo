@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <h5 style="color: red">*编号项不得修改</h5>
@@ -241,43 +242,43 @@ export default {
       this.$refs["updateForm"].validate((valid) => {
         if (valid) {
           const params = {
-            "id": this.updateForm.id,
-            "chanceSource": this.updateForm.chanceSource,
-            "customerName": this.updateForm.customerName,
-            "probability": this.updateForm.probability,
-            "overview": this.updateForm.overview,
-            "contractPerson": this.updateForm.contractPerson,
-            "contractPhone": this.updateForm.contractPhone,
-            "description": this.updateForm.description,
-            "createPerson": this.$props.multiple[0].createPerson,
-            "createDate": this.$props.multiple[0].createDate,
-            "assignPerson": this.updateForm.assignPerson,
-            "assignDate": this.assignDate,
-            "state": this.state,
-            "devResult": 0,
-            "isValid": 0,
-            "updateDate": this.updateDate,
+            id: this.updateForm.id,
+            chanceSource: this.updateForm.chanceSource,
+            customerName: this.updateForm.customerName,
+            probability: this.updateForm.probability,
+            overview: this.updateForm.overview,
+            contractPerson: this.updateForm.contractPerson,
+            contractPhone: this.updateForm.contractPhone,
+            description: this.updateForm.description,
+            createPerson: this.$props.multiple[0].createPerson,
+            createDate: this.$props.multiple[0].createDate,
+            assignPerson: this.updateForm.assignPerson,
+            assignDate: this.assignDate,
+            state: this.state,
+            devResult: 0,
+            isValid: 0,
+            updateDate: this.updateDate,
           };
-          this.$store.dispatch("Sales/update", params)
+          this.$store
+            .dispatch("Sales/update", params)
             .then(() => {
               console.log(this.$store.state.Sales.updateInfo);
-              if (
-                this.$store.state.Sales.updateInfo.data === true
-              ) {
+              if (this.$store.state.Sales.updateInfo.data === true) {
                 this.$emit("onAdd");
+                this.$emit("reInit");
                 this.$message({
                   message: "修改操作成功！",
                   type: "success",
                 });
-                this.$emit("queryAll");
               } else {
-                this.$message.error(
-                  "修改操作失败！"
-                );
+                this.$message.error("修改操作失败！");
                 this.$emit("onAdd");
+                this.$emit("reInit");
               }
             })
-            .catch((e) => {this.$message.error("修改操作失败！发生错误："+e);});
+            .catch((e) => {
+              this.$message.error("修改操作失败！发生错误：" + e);
+            });
           this.$refs["updateForm"].resetFields();
         } else {
           console.log("error submit!!");

@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <el-breadcrumb separator="/" class="main-nav">
@@ -51,6 +52,7 @@
         <el-autocomplete
           popper-class="my-autocomplete"
           v-model="createPerson"
+          value-key="createPerson"
           :fetch-suggestions="querySearchCreatePerson"
           :trigger-on-focus="false"
           :clearable="false"
@@ -153,18 +155,26 @@
       </span>
     </el-dialog>
     <!-- 新增 -->
-    <el-dialog title="计划项数据详情" :visible.sync="outerVisible" :close-on-click-modal="false">
+    <el-dialog
+      title="计划项数据详情"
+      :visible.sync="outerVisible"
+      :close-on-click-modal="false"
+    >
       <CusDevPlanInfo
         @onAdd="onAdd"
-        @getfindAll="queryAll"
+        @reInit="reInit"
         :multiple="this.multipleSelection"
       ></CusDevPlanInfo>
     </el-dialog>
     <!-- 修改 -->
-    <el-dialog title="计划项数据维护" :visible.sync="outerUpdateVisible" :close-on-click-modal="false">
+    <el-dialog
+      title="计划项数据维护"
+      :visible.sync="outerUpdateVisible"
+      :close-on-click-modal="false"
+    >
       <CusDevPlanMainten
         @onAdd="onAdd"
-        @getfindAll="queryAll"
+        @reInit="reInit"
         :multiple="this.multipleSelection"
       ></CusDevPlanMainten>
     </el-dialog>
@@ -249,9 +259,7 @@ export default {
     };
   },
   created() {
-    this.queryAll();
-    this.listCustomerName();
-    this.listCreatePerson();
+    this.reInit();
   },
   mounted() {},
   destroyed() {
@@ -259,6 +267,11 @@ export default {
     // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
+    reInit() {
+      this.queryAll();
+      this.listCustomerName();
+      this.listCreatePerson();
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.size = val;
@@ -308,12 +321,9 @@ export default {
         );
       };
     },
-    // handleSelect(item) {
-    //   this.customerName = item.customerName;
-    //   this.createPerson = item.createPerson;
-    // },
-    hell() {
-      this.outerVisible1 = true;
+    handleSelect(item) {
+      this.customerName = item.customerName;
+      this.createPerson = item.createPerson;
     },
     toggleSelection(rows) {
       if (rows) {
@@ -328,6 +338,7 @@ export default {
       this.multipleSelection = val;
     },
     listCustomerName() {
+      this.restaurantsCustomerName = []; //清空数组 否则将导致后续记录添加导致重复
       this.$store
         .dispatch("Sales/listCustomerName", null)
         .then(() => {
@@ -347,6 +358,7 @@ export default {
         });
     },
     listCreatePerson() {
+      this.restaurantsCreatePerson = []; //清空数组 否则将导致后续记录添加导致重复
       this.$store
         .dispatch("Sales/listCreatePerson", null)
         .then(() => {
@@ -388,15 +400,6 @@ export default {
           if (this.$store.state.Sales.assignedInfo.code === 200) {
             this.loading = false; //取消加载状态
             this.tableData = this.$store.state.Sales.assignedInfo.data.records;
-
-            // this.tableData.forEach((e) => {
-            //   const records = {
-            //     //可根据需求更改
-            //     customerName: e.customerName,
-            //     createPerson: e.createPerson,
-            //   };
-            //   this.restaurants.push(records);
-            // });
 
             this.total = this.$store.state.Sales.assignedInfo.data.total;
             this.currentPage =
@@ -444,9 +447,7 @@ export default {
               message: "删除操作成功！",
               type: "success",
             });
-            this.queryAll();
-            this.listCustomerName();
-            this.listCreatePerson();
+            this.reInit();
           } else {
             this.$message.error("执行删除操作失败！");
           }
@@ -485,7 +486,6 @@ export default {
     onAdd: function () {
       this.outerVisible = false;
       this.outerUpdateVisible = false;
-      this.queryAll();
     },
     ondetails: function () {
       if (
@@ -568,3 +568,5 @@ $hc: #409eff;
   line-height: 4em;
 }
 </style>
+
+

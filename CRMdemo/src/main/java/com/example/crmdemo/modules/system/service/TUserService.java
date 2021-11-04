@@ -24,4 +24,10 @@ public interface TUserService extends IService<TUser> {
      List<TUser> findAll(Wrapper<TUser> queryWrapper);
 
      boolean update(TUser tUser);
+
+     boolean add(TUser tUser);
+
+     boolean delete(String ids);
+
+     boolean updateById(String ids);
 }

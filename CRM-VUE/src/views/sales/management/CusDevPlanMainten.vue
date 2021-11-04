@@ -168,8 +168,8 @@
         <CusDevPlanAdd
           v-if="outerAddVisible"
           @onAdd="onAdd"
-          @getfindAll="queryAll"
-          :salesChanceId="this.salesChanceId"
+          @queryAll="queryAll"
+          :salesChanceId="this.$props.multiple[0].id"
           :modal-append-to-body="true"
         ></CusDevPlanAdd>
       </el-dialog>
@@ -180,9 +180,8 @@
         :close-on-click-modal="false"
       >
         <CusDevPlanUpdate
-          v-if="outerUpdateVisible"
           @onAdd="onAdd"
-          @getfindAll="queryAll"
+          @queryAll="queryAll"
           :multiple="this.multipleSelection"
         ></CusDevPlanUpdate>
       </el-dialog>
@@ -229,11 +228,11 @@ export default {
     this.queryAll();
   },
   watch: {
-    // multiple: function () {
-    //   if (this.$props.multiple.length !== 0) {
-    //     this.init();
-    //   }
-    // },
+    multiple: function () {
+      if (this.$props.multiple.length !== 0) {
+        this.queryAll();
+      }
+    },
   },
   methods: {
     queryAll() {
@@ -353,15 +352,16 @@ export default {
           if (this.$store.state.Sales.updateInfo.data === true) {
             this.signSuccessDialogVisible = false;
             this.$emit("onAdd");
+            this.$emit("reInit");
             this.$message({
               message: "标记操作成功！",
               type: "success",
-            });
-            this.$emit("queryAll");
+            }); 
           } else {
             this.signSuccessDialogVisible = false;
             this.$message.error("标记操作失败！");
             this.$emit("onAdd");
+            this.$emit("reInit");
           }
         })
         .catch((e) => {
@@ -396,15 +396,16 @@ export default {
           if (this.$store.state.Sales.updateInfo.data === true) {
             this.signFailureDialogVisible = false;
             this.$emit("onAdd");  
+            this.$emit("reInit");
             this.$message({
               message: "标记操作成功！",
               type: "success",
             });
-            this.$emit("queryAll");
           } else {
             this.signFailureDialogVisible = false;
             this.$message.error("标记操作失败！");
             this.$emit("onAdd");
+            this.$emit("reInit");
           }
         })
         .catch((e) => {
@@ -415,7 +416,6 @@ export default {
     onAdd: function () {
       this.outerAddVisible = false;
       this.outerUpdateVisible = false;
-      this.queryAll();
     },
     ondetails: function () {
       if (
@@ -446,5 +446,3 @@ export default {
   float: left;
 }
 </style>
-
-

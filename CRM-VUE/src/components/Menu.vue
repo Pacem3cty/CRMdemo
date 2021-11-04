@@ -96,12 +96,12 @@
           <span slot="title"><i class="el-icon-user"></i>用户管理</span>
         </el-menu-item>
 
-         <el-menu-item index="/">
-          <span slot="title"><i class="el-icon-key"></i>权限管理</span>
+         <el-menu-item index="/Role">
+          <span slot="title"><i class="el-icon-notebook-2"></i>角色管理</span>
         </el-menu-item>
 
         <el-menu-item index="/">
-          <span slot="title"><i class="el-icon-notebook-2"></i>菜单管理</span>
+          <span slot="title"><i class="el-icon-key"></i>权限管理</span>
         </el-menu-item>
 
       </el-submenu>

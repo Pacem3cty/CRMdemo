@@ -33,6 +33,7 @@
         <el-autocomplete
           popper-class="my-autocomplete"
           v-model="customerName"
+          value-key="customerName"
           :fetch-suggestions="querySearchCustomerName"
           :trigger-on-focus="false"
           :clearable="false"
@@ -51,6 +52,7 @@
         <el-autocomplete
           popper-class="my-autocomplete"
           v-model="createPerson"
+          value-key="createPerson"
           :fetch-suggestions="querySearchCreatePerson"
           :trigger-on-focus="false"
           :clearable="false"
@@ -151,13 +153,17 @@
       v-if="outerVisible"
       :close-on-click-modal="false"
     >
-      <SaleChanceAdd @onAdd="onAdd" @getfindAll="queryAll"></SaleChanceAdd>
+      <SaleChanceAdd @onAdd="onAdd" @reInit="reInit"></SaleChanceAdd>
     </el-dialog>
     <!-- 修改 -->
-    <el-dialog title="修改营销机会信息" :visible.sync="outerUpdateVisible" :close-on-click-modal="false"  v-if="outerUpdateVisible">
+    <el-dialog
+      title="修改营销机会信息"
+      :visible.sync="outerUpdateVisible"
+      :close-on-click-modal="false"
+    >
       <SaleChanceUpdate
         @onAdd="onAdd"
-        @getfindAll="queryAll"
+        @reInit="reInit"
         :multiple="this.multipleSelection"
       ></SaleChanceUpdate>
     </el-dialog>
@@ -206,8 +212,6 @@ export default {
         { key: "createDate", name: "创建日期", width: 100 },
         { key: "assignPerson", name: "指派人", width: 80 },
         { key: "assignDate", name: "分配日期", width: 100 },
-        // { key: 'state', name: '分配状态', width: 250 },
-        // { key: 'devResult', name: '开发状态', width: 250 }
       ],
       loading: true,
       input: "",
@@ -236,16 +240,16 @@ export default {
     };
   },
   created() {
-    this.queryAll();
-    this.listCustomerName();
-    this.listCreatePerson();
+    this.reInit();
   },
   mounted() {},
-  destroyed() {
-    // 销毁用第三方登录
-    // window.removeEventListener('storage', this.afterQRScan)
-  },
+  destroyed() {},
   methods: {
+    reInit() {
+      this.queryAll();
+      this.listCustomerName();
+      this.listCreatePerson();
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.size = val;
@@ -299,9 +303,6 @@ export default {
       this.customerName = item.customerName;
       this.createPerson = item.createPerson;
     },
-    hell() {
-      this.outerVisible1 = true;
-    },
     toggleSelection(rows) {
       if (rows) {
         rows.forEach((row) => {
@@ -315,6 +316,7 @@ export default {
       this.multipleSelection = val;
     },
     listCustomerName() {
+      this.restaurantsCustomerName = []; //清空数组 否则将导致后续记录添加导致重复
       this.$store
         .dispatch("Sales/listCustomerName", null)
         .then(() => {
@@ -334,6 +336,7 @@ export default {
         });
     },
     listCreatePerson() {
+      this.restaurantsCreatePerson = []; //清空数组 否则将导致后续记录添加导致重复
       this.$store
         .dispatch("Sales/listCreatePerson", null)
         .then(() => {
@@ -375,15 +378,6 @@ export default {
           if (this.$store.state.Sales.salesInfo.code === 200) {
             this.loading = false; //取消加载状态
             this.tableData = this.$store.state.Sales.salesInfo.data.records;
-
-            // this.tableData.forEach((e) => {
-            //   const records = {
-            //     //可根据需求更改
-            //     customerName: e.customerName,
-            //     createPerson: e.createPerson,
-            //   };
-            //   this.restaurants.push(records);
-            // });
 
             this.total = this.$store.state.Sales.salesInfo.data.total;
             this.currentPage = this.$store.state.Sales.salesInfo.data.current;
@@ -431,9 +425,9 @@ export default {
               message: "删除操作成功！",
               type: "success",
             });
-            this.queryAll();
-            this.listCustomerName();
-            this.listCreatePerson();
+            this.reInit();
+            // this.listCustomerName();
+            // this.listCreatePerson();
           } else {
             this.$message.error("执行删除操作失败！");
           }
@@ -445,9 +439,6 @@ export default {
     onAdd: function () {
       this.outerVisible = false;
       this.outerUpdateVisible = false;
-      this.queryAll();
-      this.listCreatePerson();
-      this.listCustomerName();
     },
     ondetails: function () {
       if (

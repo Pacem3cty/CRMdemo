@@ -35,7 +35,8 @@ public class TSaleChanceController {
     @ResponseBody
     public CommonResult listCreatePerson() {//不另提供筛选查询分配状态已分配的信息 避免冗余
         QueryWrapper<TSaleChance> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("DISTINCT create_person");
+//        queryWrapper.select("DISTINCT create_person").eq("is_valid", 0);
+        queryWrapper.select("create_person").eq("is_valid", 0).groupBy("create_person");//GROUP BY 较 DISTINCT 性能更优
         List<TSaleChance> tSaleChanceList =tSaleChanceService.findAll(queryWrapper);
         return CommonResult.success(tSaleChanceList);
     }
@@ -45,7 +46,8 @@ public class TSaleChanceController {
     @ResponseBody
     public CommonResult listCustomerName() {
         QueryWrapper<TSaleChance> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("DISTINCT customer_name");
+//        queryWrapper.select("DISTINCT customer_name").eq("is_valid", 0);
+        queryWrapper.select("customer_name").eq("is_valid", 0).groupBy("customer_name");//GROUP BY 较 DISTINCT 性能更优
         List<TSaleChance> tSaleChanceList =tSaleChanceService.findAll(queryWrapper);
         return CommonResult.success(tSaleChanceList);
     }
@@ -126,7 +128,7 @@ public class TSaleChanceController {
     }
 
 
-    @ApiOperation(value = "伪删除营销机会信息")
+    @ApiOperation(value = "软删除营销机会信息")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult<Boolean> delete(@RequestBody String ids) {

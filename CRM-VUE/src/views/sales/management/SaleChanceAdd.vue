@@ -221,11 +221,13 @@ export default {
             this.addForm.id = this.$store.state.Sales.currentIdInfo.data;
           } else {
             this.$emit("onAdd");
+            this.$emit("reInit");
             this.$message.error("获取编号失败导致无法执行添加操作！");
           }
         })
         .catch((e) => {
           this.$emit("onAdd");
+          this.$emit("reInit");
           this.$message.error(
             "获取编号失败导致无法执行添加操作！发生错误：" + e
           );
@@ -264,14 +266,15 @@ export default {
             .then(() => {
               if (this.$store.state.Sales.addInfo.data === true) {
                 this.$emit("onAdd");
-                this.$emit("queryAll"); //未知原因不能执行 代码迁移至0nAdd
+                 this.$emit("reInit");
                 this.$message({
                   message: "新增操作成功！",
                   type: "success",
                 });
               } else {
                 this.$message.error("新增操作失败！");
-                this.$refs["addForm"].resetFields();
+                 this.$emit("onAdd");
+                 this.$emit("reInit");
               }
             })
             .catch((e) => {this.$message.error("新增操作失败！发生错误："+e);});

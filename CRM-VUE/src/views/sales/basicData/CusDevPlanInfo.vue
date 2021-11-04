@@ -1,3 +1,4 @@
+
 <template>
 <div>
   <div>
@@ -117,11 +118,11 @@ export default {
     this.queryAll();
   },
   watch: {
-    // multiple: function () {
-    //   if (this.$props.multiple.length !== 0) {
-    //     this.init();
-    //   }
-    // },
+    multiple: function () {
+      if (this.$props.multiple.length !== 0) {
+        this.queryAll();
+      }
+    },
   },
   methods: {
     queryAll(){
@@ -168,5 +169,3 @@ export default {
   float: left;
 }
 </style>
-
-

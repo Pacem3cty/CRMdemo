@@ -2,7 +2,8 @@
   <div>
     <el-breadcrumb separator="/" class="main-nav">
       <el-breadcrumb-item>首页</el-breadcrumb-item>
-      <el-breadcrumb-item>账号设置</el-breadcrumb-item>
+      <el-breadcrumb-item>系统设置</el-breadcrumb-item>
+      <el-breadcrumb-item>资料修改</el-breadcrumb-item>
       <el-breadcrumb-item>{{ activeName }}</el-breadcrumb-item>
       <div style="font-size: 25px; float: right; margin-right: 25px"></div>
     </el-breadcrumb>

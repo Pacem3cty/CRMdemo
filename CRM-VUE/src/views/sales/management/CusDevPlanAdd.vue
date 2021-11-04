@@ -103,11 +103,13 @@ export default {
             this.addForm.id = this.$store.state.Sales.cusDevPlanCurrentIdInfo.data;
           } else {
             this.$emit("onAdd");
+            this.$emit("queryAll");
             this.$message.error("获取编号失败导致无法执行添加操作！");
           }
         })
         .catch((e) => {
           this.$emit("onAdd");
+          this.$emit("queryAll");
           this.$message.error(
             "获取编号失败导致无法执行添加操作！发生错误：" + e
           );
@@ -131,7 +133,7 @@ export default {
             .then(() => {
               if (this.$store.state.Sales.addCusDevPlanInfo.data === true) {
                 this.$emit("onAdd");
-                // this.$emit("queryAll"); //未知原因不能执行 代码迁移至onAdd
+                this.$emit("queryAll");
                 this.$message({
                   message: "新增操作成功！",
                   type: "success",

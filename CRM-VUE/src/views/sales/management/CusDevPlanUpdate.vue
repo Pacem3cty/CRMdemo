@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <el-row :gutter="15">
@@ -48,11 +49,11 @@ export default {
   data() {
     return {
       addForm: {
-        id: this.$props.multiple[0].id,
-        saleChanceId: this.$props.multiple[0].saleChanceId,
-        planItem: this.$props.multiple[0].planItem,
-        planDate: this.$props.multiple[0].planDate,
-        exeAffect: this.$props.multiple[0].exeAffect,
+        id: '',
+        saleChanceId: '',
+        planItem: '',
+        planDate: '',
+        exeAffect: '',
       },
       createDate:'',
       rules: {
@@ -85,7 +86,13 @@ export default {
     }
   },
   computed: {},
-  watch: {},
+  watch: {
+      multiple: function () {
+      if (this.$props.multiple.length !== 0) {
+        this.init();
+      }
+    },
+  },
   created() {
       this.init();
   },
@@ -95,6 +102,11 @@ export default {
       let date = new Date();
       this.updateDate =
         date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+      this.addForm.id = this.$props.multiple[0].id;
+      this.addForm.saleChanceId = this.$props.multiple[0].saleChanceId;
+      this.addForm.planItem = this.$props.multiple[0].planItem;
+      this.addForm.planDate = this.$props.multiple[0].planDate;
+      this.addForm.exeAffect = this.$props.multiple[0].exeAffect;
     },
     submitForm() {
       this.$refs["addForm"].validate((valid) => {
@@ -114,17 +126,17 @@ export default {
             .then(() => {
               if (this.$store.state.Sales.updateCusDevPlanInfo.data === true) {
                 this.$emit("onAdd");
-                // this.$emit("queryAll"); //未知原因不能执行 代码迁移至onAdd
+                this.$emit("queryAll");
                 this.$message({
-                  message: "新增操作成功！",
+                  message: "修改操作成功！",
                   type: "success",
                 });
               } else {
-                this.$message.error("新增操作失败！");
+                this.$message.error("修改操作失败！");
                 this.$refs["addForm"].resetFields();
               }
             })
-            .catch((e) => {this.$message.error("新增操作失败！发生错误："+e);});
+            .catch((e) => {this.$message.error("修改操作失败！发生错误："+e);});
           this.$refs["addForm"].resetFields();
         } else {
           console.log("error submit!!");
@@ -140,4 +152,3 @@ export default {
 </script>
 <style>
 </style>
-

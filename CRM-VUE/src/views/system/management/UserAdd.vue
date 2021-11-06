@@ -287,19 +287,19 @@ export default {
                         type: "success",
                       });
                     } else {
-                       this.$message.error("分配用户角色失败！");
-                        this.$refs["addForm"].resetFields();
+                      this.$message.error("分配用户角色失败！");
+                      this.$refs["addForm"].resetFields();
                     }
                   });
               } else {
                 this.$message.error("新增操作失败！");
-                this.$refs["addForm"].resetFields();
+                this.resetForm();
               }
             })
             .catch((e) => {
               this.$message.error("新增操作失败！发生错误：" + e);
+              this.resetForm();
             });
-          this.$refs["addForm"].resetFields();
         } else {
           console.log("error submit!");
           return false;
@@ -307,7 +307,13 @@ export default {
       });
     },
     resetForm() {
-      this.$refs["addForm"].resetFields();
+      this.addForm.userName = "";
+      this.addForm.userPwd = "";
+      this.addForm.trueName = "";
+      this.addForm.email = "";
+      this.addForm.phone = "";
+      this.addForm.roleName = "";
+      this.addForm.remark = "";
     },
   },
 };

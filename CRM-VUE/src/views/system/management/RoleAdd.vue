@@ -12,28 +12,17 @@
           <el-form-item label="编号" prop="id">
             <el-input
               v-model="addForm.id"
-              placeholder="请输入编号"
-              readonly
-              :style="{ width: '100%' }"
-            >
-            </el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="机会编号" prop="saleChanceId">
-            <el-input
-              v-model="addForm.saleChanceId"
-              placeholder="请输入机会编号"
+              placeholder="请选择编号"
               readonly
               :style="{ width: '100%' }"
             ></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="24">
-          <el-form-item label="计划项" prop="planItem">
+        <el-col :span="12">
+          <el-form-item label="角色名称" prop="roleName">
             <el-input
-              v-model="addForm.planItem"
-              placeholder="请输入计划项"
+              v-model="addForm.roleName"
+              placeholder="请输入角色名称"
               clearable
               :style="{ width: '100%' }"
             >
@@ -41,22 +30,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="计划日期" prop="planDate">
-            <el-date-picker
-              v-model="addForm.planDate"
-              format="yyyy-MM-dd"
-              value-format="yyyy-MM-dd"
-              :style="{ width: '100%' }"
-              placeholder="请选择计划日期"
-              clearable
-            ></el-date-picker>
-          </el-form-item>
-        </el-col>
-        <el-col :span="24">
-          <el-form-item label="执行效果" prop="exeAffect">
+          <el-form-item label="角色备注" prop="roleRemark">
             <el-input
-              v-model="addForm.exeAffect"
-              placeholder="请输入执行效果"
+              v-model="addForm.roleRemark"
+              placeholder="请输入角色备注"
               clearable
               :style="{ width: '100%' }"
             >
@@ -75,53 +52,37 @@
 </template>
 <script>
 export default {
-  props: ["salesChanceId"],
+  components: {},
+  props: [],
   data() {
     return {
       addForm: {
         id: "",
-        saleChanceId: this.$props.salesChanceId,
-        planItem: "",
-        planDate: "",
-        exeAffect: "",
+        roleName: "",
+        roleRemark: "",
       },
       createDate: "",
       rules: {
         id: [
           {
             required: true,
-            message: "请输入编号",
+            message: "请选择编号",
             trigger: "blur",
           },
         ],
-        saleChanceId: [
+        roleName: [
           {
             required: true,
-            message: "请输入机会编号",
+            message: "请输入角色名称",
+            trigger: "blur",
+          },
+          {
+            pattern: /[^\d^%&',;./=?~\x22$\x22]+/,
+            message: "请输入正确的角色名称格式",
             trigger: "blur",
           },
         ],
-        planItem: [
-          {
-            required: true,
-            message: "请输入计划项",
-            trigger: "blur",
-          },
-        ],
-        planDate: [
-          {
-            required: true,
-            message: "请选择计划日期",
-            trigger: "change",
-          },
-        ],
-        exeAffect: [
-          {
-            required: true,
-            message: "请输入执行效果",
-            trigger: "blur",
-          },
-        ],
+        roleRemark: [],
       },
     };
   },
@@ -133,49 +94,46 @@ export default {
   mounted() {},
   methods: {
     init() {
-      let date = new Date();
-      this.createDate =
-        date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
       this.$store
-        .dispatch("Sales/getCusDevPlanCurrentId", null) //从API中匹配相应的路径发送请求以及请求参数
+        .dispatch("Role/getCurrentId", null) //从API中匹配相应的路径发送请求以及请求参数
         .then(() => {
-          if (this.$store.state.Sales.cusDevPlanCurrentIdInfo.code === 200) {
+          if (this.$store.state.Role.currentIdInfo.code === 200) {
             //状态码为200 即请求成功
-            this.addForm.id =
-              this.$store.state.Sales.cusDevPlanCurrentIdInfo.data;
+            this.addForm.id = this.$store.state.Role.currentIdInfo.data;
           } else {
             this.$emit("onAdd");
-            this.$emit("queryAll");
+            this.$emit("reInit");
             this.$message.error("获取编号失败导致无法执行添加操作！");
           }
         })
         .catch((e) => {
           this.$emit("onAdd");
-          this.$emit("queryAll");
+          this.$emit("reInit");
           this.$message.error(
             "获取编号失败导致无法执行添加操作！发生错误：" + e
           );
         });
     },
     submitForm() {
+      let date = new Date();
+      this.createDate =
+        date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
       this.$refs["addForm"].validate((valid) => {
         if (valid) {
           const params = {
             id: this.addForm.id,
-            saleChanceId: this.addForm.saleChanceId,
-            planItem: this.addForm.planItem,
-            planDate: this.addForm.planDate,
-            exeAffect: this.addForm.exeAffect,
+            roleName: this.addForm.roleName,
+            roleRemark: this.addForm.roleRemark,
+            isValid: 0,
             createDate: this.createDate,
             updateDate: "",
-            isValid: 0,
           };
           this.$store
-            .dispatch("Sales/addCusDevPlan", params)
+            .dispatch("Role/add", params)
             .then(() => {
-              if (this.$store.state.Sales.addCusDevPlanInfo.data === true) {
+              if (this.$store.state.Role.addInfo.data === true) {
                 this.$emit("onAdd");
-                this.$emit("queryAll");
+                this.$emit("reInit");
                 this.$message({
                   message: "新增操作成功！",
                   type: "success",
@@ -190,15 +148,14 @@ export default {
               this.resetForm();
             });
         } else {
-          console.log("error submit!!");
+          console.log("error submit!");
           return false;
         }
       });
     },
     resetForm() {
-      this.addForm.planItem = "";
-      this.addForm.planDate = "";
-      this.addForm.exeAffect = "";
+      this.addForm.roleName = "";
+      this.addForm.roleRemark = "";
     },
   },
 };

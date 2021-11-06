@@ -1,9 +1,10 @@
 package com.example.crmdemo.modules.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.crmdemo.modules.sales.model.TSaleChance;
+
 import com.example.crmdemo.modules.system.model.TUser;
 import com.example.crmdemo.modules.system.mapper.TUserMapper;
 import com.example.crmdemo.modules.system.service.TUserService;
@@ -16,8 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -43,6 +43,11 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
     @Override
     public List<TUser> findAll(Wrapper<TUser> queryWrapper) {
         return tUserMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public List<Map<String, Object>> query(Wrapper<TUser> queryWrapper) {
+        return tUserMapper.selectMaps(queryWrapper);
     }
 
     @Override
@@ -92,6 +97,16 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
                 flg.set(false);
             }
         });
+        return flg.get();
+    }
+
+    @Override
+    public boolean updatePart(TUser tUser, Wrapper<TUser> updateWrapper) {
+        AtomicBoolean flg= new AtomicBoolean(true);
+        int n = tUserMapper.update(tUser,updateWrapper);
+        if(n == 0 ){
+            flg.set(false);
+        }
         return flg.get();
     }
 }

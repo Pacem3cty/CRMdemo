@@ -1,12 +1,12 @@
 <template>
   <div>
-      <label style="color: red">用户密码MD5转换</label>
-      <el-input
-        v-model="md5trans"
-        placeholder="如需更改用户密码 请在此输入以进行自动MD5转换"
-        show-password
-        :style="{ width: '45%' }"
-      ></el-input>
+    <label style="color: red">用户密码MD5转换</label>
+    <el-input
+      v-model="md5trans"
+      placeholder="如需更改用户密码 请在此输入以进行自动MD5转换"
+      show-password
+      :style="{ width: '45%' }"
+    ></el-input>
     <el-row :gutter="15">
       <el-form
         ref="updateForm"
@@ -98,17 +98,6 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <!-- <el-col :span="12">
-          <el-form-item label="密码MD5转换" prop="md5trans">
-            <el-input
-              v-model="updateForm.md5In"
-              placeholder="请输入需要转换的密码"
-              clearable
-              :style="{ width: '100%' }"
-            >
-            </el-input>
-          </el-form-item>
-        </el-col> -->
         <el-col :span="24">
           <el-form-item label="备注" prop="remark">
             <el-input
@@ -136,7 +125,7 @@ export default {
   props: ["multiple"],
   data() {
     return {
-      md5trans:"",
+      md5trans: "",
       updateForm: {
         id: "",
         userName: "",
@@ -217,21 +206,20 @@ export default {
       },
     };
   },
-  computed: {
-  },
+  computed: {},
   watch: {
-    multiple:function(){
-        if(this.$props.multiple.length !== 0){
-            this.init();
-        }     
-      },
-    md5trans:function(){
-        if(this.md5trans === ""){
-            this.updateForm.userPwd = this.$props.multiple[0].userPwd;
-        }else{
-            this.updateForm.userPwd = this.$md5(this.md5trans);
-        }
-    }
+    multiple: function () {
+      if (this.$props.multiple.length !== 0) {
+        this.init();
+      }
+    },
+    md5trans: function () {
+      if (this.md5trans === "") {
+        this.updateForm.userPwd = this.$props.multiple[0].userPwd;
+      } else {
+        this.updateForm.userPwd = this.$md5(this.md5trans);
+      }
+    },
   },
   created() {
     this.listRoleName();
@@ -318,7 +306,7 @@ export default {
             .dispatch("User/update", paramsUser)
             .then(() => {
               if (this.$store.state.User.updateInfo.data === true) {
-                 this.$store
+                this.$store
                   .dispatch("UserRole/update", paramsUserRole)
                   .then(() => {
                     if (this.$store.state.UserRole.updateInfo.data === true) {
@@ -329,18 +317,19 @@ export default {
                         type: "success",
                       });
                     } else {
-                       this.$message.error("分配用户角色失败！");
+                      this.$message.error("分配用户角色失败！");
+                      this.resetForm();
                     }
                   });
               } else {
                 this.$message.error("修改操作失败！");
-                // this.$refs["addForm"].resetFields();
+                this.resetForm();
               }
             })
             .catch((e) => {
-              this.$message.error("新增操作失败！发生错误：" + e);
+              this.$message.error("修改操作失败！发生错误：" + e);
+              this.resetForm();
             });
-          // this.$refs["addForm"].resetFields();
         } else {
           console.log("error submit!");
           return false;
@@ -348,7 +337,13 @@ export default {
       });
     },
     resetForm() {
-      this.$refs["updateForm"].resetFields();
+      this.updateForm.userName = this.$props.multiple[0].userName;
+      this.updateForm.userPwd = this.$props.multiple[0].userPwd;
+      this.updateForm.trueName = this.$props.multiple[0].trueName;
+      this.updateForm.email = this.$props.multiple[0].email;
+      this.updateForm.phone = this.$props.multiple[0].phone;
+      this.updateForm.roleName = this.$store.state.UserRole.roleIdInfo.data;
+      this.updateForm.remark = this.$props.multiple[0].remark;
     },
   },
 };

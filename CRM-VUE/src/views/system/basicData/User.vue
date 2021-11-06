@@ -44,7 +44,7 @@
 
       <div class="i-div">
         <label class="i-label">邮箱</label>
-       <el-input v-model="email" placeholder="请输入邮箱"></el-input>
+        <el-input v-model="email" placeholder="请输入邮箱"></el-input>
       </div>
 
       <div class="i-div">
@@ -57,7 +57,7 @@
         <el-autocomplete
           popper-class="my-autocomplete"
           v-model="trueName"
-           value-key="trueName"
+          value-key="trueName"
           :fetch-suggestions="querySearchTrueName"
           :trigger-on-focus="false"
           :clearable="false"
@@ -69,7 +69,7 @@
 
       <div class="i-div">
         <label class="i-label">备注</label>
-       <el-input v-model="remark" placeholder="请输入备注"></el-input>
+        <el-input v-model="remark" placeholder="请输入备注"></el-input>
       </div>
 
       <div class="i-div">
@@ -218,9 +218,7 @@ export default {
     querySearchUserName(queryString, cb) {
       var restaurantsUserName = this.restaurantsUserName;
       var results = queryString
-        ? restaurantsUserName.filter(
-            this.createFilterUserName(queryString)
-          )
+        ? restaurantsUserName.filter(this.createFilterUserName(queryString))
         : restaurantsUserName;
       // 调用 callback 返回建议列表的数据
       cb(results);
@@ -237,9 +235,7 @@ export default {
     querySearchTrueName(queryString, cb) {
       var restaurantsTrueName = this.restaurantsTrueName;
       var results = queryString
-        ? restaurantsTrueName.filter(
-            this.createFilterTrueName(queryString)
-          )
+        ? restaurantsTrueName.filter(this.createFilterTrueName(queryString))
         : restaurantsTrueName;
       // 调用 callback 返回建议列表的数据
       cb(results);
@@ -270,7 +266,7 @@ export default {
       this.multipleSelection = val;
     },
     listUserName() {
-      this.restaurantsUserName = [];//清空数组 否则将导致后续记录添加导致重复
+      this.restaurantsUserName = []; //清空数组 否则将导致后续记录添加导致重复
       this.$store
         .dispatch("User/listUserNameInfo", null)
         .then(() => {
@@ -290,7 +286,7 @@ export default {
         });
     },
     listTrueName() {
-      this.restaurantsTrueName = [];//清空数组 否则将导致后续记录添加导致重复
+      this.restaurantsTrueName = []; //清空数组 否则将导致后续记录添加导致重复
       this.$store
         .dispatch("User/listTrueNameInfo", null)
         .then(() => {
@@ -318,7 +314,7 @@ export default {
         email: this.email,
         phone: this.phone,
         trueName: this.trueName,
-        remark: this.remark
+        remark: this.remark,
       };
       this.$store
         .dispatch("User/queryAllUserInfo", params)

@@ -14,10 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author wr
@@ -27,8 +28,13 @@ import java.util.List;
 @RequestMapping("/sales")
 public class TSaleChanceController {
 
-    @Autowired
+
     private TSaleChanceService tSaleChanceService;
+
+    @Autowired
+    public void settSaleChanceService(TSaleChanceService tSaleChanceService) {
+        this.tSaleChanceService = tSaleChanceService;
+    }
 
     @ApiOperation(value = "查询创建人信息")
     @RequestMapping(value = "/listCreatePerson", method = RequestMethod.POST)
@@ -36,8 +42,9 @@ public class TSaleChanceController {
     public CommonResult listCreatePerson() {//不另提供筛选查询分配状态已分配的信息 避免冗余
         QueryWrapper<TSaleChance> queryWrapper = new QueryWrapper<>();
 //        queryWrapper.select("DISTINCT create_person").eq("is_valid", 0);
-        queryWrapper.select("create_person").eq("is_valid", 0).groupBy("create_person");//GROUP BY 较 DISTINCT 性能更优
-        List<TSaleChance> tSaleChanceList =tSaleChanceService.findAll(queryWrapper);
+        queryWrapper.select("create_person as createPerson").eq("is_valid", 0).groupBy("create_person");//GROUP BY 较 DISTINCT 性能更优
+//        List<TSaleChance> tSaleChanceList = tSaleChanceService.findAll(queryWrapper);
+        List<Map<String, Object>> tSaleChanceList = tSaleChanceService.query(queryWrapper);
         return CommonResult.success(tSaleChanceList);
     }
 
@@ -46,9 +53,8 @@ public class TSaleChanceController {
     @ResponseBody
     public CommonResult listCustomerName() {
         QueryWrapper<TSaleChance> queryWrapper = new QueryWrapper<>();
-//        queryWrapper.select("DISTINCT customer_name").eq("is_valid", 0);
-        queryWrapper.select("customer_name").eq("is_valid", 0).groupBy("customer_name");//GROUP BY 较 DISTINCT 性能更优
-        List<TSaleChance> tSaleChanceList =tSaleChanceService.findAll(queryWrapper);
+        queryWrapper.select("customer_name as customerName").eq("is_valid", 0).groupBy("customer_name");//GROUP BY 较 DISTINCT 性能更优
+        List<Map<String, Object>> tSaleChanceList = tSaleChanceService.query(queryWrapper);
         return CommonResult.success(tSaleChanceList);
     }
 
@@ -59,8 +65,8 @@ public class TSaleChanceController {
         Integer currentId = 0;
         QueryWrapper<TSaleChance> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("MAX(id) as id");
-        List<TSaleChance> tSaleChanceList =tSaleChanceService.findAll(queryWrapper);
-        if(tSaleChanceList.size()>0){
+        List<TSaleChance> tSaleChanceList = tSaleChanceService.findAll(queryWrapper);
+        if (tSaleChanceList.size() > 0) {
             currentId = tSaleChanceList.get(0).getId();
         }
         currentId++;
@@ -74,33 +80,33 @@ public class TSaleChanceController {
         QueryWrapper<TSaleChance> queryWrapper = new QueryWrapper<>();
 
         //客户名
-        if(tSaleChanceDto.getCustomerName() != null && !tSaleChanceDto.getCustomerName().equals("")){
-            queryWrapper.like("customer_name",tSaleChanceDto.getCustomerName());
+        if (tSaleChanceDto.getCustomerName() != null && !tSaleChanceDto.getCustomerName().equals("")) {
+            queryWrapper.like("customer_name", tSaleChanceDto.getCustomerName());
 
         }
         //创建人
-        if(tSaleChanceDto.getCreatePerson() != null && !tSaleChanceDto.getCreatePerson().equals("")){
-            queryWrapper.like("create_person",tSaleChanceDto.getCreatePerson());
+        if (tSaleChanceDto.getCreatePerson() != null && !tSaleChanceDto.getCreatePerson().equals("")) {
+            queryWrapper.like("create_person", tSaleChanceDto.getCreatePerson());
 
         }
         //分配状态
-        if(tSaleChanceDto.getState() != null && !tSaleChanceDto.getState().equals("")){
-            queryWrapper.eq("state",tSaleChanceDto.getState());
+        if (tSaleChanceDto.getState() != null && !tSaleChanceDto.getState().equals("")) {
+            queryWrapper.eq("state", tSaleChanceDto.getState());
         }
 
         //建档日
-        if(tSaleChanceDto.getStartTime() != null && !tSaleChanceDto.getStartTime().equals("")) {
+        if (tSaleChanceDto.getStartTime() != null && !tSaleChanceDto.getStartTime().equals("")) {
             //格式化时间
             queryWrapper.ge("create_date", tSaleChanceDto.getStartTime());
             queryWrapper.le("create_date", tSaleChanceDto.getEndTime());
         }
-        queryWrapper.eq("is_valid",0); //查询没有被软删除的记录
+        queryWrapper.eq("is_valid", 0); //查询没有被软删除的记录
         queryWrapper.orderByAsc("id");//按升序排序
 
         Page page = new Page();//分页查询page类
         page.setCurrent(tSaleChanceDto.getCurrent());//获取当前页数
         page.setSize(tSaleChanceDto.getPageSize());//获取每页显示条目
-        IPage<TSaleChance> pageResult = tSaleChanceService.findAll(page,queryWrapper);
+        IPage<TSaleChance> pageResult = tSaleChanceService.findAll(page, queryWrapper);
         return CommonResult.success(pageResult);
     }
 
@@ -144,34 +150,34 @@ public class TSaleChanceController {
         QueryWrapper<TSaleChance> queryWrapper = new QueryWrapper<>();
 
         //客户名
-        if(tSaleChanceDto.getCustomerName() != null && !tSaleChanceDto.getCustomerName().equals("")){
-            queryWrapper.like("customer_name",tSaleChanceDto.getCustomerName());
+        if (tSaleChanceDto.getCustomerName() != null && !tSaleChanceDto.getCustomerName().equals("")) {
+            queryWrapper.like("customer_name", tSaleChanceDto.getCustomerName());
 
         }
         //创建人
-        if(tSaleChanceDto.getCreatePerson() != null && !tSaleChanceDto.getCreatePerson().equals("")){
-            queryWrapper.like("create_person",tSaleChanceDto.getCreatePerson());
+        if (tSaleChanceDto.getCreatePerson() != null && !tSaleChanceDto.getCreatePerson().equals("")) {
+            queryWrapper.like("create_person", tSaleChanceDto.getCreatePerson());
 
         }
         //分配状态
-        if(tSaleChanceDto.getDevResult() != null && !tSaleChanceDto.getDevResult().equals("")){
-            queryWrapper.eq("dev_result",tSaleChanceDto.getDevResult());
+        if (tSaleChanceDto.getDevResult() != null && !tSaleChanceDto.getDevResult().equals("")) {
+            queryWrapper.eq("dev_result", tSaleChanceDto.getDevResult());
         }
 
         //建档日
-        if(tSaleChanceDto.getStartTime() != null && !tSaleChanceDto.getStartTime().equals("")) {
+        if (tSaleChanceDto.getStartTime() != null && !tSaleChanceDto.getStartTime().equals("")) {
             //格式化时间
             queryWrapper.ge("create_date", tSaleChanceDto.getStartTime());
             queryWrapper.le("create_date", tSaleChanceDto.getEndTime());
         }
-        queryWrapper.eq("state",1);//查询分配状态为已分配的记录
-        queryWrapper.eq("is_valid",0); //查询没有被软删除的记录
+        queryWrapper.eq("state", 1);//查询分配状态为已分配的记录
+        queryWrapper.eq("is_valid", 0); //查询没有被软删除的记录
         queryWrapper.orderByAsc("id");//按升序排序
 
         Page page = new Page();//分页查询page类
         page.setCurrent(tSaleChanceDto.getCurrent());//获取当前页数
         page.setSize(tSaleChanceDto.getPageSize());//获取每页显示条目
-        IPage<TSaleChance> pageResult = tSaleChanceService.findAll(page,queryWrapper);
+        IPage<TSaleChance> pageResult = tSaleChanceService.findAll(page, queryWrapper);
         return CommonResult.success(pageResult);
     }
 }

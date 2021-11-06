@@ -21,32 +21,32 @@
             <el-descriptions-item>
               <template slot="label">
                 <i class="el-icon-user"></i>用户编号</template
-              >{{ userInfoList.id }}
+              >{{ this.userInfoList.id }}
             </el-descriptions-item>
             <el-descriptions-item>
               <template slot="label">
                 <i class="el-icon-user"></i>用户名称</template
-              >{{ userInfoList.userName }}
+              >{{ this.userInfoList.userName }}
             </el-descriptions-item>
             <el-descriptions-item>
               <template slot="label">
                 <i class="el-icon-user"></i>真实姓名</template
-              >{{ userInfoList.trueName }}
+              >{{ this.userInfoList.trueName }}
             </el-descriptions-item>
             <el-descriptions-item>
               <template slot="label">
                 <i class="el-icon-mobile-phone"></i>联系方式 </template
-              >{{ userInfoList.phone }}
+              >{{ this.userInfoList.phone }}
             </el-descriptions-item>
             <el-descriptions-item>
               <template slot="label">
                 <i class="el-icon-paperclip"></i>邮箱地址 </template
-              >{{ userInfoList.email }}
+              >{{ this.userInfoList.email }}
             </el-descriptions-item>
             <el-descriptions-item>
               <template slot="label">
                 <i class="el-icon-tickets"></i>备注 </template
-              >{{ userInfoList.remark }}
+              >{{ this.userInfoList.remark }}
             </el-descriptions-item>
           </el-descriptions>
           <h5 style="color: red">
@@ -130,6 +130,7 @@
                   <el-button type="primary" @click="submitUpdateInfoForm"
                     >修改</el-button
                   >
+                  <el-button @click="resetInfoForm">重置</el-button>
                 </el-form-item>
               </el-col>
             </el-form>
@@ -186,7 +187,7 @@
                   <el-button type="primary" @click="submitUpdatePwdForm"
                     >修改</el-button
                   >
-                  <el-button @click="resetForm">重置</el-button>
+                  <el-button @click="resetPwdForm">重置</el-button>
                 </el-form-item>
               </el-col>
             </el-form>
@@ -311,13 +312,13 @@ export default {
         .dispatch("User/listUserInfo", localStorage.getItem("id"))
         .then(() => {
           if (this.$store.state.User.userInfo.code === 200) {
-            this.userInfoList = this.$store.state.User.userInfo.data;
-            this.infoformData.id = this.userInfoList.id;
-            this.infoformData.userName = this.userInfoList.userName;
-            this.infoformData.trueName = this.userInfoList.trueName;
-            this.infoformData.phone = this.userInfoList.phone;
-            this.infoformData.email = this.userInfoList.email;
-            this.infoformData.remark = this.userInfoList.remark;
+            this.userInfoList = this.$store.state.User.userInfo.data[0];
+              this.infoformData.id = this.userInfoList.id;
+              this.infoformData.userName = this.userInfoList.userName;
+              this.infoformData.trueName = this.userInfoList.trueName;
+              this.infoformData.phone = this.userInfoList.phone;
+              this.infoformData.email = this.userInfoList.email;
+              this.infoformData.remark = this.userInfoList.remark;
           }
         })
         .catch(() => {});
@@ -344,6 +345,9 @@ export default {
                 this.getUserList();
               } else if (this.$store.state.User.updateInfo.data === 1) {
                 this.$message.error("无效账号！将自动退出到登录页！");
+                localStorage.removeItem("trueName");
+                localStorage.removeItem("token");
+                localStorage.removeItem("userName");
                 this.$router.push("/");
                 // this.$route.push({ path: this.redirect || '/' , query: this.otherQuery})
                 // this.loading = false
@@ -367,7 +371,6 @@ export default {
       };
       this.$refs["formData"].validate((valid) => {
         if (valid) {
-          
           this.$store
             .dispatch("User/updatePwd", params)
             .then(() => {
@@ -376,19 +379,25 @@ export default {
                   message: "修改密码成功！",
                   type: "success",
                 });
-                this.resetForm();
+                this.resetPwdForm();
               } else if (this.$store.state.User.updatePwdInfo.data === 1) {
                 this.$message.error("无效账号！将自动退出到登录页！");
+                this.resetPwdForm();
+                localStorage.removeItem("trueName");
+                localStorage.removeItem("token");
+                localStorage.removeItem("userName");
                 this.$router.push("/");
               } else if (this.$store.state.User.updatePwdInfo.data === 2) {
                 this.$message.error("原密码错误！");
-                this.$router.push("/");
+                this.resetPwdForm();
               } else {
                 this.$message.error("修改密码失败！");
+                this.resetPwdForm();
               }
             })
             .catch((e) => {
               this.$message.error("发生错误：" + e);
+              this.resetPwdForm();
               // this.loading = false
             });
         } else {
@@ -396,8 +405,14 @@ export default {
         }
       });
     },
-    resetForm() {
+    resetPwdForm() {
       this.$refs["formData"].resetFields();
+    },
+    resetInfoForm() {
+      this.infoformData.userName = this.userInfoList.userName;
+      this.infoformData.phone = this.userInfoList.phone;
+      this.infoformData.email = this.userInfoList.email;
+      this.infoformData.remark = this.userInfoList.remark;
     },
     handleClick(tab, event) {
       console.log(tab, event);

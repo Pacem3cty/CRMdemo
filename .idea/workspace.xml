@@ -1,37 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eac79b19-3039-475b-aeeb-db4aacd2df86" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/CRM-VUE/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRM-VUE/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRM-VUE/babel.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/babel.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRM-VUE/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRM-VUE/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRM-VUE/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRM-VUE/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRM-VUE/src/api/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/api/Login.js" afterDir="false" />
+    <list default="true" id="2a970fec-9dea-4faa-b78c-3994a0d6646b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/dto/TRoleDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/model/ZTree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRM-VUE/src/api/Sales.js" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/api/Sales.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRM-VUE/src/api/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/api/User.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRM-VUE/src/assets/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/assets/css/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRM-VUE/src/components/Dropdown.vue" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/components/Dropdown.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRM-VUE/src/components/Menu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/components/Menu.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRM-VUE/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRM-VUE/src/plugins/md5.js" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/plugins/md5.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRM-VUE/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/router/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRM-VUE/src/store/getters.js" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/store/getters.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRM-VUE/src/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/store/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRM-VUE/src/store/modules/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/store/modules/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRM-VUE/src/store/modules/Sales.js" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/store/modules/Sales.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRM-VUE/src/store/modules/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/store/modules/User.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRM-VUE/src/utils/http.js" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/utils/http.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRM-VUE/src/utils/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/utils/request.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRM-VUE/src/utils/validate.js" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/utils/validate.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRM-VUE/src/views/401.vue" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/views/401.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRM-VUE/src/views/404.vue" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/views/404.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRM-VUE/src/views/500.vue" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/views/500.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRM-VUE/src/views/About.vue" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/views/About.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRM-VUE/src/views/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/views/Home.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRM-VUE/src/views/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/views/Login.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRM-VUE/src/views/account/management/AccountUpdate.vue" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/CRM-VUE/src/views/sales/basicData/CusDevPlan.vue" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/views/sales/basicData/CusDevPlan.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRM-VUE/src/views/sales/basicData/CusDevPlanInfo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/views/sales/basicData/CusDevPlanInfo.vue" afterDir="false" />
@@ -45,30 +25,7 @@
       <change beforePath="$PROJECT_DIR$/CRM-VUE/src/views/system/management/AccountUpdate.vue" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/views/system/management/AccountUpdate.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRM-VUE/src/views/system/management/UserAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/views/system/management/UserAdd.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRM-VUE/src/views/system/management/UserUpdate.vue" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/src/views/system/management/UserUpdate.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRM-VUE/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/CRM-VUE/vue.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/.mvn/wrapper/MavenWrapperDownloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/.mvn/wrapper/MavenWrapperDownloader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/crm.sql" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/crm.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/mvnw" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/mvnw.cmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/CrMdemoApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/CrMdemoApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/common/api/CommonPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/common/api/CommonPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/common/api/CommonResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/common/api/CommonResult.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/common/api/IErrorCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/common/api/IErrorCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/common/api/ResultCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/common/api/ResultCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/common/config/BaseSwaggerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/common/config/BaseSwaggerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/common/domain/SwaggerProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/common/domain/SwaggerProperties.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/common/exception/ApiException.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/common/exception/ApiException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/common/exception/Asserts.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/common/exception/Asserts.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/common/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/common/exception/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/common/export/ExportExcelUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/common/export/ExportExcelUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/config/ApiHttpCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/config/ApiHttpCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/config/ApiResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/config/ApiResult.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/config/MyBatisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/config/MyBatisConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/config/MyBatisPlusGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/config/MyBatisPlusGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/config/SwaggerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/config/SwaggerConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/basic/controller/TUserController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/basic/mapper/TUserMapper.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/basic/model/Info.java" beforeDir="false" />
@@ -97,62 +54,29 @@
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/permission/service/impl/TPermissionServiceImpl.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/permission/service/impl/TRoleServiceImpl.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/permission/service/impl/TUserRoleServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/sales/controller/TCusDevPlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/sales/controller/TCusDevPlanController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/sales/controller/TSaleChanceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/sales/controller/TSaleChanceController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/sales/dto/TCusDevPlanDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/sales/dto/TCusDevPlanDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/sales/dto/TSaleChanceDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/sales/dto/TSaleChanceDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/sales/mapper/TCusDevPlanMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/sales/mapper/TCusDevPlanMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/sales/mapper/TSaleChanceMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/sales/mapper/TSaleChanceMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/sales/model/TCusDevPlan.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/sales/model/TCusDevPlan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/sales/model/TSaleChance.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/sales/model/TSaleChance.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/sales/service/TCusDevPlanService.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/sales/service/TCusDevPlanService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/sales/service/TSaleChanceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/sales/service/TSaleChanceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/sales/service/impl/TCusDevPlanServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/sales/service/impl/TCusDevPlanServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/sales/service/impl/TSaleChanceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/sales/service/impl/TSaleChanceServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/controller/TModuleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/controller/TModuleController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/controller/TPermissionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/controller/TPermissionController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/controller/TRoleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/controller/TRoleController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/controller/TUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/controller/TUserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/controller/TUserRoleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/controller/TUserRoleController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/dto/TUserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/dto/TUserDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/mapper/TModuleMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/mapper/TModuleMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/mapper/TPermissionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/mapper/TPermissionMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/mapper/TRoleMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/mapper/TRoleMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/mapper/TUserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/mapper/TUserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/mapper/TUserRoleMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/mapper/TUserRoleMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/model/Info.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/model/Info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/model/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/model/Login.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/model/LoginInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/model/LoginInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/model/TModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/model/TModule.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/model/TPermission.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/model/TPermission.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/model/TRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/model/TRole.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/model/TUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/model/TUser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/model/TUserRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/model/TUserRole.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/service/TModuleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/service/TModuleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/service/TPermissionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/service/TPermissionService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/service/TRoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/service/TRoleService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/service/TUserRoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/service/TUserRoleService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/service/TUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/service/TUserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/service/impl/TModuleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/service/impl/TModuleServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/service/impl/TPermissionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/service/impl/TPermissionServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/service/impl/TRoleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/service/impl/TRoleServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/service/impl/TUserRoleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/service/impl/TUserRoleServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/service/impl/TUserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/modules/system/service/impl/TUserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/util/AntiSQLInjectionUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/util/AntiSQLInjectionUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/util/Md5Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/util/Md5Util.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/util/TokenUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/java/com/example/crmdemo/util/TokenUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/resources/application-prod.yml" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/resources/application-prod.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/resources/generator.properties" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/resources/generator.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/resources/mapper/TCusDevPlanMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/resources/mapper/TCusDevPlanMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/resources/mapper/TModuleMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/resources/mapper/TModuleMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/resources/mapper/TPermissionMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/resources/mapper/TPermissionMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/resources/mapper/TRoleMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/resources/mapper/TRoleMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/resources/mapper/TSaleChanceMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/resources/mapper/TSaleChanceMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/resources/mapper/TUserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/resources/mapper/TUserMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/main/resources/mapper/TUserRoleMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/main/resources/mapper/TUserRoleMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRMdemo/src/test/java/com/example/crmdemo/CrMdemoApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/CRMdemo/src/test/java/com/example/crmdemo/CrMdemoApplicationTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -163,7 +87,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="20SVY5JIWsgcDtMgOYSYI91Z73i" />
+  <component name="ProjectId" id="20VHjeZlQyjEPAVZvdCFEeptJBw" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -172,19 +96,19 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/CRMdemo" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="eac79b19-3039-475b-aeeb-db4aacd2df86" name="Changes" comment="" />
-      <created>1636038021613</created>
+      <changelist id="2a970fec-9dea-4faa-b78c-3994a0d6646b" name="Changes" comment="" />
+      <created>1636122973695</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1636038021613</updated>
-      <workItem from="1636038024033" duration="26000" />
+      <updated>1636122973695</updated>
+      <workItem from="1636122976433" duration="35000" />
     </task>
     <servers />
   </component>

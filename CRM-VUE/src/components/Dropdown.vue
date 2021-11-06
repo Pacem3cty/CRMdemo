@@ -30,7 +30,7 @@ export default({
         Logout(){
             localStorage.removeItem('trueName');
             localStorage.removeItem('token');
-            localStorage.removeItem('userName')
+            localStorage.removeItem('userName');
             this.$router.push('/');
         }
     }

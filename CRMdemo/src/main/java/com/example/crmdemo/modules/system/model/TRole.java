@@ -30,7 +30,7 @@ public class TRole implements Serializable {
     @ApiModelProperty(value = "角色名称")
     private String roleName;
 
-    @ApiModelProperty(value = "是否删除  0 未删除  1 已删除")
+    @ApiModelProperty(value = "角色备注")
     private String roleRemark;
 
     @ApiModelProperty(value = "建档日期")

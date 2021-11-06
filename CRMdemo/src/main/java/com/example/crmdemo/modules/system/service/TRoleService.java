@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.crmdemo.modules.system.model.TUser;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -21,6 +22,8 @@ public interface TRoleService extends IService<TRole> {
     IPage findAll(Page page, Wrapper<TRole> queryWrapper);
 
     List<TRole> findAll(Wrapper<TRole> queryWrapper);
+
+    List<Map<String, Object>> query(Wrapper<TRole> queryWrapper);
 
     boolean update(TRole tRole);
 

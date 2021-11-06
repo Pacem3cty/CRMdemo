@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.crmdemo.modules.sales.model.TCusDevPlan;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.crmdemo.modules.system.model.TRole;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -21,6 +23,11 @@ public interface TCusDevPlanService extends IService<TCusDevPlan> {
      * 查询营销机会信息 分页查询
      */
     IPage findAll(Page page, Wrapper<TCusDevPlan> queryWrapper);
+
+    /**
+     * 查询营销机会信息 查询部分字段
+     */
+    List<Map<String, Object>> query(Wrapper<TCusDevPlan> queryWrapper);
 
     /**
      * 新增营销机会信息

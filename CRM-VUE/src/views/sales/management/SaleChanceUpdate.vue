@@ -274,12 +274,13 @@ export default {
                 this.$message.error("修改操作失败！");
                 this.$emit("onAdd");
                 this.$emit("reInit");
+                this.resetForm();
               }
             })
             .catch((e) => {
               this.$message.error("修改操作失败！发生错误：" + e);
+              this.resetForm();
             });
-          this.$refs["updateForm"].resetFields();
         } else {
           console.log("error submit!!");
           return false;
@@ -287,7 +288,14 @@ export default {
       });
     },
     resetForm() {
-      this.$refs["updateForm"].resetFields();
+      this.updateForm.chanceSource = this.$props.multiple[0].chanceSource;
+      this.updateForm.customerName = this.$props.multiple[0].customerName;
+      this.updateForm.probability = this.$props.multiple[0].probability;
+      this.updateForm.overview = this.$props.multiple[0].overview;
+      this.updateForm.contractPerson = this.$props.multiple[0].contractPerson;
+      this.updateForm.contractPhone = this.$props.multiple[0].contractPhone;
+      this.updateForm.description = this.$props.multiple[0].description;
+      this.updateForm.assignPerson = this.$props.multiple[0].assignPerson;
     },
   },
 };

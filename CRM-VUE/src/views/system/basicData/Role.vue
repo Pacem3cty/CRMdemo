@@ -47,6 +47,10 @@
           >查询</el-button
         >
       </div>
+
+      <div class="i-div-r">
+        <el-button type="primary" style="margin-top: 9px" @click="onAuth">授权管理</el-button>
+      </div>
     </div>
     <div class="table-div">
       <el-table
@@ -95,37 +99,37 @@
       </span>
     </el-dialog>
     <!-- 新增 -->
-    <!-- <el-dialog
+    <el-dialog
       title="新增角色信息"
       :visible.sync="outerVisible"
       v-if="outerVisible"
       :close-on-click-modal="false"
     >
-      <UserAdd @onAdd="onAdd" @reInit="reInit"></UserAdd>
-    </el-dialog> -->
+      <RoleAdd @onAdd="onAdd" @reInit="reInit"></RoleAdd>
+    </el-dialog>
     <!-- 修改 -->
-    <!-- <el-dialog
+    <el-dialog
       title="修改角色信息"
       :visible.sync="outerUpdateVisible"
       :close-on-click-modal="false"
     >
-      <UserUpdate
+      <RoleUpdate
         @onAdd="onAdd"
         @reInit="reInit"
         :multiple="this.multipleSelection"
-      ></UserUpdate>
-    </el-dialog> -->
+      ></RoleUpdate>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-// import UserAdd from "../management/UserAdd.vue";
-// import UserUpdate from "../management/UserUpdate.vue";
+import RoleAdd from "../management/RoleAdd.vue";
+import RoleUpdate from "../management/RoleUpdate.vue";
 
 export default {
   components: {
-    // UserAdd,
-    // UserUpdate,
+    RoleAdd,
+    RoleUpdate,
   },
   data() {
     return {
@@ -179,9 +183,7 @@ export default {
     querySearchRoleName(queryString, cb) {
       var restaurantsRoleName = this.restaurantsRoleName;
       var results = queryString
-        ? restaurantsRoleName.filter(
-            this.createFilterRoleName(queryString)
-          )
+        ? restaurantsRoleName.filter(this.createFilterRoleName(queryString))
         : restaurantsRoleName;
       // 调用 callback 返回建议列表的数据
       cb(results);
@@ -211,7 +213,7 @@ export default {
       this.multipleSelection = val;
     },
     listRoleName() {
-      this.restaurantsRoleName = [];//清空数组 否则将导致后续记录添加导致重复
+      this.restaurantsRoleName = []; //清空数组 否则将导致后续记录添加导致重复
       this.$store
         .dispatch("Role/listRoleNameInfo", null)
         .then(() => {
@@ -282,8 +284,8 @@ export default {
         .dispatch("Role/del", params)
         .then(() => {
           if (
-            this.$store.state.Role.delInfo.code === 200 &&
-            this.$store.state.Role.delInfo.data === true
+            this.$store.state.Role.deleteInfo.code === 200 &&
+            this.$store.state.Role.deleteInfo.data === true
           ) {
             this.$message({
               message: "删除操作成功！",
@@ -325,6 +327,26 @@ export default {
         return;
       }
       this.outerUpdateVisible = true;
+    },
+    onAuth: function () {
+      if (
+        this.multipleSelection === undefined ||
+        this.multipleSelection.length === 0
+      ) {
+        this.$message({
+          message: "请选择一条角色信息执行授权管理操作",
+          type: "warning",
+        });
+        return;
+      }
+      if (this.multipleSelection.length > 1) {
+        this.$message({
+          message: "最多只能选择一条角色信息执行授权管理操作",
+          type: "warning",
+        });
+        return;
+      }
+
     },
   },
 };
@@ -375,5 +397,9 @@ $hc: #409eff;
 }
 .el-form-item__label {
   line-height: 4em;
+}
+.i-div-r {
+  float: right;
+  margin-right: 45px;
 }
 </style>

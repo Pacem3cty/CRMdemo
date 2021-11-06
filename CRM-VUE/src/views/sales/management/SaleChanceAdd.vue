@@ -266,19 +266,22 @@ export default {
             .then(() => {
               if (this.$store.state.Sales.addInfo.data === true) {
                 this.$emit("onAdd");
-                 this.$emit("reInit");
+                this.$emit("reInit");
                 this.$message({
                   message: "新增操作成功！",
                   type: "success",
                 });
               } else {
                 this.$message.error("新增操作失败！");
-                 this.$emit("onAdd");
-                 this.$emit("reInit");
+                this.$emit("onAdd");
+                this.$emit("reInit");
+                this.resetForm();
               }
             })
-            .catch((e) => {this.$message.error("新增操作失败！发生错误："+e);});
-          this.$refs["addForm"].resetFields();
+            .catch((e) => {
+              this.$message.error("新增操作失败！发生错误：" + e);
+              this.resetForm();
+            });
         } else {
           console.log("error submit!!");
           return false;
@@ -286,7 +289,14 @@ export default {
       });
     },
     resetForm() {
-      this.$refs["addForm"].resetFields();
+      this.addForm.chanceSource = "";
+      this.addForm.customerName = "";
+      this.addForm.probability = "";
+      this.addForm.overview = "";
+      this.addForm.contractPerson = "";
+      this.addForm.contractPhone = "";
+      this.addForm.description = "";
+      this.addForm.assignPerson = "";
     },
   },
 };

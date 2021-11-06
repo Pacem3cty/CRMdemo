@@ -13,11 +13,12 @@ import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author wr
@@ -31,15 +32,20 @@ public class TSaleChanceServiceImpl extends ServiceImpl<TSaleChanceMapper, TSale
 
     @Override
     public IPage findAll(Page page, Wrapper<TSaleChance> queryWrapper) {
-        IPage iPage = tSaleChanceMapper.selectPage(page,queryWrapper);
+        IPage iPage = tSaleChanceMapper.selectPage(page, queryWrapper);
         return iPage;
+    }
+
+    @Override
+    public List<Map<String, Object>> query(Wrapper<TSaleChance> queryWrapper) {
+        return tSaleChanceMapper.selectMaps(queryWrapper);
     }
 
     @Override
     public boolean add(TSaleChance tSaleChance) {
         tSaleChance.setCreateDate(new Date());
         int n = tSaleChanceMapper.insert(tSaleChance);
-        if(n == 0 ){
+        if (n == 0) {
             return false;
         }
         return true;
@@ -49,7 +55,7 @@ public class TSaleChanceServiceImpl extends ServiceImpl<TSaleChanceMapper, TSale
     public boolean update(TSaleChance tSaleChance) {
         tSaleChance.setUpdateDate(new Date());
         int n = tSaleChanceMapper.updateById(tSaleChance);
-        if(n == 0 ){
+        if (n == 0) {
             return false;
         }
         return true;
@@ -57,12 +63,12 @@ public class TSaleChanceServiceImpl extends ServiceImpl<TSaleChanceMapper, TSale
 
     @Override
     public boolean delete(String ids) {
-        AtomicBoolean flg= new AtomicBoolean(true);
+        AtomicBoolean flg = new AtomicBoolean(true);
         String[] array = ids.split(",");
         Arrays.stream(array).forEach(m -> {
             TSaleChance tSaleChance = tSaleChanceMapper.selectById(m);
             int n = tSaleChanceMapper.deleteById(tSaleChance.getId());
-            if(n == 0 ){
+            if (n == 0) {
                 flg.set(false);
             }
         });
@@ -71,13 +77,13 @@ public class TSaleChanceServiceImpl extends ServiceImpl<TSaleChanceMapper, TSale
 
     @Override
     public boolean updateById(String ids) {
-        AtomicBoolean flg= new AtomicBoolean(true);
+        AtomicBoolean flg = new AtomicBoolean(true);
         String[] array = ids.split(",");
         Arrays.stream(array).forEach(m -> {
             TSaleChance tSaleChance = tSaleChanceMapper.selectById(m);
             tSaleChance.setIsValid(1);
             int n = tSaleChanceMapper.updateById(tSaleChance);
-            if(n == 0 ){
+            if (n == 0) {
                 flg.set(false);
             }
         });

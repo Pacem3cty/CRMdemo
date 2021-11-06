@@ -31,8 +31,6 @@ const mutations = {
   SET_DELINFO: (state, delInfo) => {
     state.delInfo = delInfo
   },
-
-
   SET_USERNAMEINFO: (state, userNameInfo) => {
     state.userNameInfo = userNameInfo
   },

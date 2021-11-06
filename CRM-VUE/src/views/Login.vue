@@ -93,31 +93,29 @@ export default {
     // window.removeEventListener('storage', this.afterQRScan)
   },
    methods:{
-     //使用axios发送登录请求
      submit(formName){
         const params = {
           "userName":this.loginForm.username,
           "userPwd":this.loginForm.password,
-          "newPwd":''
         }
 
        this.$refs[formName].validate((valid) => {
             if (valid) {
             this.$store.dispatch('Login/login',params)
             .then(()=>{
-                if(this.$store.state.Login.loginInfo.data.pwdIsTrue === true){
+                if(this.$store.state.Login.loginInfo.data[0].pwdIsTrue === true){
                   this.$message({
-                  message: this.$store.state.Login.loginInfo.data.loginTip,
+                  message: this.$store.state.Login.loginInfo.data[0].loginTip,
                   type: 'success'
                 });
-                  localStorage.setItem('token',this.$store.state.Login.loginInfo.data.token);
-                  localStorage.setItem('id',this.$store.state.Login.loginInfo.data.id)
-                  localStorage.setItem('trueName',this.$store.state.Login.loginInfo.data.trueName);
-                  localStorage.setItem('userName',this.$store.state.Login.loginInfo.data.userName);
+                  localStorage.setItem('token',this.$store.state.Login.loginInfo.data[0].token);
+                  localStorage.setItem('id',this.$store.state.Login.loginInfo.data[0].id)
+                  localStorage.setItem('trueName',this.$store.state.Login.loginInfo.data[0].trueName);
+                  localStorage.setItem('userName',this.$store.state.Login.loginInfo.data[0].userName);
                   this.$router.push("/home");
                 }
               else{
-                  this.$message.error(this.$store.state.Login.loginInfo.data.loginTip);
+                  this.$message.error(this.$store.state.Login.loginInfo.data[0].loginTip);
                 // this.$route.push({ path: this.redirect || '/' , query: this.otherQuery})
                 // this.loading = false
               }

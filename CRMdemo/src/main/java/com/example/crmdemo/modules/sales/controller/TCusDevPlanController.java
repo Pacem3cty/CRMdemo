@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author wr
@@ -28,8 +28,13 @@ import java.util.List;
 @RequestMapping("/sales/tCusDevPlan")
 public class TCusDevPlanController {
 
-    @Autowired
+
     TCusDevPlanService tCusDevPlanService;
+
+    @Autowired
+    public void settCusDevPlanService(TCusDevPlanService tCusDevPlanService) {
+        this.tCusDevPlanService = tCusDevPlanService;
+    }
 
     @ApiOperation(value = "获取新增营销机会编号")
     @RequestMapping(value = "/getCurrentId", method = RequestMethod.POST)
@@ -38,8 +43,8 @@ public class TCusDevPlanController {
         Integer currentId = 0;
         QueryWrapper<TCusDevPlan> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("MAX(id) as id");
-        List<TCusDevPlan> tCusDevPlanList =tCusDevPlanService.findAll(queryWrapper);
-        if(tCusDevPlanList.size()>0){
+        List<TCusDevPlan> tCusDevPlanList = tCusDevPlanService.findAll(queryWrapper);
+        if (tCusDevPlanList.size() > 0) {
             currentId = tCusDevPlanList.get(0).getId();
         }
         currentId++;
@@ -53,17 +58,17 @@ public class TCusDevPlanController {
         QueryWrapper<TCusDevPlan> queryWrapper = new QueryWrapper<>();
 
         //查询营销机会编号
-        if(tCusDevPlanDto.getSaleChanceId() != null && !tCusDevPlanDto.getSaleChanceId().equals("")) {
+        if (tCusDevPlanDto.getSaleChanceId() != null && !tCusDevPlanDto.getSaleChanceId().equals("")) {
             queryWrapper.eq("sale_chance_id", tCusDevPlanDto.getSaleChanceId());
 
         }
-        queryWrapper.eq("is_valid",0); //查询没有被软删除的记录
+        queryWrapper.eq("is_valid", 0); //查询没有被软删除的记录
         queryWrapper.orderByAsc("id");//按升序排序
 
         Page page = new Page();//分页查询page类
         page.setCurrent(tCusDevPlanDto.getCurrent());//获取当前页数
         page.setSize(tCusDevPlanDto.getPageSize());//获取每页显示条目
-        IPage<TCusDevPlan> pageResult = tCusDevPlanService.findAll(page,queryWrapper);
+        IPage<TCusDevPlan> pageResult = tCusDevPlanService.findAll(page, queryWrapper);
         return CommonResult.success(pageResult);
     }
 

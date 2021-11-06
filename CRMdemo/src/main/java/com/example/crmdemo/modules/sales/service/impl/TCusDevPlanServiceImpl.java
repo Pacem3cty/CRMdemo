@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -34,6 +35,11 @@ public class TCusDevPlanServiceImpl extends ServiceImpl<TCusDevPlanMapper, TCusD
     public IPage findAll(Page page, Wrapper<TCusDevPlan> queryWrapper) {
         IPage iPage = tCusDevPlanMapper.selectPage(page,queryWrapper);
         return iPage;
+    }
+
+    @Override
+    public List<Map<String, Object>> query(Wrapper<TCusDevPlan> queryWrapper) {
+        return tCusDevPlanMapper.selectMaps(queryWrapper);
     }
 
     @Override

@@ -6,6 +6,7 @@
     <resultMap id="BaseResultMap" type="com.example.crmdemo.modules.system.model.TModule">
         <id column="id" property="id" />
         <result column="module_name" property="moduleName" />
+        <result column="module_style" property="moduleStyle" />
         <result column="url" property="url" />
         <result column="parent_id" property="parentId" />
         <result column="parent_opt_value" property="parentOptValue" />

@@ -35,7 +35,7 @@ public class TUserRoleController {
         this.tUserRoleService = tUserRoleService;
     }
 
-    @ApiOperation(value = "查询用户-角色信息")
+    @ApiOperation(value = "查询用户-角色信息（返回角色编号")
     @RequestMapping(value = "/queryRoleId", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult queryRoleId(@RequestBody Object userId) {
@@ -66,5 +66,6 @@ public class TUserRoleController {
     public CommonResult<Boolean> update(@RequestBody TUserRole tUserRole) {
         return CommonResult.success(tUserRoleService.update(tUserRole));
     }
+
 }
 

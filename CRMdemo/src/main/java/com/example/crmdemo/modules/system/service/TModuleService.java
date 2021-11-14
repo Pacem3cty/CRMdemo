@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.crmdemo.modules.system.model.TModule;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.crmdemo.modules.system.model.ZTree;
 
 import java.util.List;
 import java.util.Map;
@@ -23,6 +22,8 @@ public interface TModuleService extends IService<TModule> {
     IPage findAll(Page page, Wrapper<TModule> queryWrapper);
 
     List<Map<String, Object>> query(Wrapper<TModule> queryWrapper);
+
+    List<TModule> findAll(Wrapper<TModule> queryWrapper);
 
     boolean update(TModule tModule);
 

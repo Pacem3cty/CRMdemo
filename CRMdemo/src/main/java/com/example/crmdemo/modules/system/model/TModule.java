@@ -3,6 +3,9 @@ package com.example.crmdemo.modules.system.model;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
 import java.io.Serializable;
+import java.util.List;
+
+import com.example.crmdemo.util.Tree;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -22,7 +25,7 @@ import lombok.EqualsAndHashCode;
 @ApiModel(value="TModule对象", description="")
 public class TModule implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "资源编号")
     private Integer id;
@@ -48,7 +51,7 @@ public class TModule implements Serializable {
     @ApiModelProperty(value = "权限码")
     private String optValue;
 
-    @ApiModelProperty(value = "序号")
+    @ApiModelProperty(value = "序号（靠前程度）")
     private Integer orders;
 
     @ApiModelProperty(value = "是否删除  0 未删除  1 已删除")
@@ -59,6 +62,5 @@ public class TModule implements Serializable {
 
     @ApiModelProperty(value = "修改时间")
     private Date updateDate;
-
 
 }

@@ -6,7 +6,7 @@ import cn.hutool.core.convert.Convert;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 /**
  * 分页数据封装类
- * Created by macro on 2019/4/19.
+ *
  */
 public class CommonPage<T> {
 

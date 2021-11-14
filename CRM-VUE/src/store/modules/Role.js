@@ -1,4 +1,4 @@
-import { listRoleNameInfo, queryAllRoleInfo,del,add,update,getCurrentId } from '../../api/Role'
+import { listRoleNameInfo, queryAllRoleInfo,del,add,update,getCurrentId,queryRoleName } from '../../api/Role'
 
 const state = {
   roleNameInfo: {},
@@ -6,7 +6,8 @@ const state = {
   deleteInfo: {},
   updateInfo: {},
   addInfo: {},
-  currentIdInfo: {}
+  currentIdInfo: {},
+  queryRoleNameInfo:{}
 }
 
 
@@ -28,6 +29,9 @@ const mutations = {
   },
   SET_CURRENTIDINFO: (state, currentIdInfo) => {
     state.currentIdInfo = currentIdInfo
+  },
+  SET_QUERYROLENAMEINFO: (state, queryRoleNameInfo) => {
+    state.queryRoleNameInfo = queryRoleNameInfo
   },
 }
 
@@ -93,6 +97,17 @@ const actions = {
       getCurrentId(param).then(response => {
         //   const { data } = response
         commit('SET_CURRENTIDINFO', response)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  queryRoleName({ commit }, param) {
+    return new Promise((resolve, reject) => {
+      queryRoleName(param).then(response => {
+        //   const { data } = response
+        commit('SET_QUERYROLENAMEINFO', response)
         resolve()
       }).catch(error => {
         reject(error)

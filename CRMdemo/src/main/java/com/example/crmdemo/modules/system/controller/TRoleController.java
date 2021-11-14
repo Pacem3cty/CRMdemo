@@ -59,7 +59,7 @@ public class TRoleController {
         return CommonResult.success(pageResult);
     }
 
-    @ApiOperation(value = "查询角色名称信息")
+    @ApiOperation(value = "查询角色编号、角色名称信息")
     @RequestMapping(value = "/listRoleName", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult listRoleName() {
@@ -107,5 +107,18 @@ public class TRoleController {
         return CommonResult.success(tRoleService.updateById(ids));
     }
 
+    @ApiOperation(value = "查询角色名称")
+    @RequestMapping(value = "/queryRoleName", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult queryRoleName(@RequestBody Object roleId) {
+      String roleName ="";
+      QueryWrapper<TRole> queryWrapper = new QueryWrapper<>();
+      queryWrapper.select("role_Name").eq("id",roleId).eq("is_valid",0);
+      List<TRole> tRoleList = tRoleService.findAll(queryWrapper);
+        if (tRoleList.size() > 0) {
+            roleName = tRoleList.get(0).getRoleName();
+        }
+        return CommonResult.success(roleName);
+    }
 }
 

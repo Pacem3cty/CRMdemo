@@ -1,182 +1,113 @@
 <template>
-	<el-tree
-      empty-text="暂无数据"
-      :expand-on-click-node="false"
+  <div style="font-size: 25px; float: left; margin-left: 25px">
+    <div style="display:inline;font-size:10px">
+      <label>当前更改角色 【</label>
+        <label style=";color:blue">{{roleName}}</label>
+      <label>】 资源授权</label>
+    </div>
+    <span>
+      <el-input
+        style="width: 220px"
+        placeholder="输入关键字对列表进行过滤"
+        v-model="filterText"
+        clearable
+      >
+      </el-input>
+      <i
+        class="el-icon-refresh-left"
+        style="margin-right: 10px; cursor: pointer"
+        @click="loadData"
+        title="刷新资源列表"
+      ></i>
+      <el-button @click="resetChecked">清空</el-button>
+    </span>
+    <el-tree
       :props="defaultProps"
-      :load="loadNode"
       node-key="id"
-      lazy>
-      <div class="custom-tree-node" slot-scope="{ node, data }">
-        <div class="fl"><i class="el-icon-menu"></i>{{ node.label }}</div>
-        <div class="fr">
-          <el-button
-            type="primary"
-            size="mini"
-            @click="() => addDialogShow(node, data, 0)">
-            新增
-          </el-button>
-          <el-button
-            type="primary"
-            plain 
-            size="mini"
-            @click="() => addDialogShow(node, data, 1)">
-            更新
-          </el-button>
-          <!-- <el-button
-            disabled
-            type="danger"
-            size="mini"
-            @click="() => remove(node, data)">
-            删除
-          </el-button> -->
-        </div>
-      </div>
+      :data="data"
+      ref="tree"
+      show-checkbox
+      @node-click="handleNodeClick"
+      default-expand-all
+      empty-text="获取资源列表失败"
+      :filter-node-method="filterNode"
+      highlight-current
+    >
     </el-tree>
+  </div>
 </template>
 <script>
-  import { typeList, addtype, updatetype, deltype } from '@/api/baseType'
-
-  export default {
-    data() {
-      return {
-        defaultProps: {
-            id: "Id",
-            label: 'Name',
-            children: 'children'
-        },
-        //新增相关
-        addDialog:false,
-        addForm: {},
-        addRules:{
-          name:[{required: true,message: '请输入基础类型名',trigger: 'blur'}]
-        },
-        pid: null, // 基础类型得父级id
-        flag: null, //操作标志位
-        node: {}, // tree 节点对象
-        nodedata: {} 
-      }
+export default {
+  props: ["multiple"],
+  data() {
+    return {
+      data: {},
+      filterText: "",
+      defaultProps: {
+        label: "label",
+        children: "childList",
+      },
+      roleName:this.$props.multiple[0].roleName
+    };
+  },
+  watch: {
+    filterText(val) {
+      this.$refs.tree.filter(val);
     },
-    created(){
+  },
+  created() {
+    this.loadData();
+  },
+  filters: {
+    filterText: function (value) {
+      if (!value) return true;
+      return this.data.label.indexOf(value) !== -1;
     },
-    methods: {
-      // 加载树结点
-      loadNode(node, resolve) {
-        // 如果是顶级的父节点
-        if (node.level === 0) {
-          // 查找顶级对象
-          typeList(node.level).then(res => {
-            if (res.Data) {
-              return resolve(res.Data)
-            } else {
-              this.$message.error(res.Msg)
-            }
-          }).catch(() => {
-            let data = []
-            return resolve(data)
-          })
-        } else {
-          // 根据父节点id找寻下一级的所有节点 
-          typeList(node.data.Id).then(res => {
-            if (res.Data) {
-              return resolve(res.Data)
-            } else {
-              this.$message.error(res.Msg)
-            }
-          }).catch(() => {
-            let data = []
-            return resolve(data)
-          })
-        }
-      },
-      remove(node, data) {
-        console.log(node, data)
-        // const parent = node.parent;
-        // const children = parent.data.children || parent.data;
-        // const index = children.findIndex(d => d.id === data.id);
-        // children.splice(index, 1);
-      },
-      
-      //新增
-      addDialogShow(node,data,flag) {
-        this.node = node //
-        this.nodedata = data
-        if(flag === 0) {
-          this.addDialog = true
-          this.pid = data.Id
-          this.flag = 0
-        }
-        if(flag === 1) {
-          this.addDialog = true
-          this.pid = data.Id
-          this.addForm.name = data.Name
-          this.flag = 1
-        }
-      },
-      addSubmit(flag) {
-        this.$refs.addForm.validate((valid) => {
-          if(valid){
-            this.listLoading = true
-            let arr = Object.assign({}, this.addForm)
-            console.log(flag)
-            if(flag === 0) {
-              let data = {
-                pid: this.pid,
-                name: arr.name
-              }
-              // 新增 api
-              addtype(data).then(() => {
-                typeList(data.pid).then(res => {
-                  let id = res.Data[0].Id 
-                  const newChild = { id: id, label: arr.name, children: [] };
-                  if (!this.nodedata.children) {
-                    this.$set(nodedata, 'children', []);
-                  }
-                  this.nodedata.children.push(newChild)
-                  this.addDialog = false
-                  this.$notify.success({
-                    message:'新增成功',
-                    duration: 2000
-                  })
-                })
-              }).catch(() => {
-                this.addDialog = false
-              })
-            }
-            if(flag === 1) {
-              let data = {
-                name: arr.name
-              }
-              updatetype(this.pid,data).then(res => {
-                this.$set(this.node.data, 'Name',arr.name)
-                this.addDialog = false
-                this.$notify.success({
-                  message:'更新成功',
-                  duration: 2000
-                })
-              }).catch(() => {
-                this.addDialog = false
-              })
-            }
+  },
+  methods: {
+    loadData() {
+      this.$store
+        .dispatch("Module/loadModuleData", null)
+        .then(() => {
+          if (this.$store.state.Module.treeListInfo.code === 200) {
+            this.data = this.$store.state.Module.treeListInfo.data;
+            this.$message({
+              message: "资源列表加载成功！",
+              type: "success",
+            });
           }
         })
-      }
-    }
-  }
+        .catch((e) => {
+          this.$message.error("加载资源列表发生错误：" + e);
+        });
+    },
+    handleNodeClick(data) {
+      console.log(data);
+    },
+    filterNode(value, data) {
+      if (!value) return true;
+      return data.label.indexOf(value) !== -1;
+    },
+    resetChecked() {
+      this.$refs.tree.setCheckedKeys([]);
+    },
+  },
+};
 </script>
-<style lang="less" scoped>
-  .el-tree-node__content {
-    line-height: 50px;
-    .custom-tree-node {
-      width: 100%;
-      display: block;
-      .fl {
-        float: left;
-        line-height: 31px;
-      }
-      .fr {
-        float: right;
-        margin-right: 50px;
-      }
+<style lang="scss">
+.el-tree-node__content {
+  line-height: 50px;
+  .custom-tree-node {
+    width: 100%;
+    display: block;
+    .fl {
+      float: left;
+      line-height: 31px;
+    }
+    .fr {
+      float: right;
+      margin-right: 50px;
     }
   }
+}
 </style>

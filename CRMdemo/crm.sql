@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80026
 File Encoding         : 65001
 
-Date: 2021-11-05 16:25:56
+Date: 2021-11-12 16:50:38
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -53,7 +53,7 @@ CREATE TABLE `t_module` (
   `module_name` varchar(255) DEFAULT NULL,
   `module_style` varchar(255) DEFAULT NULL,
   `url` varchar(255) DEFAULT NULL,
-  `parent_id` int NOT NULL,
+  `parent_id` int DEFAULT NULL,
   `parent_opt_value` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `grade` int DEFAULT NULL,
   `opt_value` varchar(255) DEFAULT NULL,
@@ -70,6 +70,14 @@ CREATE TABLE `t_module` (
 INSERT INTO `t_module` VALUES ('1', '营销管理', null, '#', '-1', '0', null, null, '1', '0', '2021-11-05 15:51:07', null);
 INSERT INTO `t_module` VALUES ('2', '营销机会管理', null, '/SaleChance', '1', '0', null, null, '2', '0', '2021-11-05 15:53:35', null);
 INSERT INTO `t_module` VALUES ('3', '营销机会管理查询', null, '#', '2', '0', null, null, '3', '0', '2021-11-05 15:56:23', null);
+INSERT INTO `t_module` VALUES ('4', '营销机会管理添加', null, null, '2', '0', null, null, '4', '0', '2021-11-11 11:22:08', null);
+INSERT INTO `t_module` VALUES ('5', '营销机会管理修改', null, null, '2', '0', null, null, '5', '0', '2021-11-11 11:23:44', null);
+INSERT INTO `t_module` VALUES ('6', '营销机会管理删除', null, null, '2', '0', null, null, '6', '0', '2021-11-11 11:24:01', null);
+INSERT INTO `t_module` VALUES ('7', '客户开发计划', null, null, '1', '0', null, null, '7', '0', '2021-11-12 14:31:14', null);
+INSERT INTO `t_module` VALUES ('8', '开发计划查询', null, null, '7', '0', null, null, '8', '0', '2021-11-12 14:35:32', null);
+INSERT INTO `t_module` VALUES ('9', '计划项详情查看', null, null, '7', '0', null, null, '9', '0', '2021-11-12 14:37:27', null);
+INSERT INTO `t_module` VALUES ('10', '计划项开发', null, null, '7', '0', null, null, '10', '0', '2021-11-12 14:37:47', null);
+INSERT INTO `t_module` VALUES ('11', '客户管理', null, null, '-1', '0', null, null, '11', '0', '2021-11-12 14:39:57', null);
 
 -- ----------------------------
 -- Table structure for t_permission
@@ -172,7 +180,7 @@ CREATE TABLE `t_user` (
 -- ----------------------------
 INSERT INTO `t_user` VALUES ('1', 'Pacem3cty', 'e10adc3949ba59abbe56e057f20f883e', '吴芮', '1556250364@qq.com', '19868586764', '一定要出重拳', '0', '2021-10-09 16:15:20', '2021-11-03 10:03:46');
 INSERT INTO `t_user` VALUES ('2', 'Pacem', 'e35cf7b66449df565f93c607d5a81d09', '吴㕙', '1556251364@qq.com', '19868586762', '牙医shakeit', '0', '2021-10-29 00:00:00', '2021-11-03 09:22:21');
-INSERT INTO `t_user` VALUES ('3', '测试', 'e35cf7b66449df565f93c607d5a81d09', '测试', '', '18000000000', '测试备注', '0', '2021-11-03 00:00:00', '2021-11-04 16:04:48');
+INSERT INTO `t_user` VALUES ('3', '测试', 'e35cf7b66449df565f93c607d5a81d09', '测试', '', '18000000000', '测试备注', '0', '2021-11-03 00:00:00', '2021-11-11 09:59:44');
 
 -- ----------------------------
 -- Table structure for t_user_role
@@ -194,4 +202,6 @@ CREATE TABLE `t_user_role` (
 -- ----------------------------
 -- Records of t_user_role
 -- ----------------------------
-INSERT INTO `t_user_role` VALUES ('3', '3', '1', '2021-11-03 00:00:00', '2021-11-04 16:04:48');
+INSERT INTO `t_user_role` VALUES ('1', '1', '1', '2021-11-12 10:48:16', null);
+INSERT INTO `t_user_role` VALUES ('2', '2', '2', '2021-11-12 11:17:53', null);
+INSERT INTO `t_user_role` VALUES ('3', '3', '3', '2021-11-03 00:00:00', '2021-11-11 09:59:44');

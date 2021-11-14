@@ -38,6 +38,11 @@ public class TModuleServiceImpl extends ServiceImpl<TModuleMapper, TModule> impl
     }
 
     @Override
+    public List<TModule> findAll(Wrapper<TModule> queryWrapper) {
+        return tModuleMapper.selectList(queryWrapper);
+    }
+
+    @Override
     public boolean update(TModule tModule) {
         return false;
     }

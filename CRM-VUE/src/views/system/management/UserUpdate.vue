@@ -255,7 +255,7 @@ export default {
         .dispatch("UserRole/queryRoleId", this.$props.multiple[0].id)
         .then(() => {
           if (this.$store.state.UserRole.roleIdInfo.code === 200) {
-            console.log(this.$store.state.UserRole.roleIdInfo.data);
+            // console.log(this.$store.state.UserRole.roleIdInfo.data);
             this.updateForm.roleName =
               this.$store.state.UserRole.roleIdInfo.data;
           } else {

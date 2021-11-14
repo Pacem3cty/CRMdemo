@@ -23,3 +23,7 @@ export function add(params) {
 export function getCurrentId(params) {
   return post("/api/role/getCurrentId",params)
 }
+
+export function queryRoleName(params) {
+  return post("/api/role/queryRoleName",params)
+}

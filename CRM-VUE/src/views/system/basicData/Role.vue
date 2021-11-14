@@ -49,7 +49,7 @@
       </div>
 
       <div class="i-div-r">
-        <el-button type="primary" style="margin-top: 9px" @click="onAuth">授权管理</el-button>
+        <el-button type="primary" style="margin-top: 9px" @click="this.onAuth">授权管理</el-button>
       </div>
     </div>
     <div class="table-div">
@@ -119,17 +119,32 @@
         :multiple="this.multipleSelection"
       ></RoleUpdate>
     </el-dialog>
+      <!-- 资源授权 -->
+    <el-dialog
+      title="更改角色资源授权"
+      v-if="outerAuthVisible"
+      :visible.sync="outerAuthVisible"
+      :close-on-click-modal="false"
+    >
+      <RoleAuth
+        @onAdd="onAdd"
+        @reInit="reInit"
+        :multiple="this.multipleSelection"
+      ></RoleAuth>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import RoleAdd from "../management/RoleAdd.vue";
 import RoleUpdate from "../management/RoleUpdate.vue";
+import RoleAuth from "../management/RoleAuth.vue";
 
 export default {
   components: {
     RoleAdd,
     RoleUpdate,
+    RoleAuth
   },
   data() {
     return {
@@ -149,6 +164,7 @@ export default {
       outerVisible: false,
       innerVisible: false,
       outerUpdateVisible: false,
+      outerAuthVisible: false,
       id: "",
       roleName: "",
       roleRemark: "",
@@ -346,7 +362,7 @@ export default {
         });
         return;
       }
-
+      this.outerAuthVisible = true;
     },
   },
 };

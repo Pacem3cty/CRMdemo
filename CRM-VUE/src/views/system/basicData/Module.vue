@@ -3,7 +3,7 @@
     <el-breadcrumb separator="/" class="main-nav">
       <el-breadcrumb-item>首页</el-breadcrumb-item>
       <el-breadcrumb-item>系统设置</el-breadcrumb-item>
-      <el-breadcrumb-item>角色管理</el-breadcrumb-item>
+      <el-breadcrumb-item>资源管理</el-breadcrumb-item>
       <div style="font-size: 25px; float: right; margin-right: 25px">
         <i
           class="el-icon-document-add"
@@ -28,32 +28,30 @@
 
     <div class="demo-input-size">
       <div class="i-div">
-        <label class="i-label">角色名称</label>
-        <el-autocomplete
-          popper-class="my-autocomplete"
-          v-model="roleName"
-          value-key="roleName"
-          :fetch-suggestions="querySearchRoleName"
-          :trigger-on-focus="false"
-          :clearable="false"
-          placeholder="请输入用户名称"
-          @select="handleSelect"
-        >
-        </el-autocomplete>
+        <el-button-group>
+          <el-button
+            size="small"
+            type="primary"
+            icon="el-icon-arrow-down"
+            @click="unfold"
+            >全部展开</el-button
+          >
+          <el-button size="small" type="primary" @click="fold"
+            >全部折叠<i class="el-icon-arrow-up"></i
+          ></el-button>
+        </el-button-group>
       </div>
-
-      <div class="i-div">
-        <el-button type="primary" style="margin-top: 9px" @click="this.queryAll"
-          >查询</el-button
-        >
-      </div>
-
       <div class="i-div-r">
-        <el-button type="primary" style="margin-top: 9px" @click="this.onAuth">授权管理</el-button>
+        <el-button type="primary" style="margin-top: 9px" @click="this.onAuth"
+          >添加目录</el-button
+        >
       </div>
     </div>
     <div class="table-div">
       <el-table
+        v-if="refreshTable"
+        :ref="treeTable"
+        row-key="id"
         v-loading="loading"
         element-loading-text="加载中"
         element-loading-spinner="el-icon-loading"
@@ -62,7 +60,10 @@
         height="700"
         border
         @selection-change="handleSelectionChange"
+        :default-expand-all="isExpand"
+        :tree-props="{ children: 'childList' }"
       >
+        >
         <el-table-column type="selection" width="30"> </el-table-column>
         <el-table-column
           v-for="item in tableColumns"
@@ -73,7 +74,7 @@
         >
         </el-table-column>
       </el-table>
-      <div class="block">
+      <!-- <div class="block">
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
@@ -84,7 +85,7 @@
           :total="total"
         >
         </el-pagination>
-      </div>
+      </div> -->
     </div>
     <!-- 删除提示 -->
     <el-dialog
@@ -99,16 +100,16 @@
       </span>
     </el-dialog>
     <!-- 新增 -->
-    <el-dialog
+    <!-- <el-dialog
       title="新增角色信息"
       :visible.sync="outerVisible"
       v-if="outerVisible"
       :close-on-click-modal="false"
     >
       <RoleAdd @onAdd="onAdd" @reInit="reInit"></RoleAdd>
-    </el-dialog>
+    </el-dialog> -->
     <!-- 修改 -->
-    <el-dialog
+    <!-- <el-dialog
       title="修改角色信息"
       :visible.sync="outerUpdateVisible"
       :close-on-click-modal="false"
@@ -118,9 +119,9 @@
         @reInit="reInit"
         :multiple="this.multipleSelection"
       ></RoleUpdate>
-    </el-dialog>
-      <!-- 资源授权 -->
-    <el-dialog
+    </el-dialog> -->
+    <!-- 资源授权 -->
+    <!-- <el-dialog
       title="更改角色资源授权"
       v-if="outerAuthVisible"
       :visible.sync="outerAuthVisible"
@@ -131,53 +132,52 @@
         @reInit="reInit"
         :multiple="this.multipleSelection"
       ></RoleAuth>
-    </el-dialog>
+    </el-dialog> -->
   </div>
 </template>
-
 <script>
-import RoleAdd from "../management/RoleAdd.vue";
-import RoleUpdate from "../management/RoleUpdate.vue";
-import RoleAuth from "../management/RoleAuth.vue";
+// import RoleAdd from "../management/RoleAdd.vue";
+// import RoleUpdate from "../management/RoleUpdate.vue";
+// import RoleAuth from "../management/RoleAuth.vue";
 
 export default {
   components: {
-    RoleAdd,
-    RoleUpdate,
-    RoleAuth
+    // RoleAdd,
+    // RoleUpdate,
+    // RoleAuth
   },
   data() {
     return {
-      restaurantsRoleName: [],
+      refreshTable: true,
+      isExpand: false,
       value: "",
       tableData: [],
       tableColumns: [
-        { key: "id", name: "编号", width: 286 },
-        { key: "roleName", name: "角色名称", width: 286 },
-        { key: "roleRemark", name: "角色备注", width: 286 },
-        { key: "createDate", name: "创建日期", width: 286 },
-        { key: "updateDate", name: "修改日期", width: 286 },
+        { key: "id", name: "资源编号", width: 286 },
+        { key: "parentId", name: "上级资源编号", width: 286 },
+        { key: "moduleName", name: "资源名称", width: 286 },
+        { key: "url", name: "资源地址", width: 286 },
+        { key: "optValue", name: "权限码", width: 286 },
       ],
       loading: false,
-      input: "",
       dialogVisible: false,
       outerVisible: false,
       innerVisible: false,
       outerUpdateVisible: false,
       outerAuthVisible: false,
       id: "",
-      roleName: "",
-      roleRemark: "",
-      createDate: "",
-      updateDate: "",
-      currentPage: 1,
-      size: 5,
-      total: 0,
+      parentId: "",
+      moduleName: "",
+      url: "",
+      optValue: "",
+      //   currentPage: 1,
+      //   size: 5,
+      //   total: 0,
       multipleSelection: [],
     };
   },
   created() {
-    this.reInit();
+    this.queryAll();
   },
   mounted() {},
   destroyed() {
@@ -185,36 +185,19 @@ export default {
     // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
-      this.size = val;
-      this.currentPage = 1;
-      this.queryAll();
+    unfold() {
+      this.refreshTable = false;
+      this.isExpand = true;
+      this.$nextTick(() => {
+        this.refreshTable = true;
+      });
     },
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
-      this.currentPage = val;
-      this.queryAll();
-    },
-    querySearchRoleName(queryString, cb) {
-      var restaurantsRoleName = this.restaurantsRoleName;
-      var results = queryString
-        ? restaurantsRoleName.filter(this.createFilterRoleName(queryString))
-        : restaurantsRoleName;
-      // 调用 callback 返回建议列表的数据
-      cb(results);
-    },
-    createFilterRoleName(queryString) {
-      return (restaurantsRoleName) => {
-        return (
-          restaurantsRoleName.roleName
-            .toLowerCase()
-            .indexOf(queryString.toLowerCase()) === 0
-        );
-      };
-    },
-    handleSelect(item) {
-      this.roleName = item.roleName;
+    fold() {
+      this.refreshTable = false;
+      this.isExpand = false;
+      this.$nextTick(() => {
+        this.refreshTable = true;
+      });
     },
     toggleSelection(rows) {
       if (rows) {
@@ -228,43 +211,14 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
-    listRoleName() {
-      this.restaurantsRoleName = []; //清空数组 否则将导致后续记录添加导致重复
-      this.$store
-        .dispatch("Role/listRoleNameInfo", null)
-        .then(() => {
-          if (this.$store.state.Role.roleNameInfo.code === 200) {
-            this.loading = false; //取消加载状态
-            this.$store.state.Role.roleNameInfo.data.forEach((e) => {
-              const records = {
-                //可根据需求更改
-                roleName: e.roleName,
-              };
-              this.restaurantsRoleName.push(records);
-            });
-          }
-        })
-        .catch((e) => {
-          this.$message.error("发生错误：" + e);
-        });
-    },
     queryAll() {
       this.loading = true;
-      const params = {
-        current: this.currentPage,
-        pageSize: this.size,
-        roleName: this.roleName,
-      };
       this.$store
-        .dispatch("Role/queryAllRoleInfo", params)
+        .dispatch("Module/queryAllModuleInfo", null)
         .then(() => {
-          if (this.$store.state.Role.roleInfo.code === 200) {
+          if (this.$store.state.Module.moduleInfo.code === 200) {
             this.loading = false; //取消加载状态
-            this.tableData = this.$store.state.Role.roleInfo.data.records;
-
-            this.total = this.$store.state.Role.roleInfo.data.total;
-            this.currentPage = this.$store.state.Role.roleInfo.data.current;
-            this.size = this.$store.state.Role.roleInfo.data.size;
+            this.tableData = this.$store.state.Module.moduleInfo.data;
           }
         })
         .catch((e) => {
@@ -319,11 +273,6 @@ export default {
     onAdd: function () {
       this.outerVisible = false;
       this.outerUpdateVisible = false;
-      this.outerAuthVisible = false;
-    },
-    reInit() {
-      this.queryAll();
-      this.listRoleName();
     },
     ondetails: function () {
       if (
@@ -399,6 +348,8 @@ $hc: #409eff;
 }
 .i-div {
   float: left;
+  margin-left: 45px;
+  margin-top: 10px;
 }
 .el-icon-document-checked:hover {
   color: $hc;
@@ -418,5 +369,6 @@ $hc: #409eff;
 .i-div-r {
   float: right;
   margin-right: 45px;
+  margin-bottom: 10px;
 }
 </style>

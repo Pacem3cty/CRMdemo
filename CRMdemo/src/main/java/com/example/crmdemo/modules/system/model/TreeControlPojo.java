@@ -1,7 +1,6 @@
 package com.example.crmdemo.modules.system.model;
 
-import com.example.crmdemo.util.Tree;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.example.crmdemo.util.TreeControl;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -12,8 +11,8 @@ import java.util.List;
  *
  */
 @Data
-@ApiModel(value="ZTree对象", description="")
-public class TModuleTree implements Tree<TModuleTree> {
+@ApiModel(value="与Element-UI框架适配的树控件对象", description="")
+public class TreeControlPojo implements TreeControl<TreeControlPojo> {
     private static final long serialVersionUID=1L;
 
     @ApiModelProperty(value = "子节点编号")
@@ -26,6 +25,6 @@ public class TModuleTree implements Tree<TModuleTree> {
     private String label;
 
     @ApiModelProperty(value = "子节点链表")
-    private List<TModuleTree> childList;
+    private List<TreeControlPojo> childList;
 
 }

@@ -87,11 +87,14 @@ public class TRoleController {
     @RequestMapping(value = "/getCurrentId", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult getCurrentId() {
-        Integer currentId = 0;
+        Integer currentId;
         QueryWrapper<TRole> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("MAX(id) as id");
         List<TRole> tRoleList = tRoleService.findAll(queryWrapper);
-        if (tRoleList.size() > 0) {
+        if (tRoleList.get(0) == null) {
+            currentId = 0;
+        }
+        else {
             currentId = tRoleList.get(0).getId();
         }
         currentId++;
@@ -115,7 +118,7 @@ public class TRoleController {
       QueryWrapper<TRole> queryWrapper = new QueryWrapper<>();
       queryWrapper.select("role_Name").eq("id",roleId).eq("is_valid",0);
       List<TRole> tRoleList = tRoleService.findAll(queryWrapper);
-        if (tRoleList.size() > 0) {
+        if (tRoleList.get(0) != null) {
             roleName = tRoleList.get(0).getRoleName();
         }
         return CommonResult.success(roleName);

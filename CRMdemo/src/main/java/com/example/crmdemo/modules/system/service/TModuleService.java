@@ -25,6 +25,8 @@ public interface TModuleService extends IService<TModule> {
 
     List<TModule> findAll(Wrapper<TModule> queryWrapper);
 
+    TModule selectOne(Wrapper<TModule> queryWrapper);
+
     boolean update(TModule tModule);
 
     boolean add(TModule tModule);

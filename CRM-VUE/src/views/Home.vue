@@ -21,7 +21,25 @@ import Dropdown from "../components/Dropdown";
 export default {
   //注册组件,
   components: { Menu, Dropdown },
-}
+  data() {
+    return {
+    // id:this.$store.state.Main.userId
+    };
+  },
+  created() {
+    // this.init();
+  },
+  methods: {
+    // init() {
+    //   this.$store
+    //     .dispatch("Main/main",this.id)
+    //     .then(() => {})
+    //     .catch((e) => {
+    //       this.$message.error("加载角色权限发生错误：" + e);
+    //     });
+    // },
+  },
+};
 </script>
 <style>
 .el-aside {

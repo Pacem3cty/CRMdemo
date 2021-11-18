@@ -2,7 +2,7 @@ package com.example.crmdemo.util;
 
 import java.util.List;
 
-public interface Tree<T> {
+public interface TreeControl<T> {
      String getId();
 
      String getPid();

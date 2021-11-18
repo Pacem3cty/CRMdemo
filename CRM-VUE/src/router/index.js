@@ -35,6 +35,7 @@ const routes = [
       // { path: '/customerCenter' , component: () => import( '../views/management/CustomerCenter.vue') ,name: '客户中心', meta: { requiresAuth: true }},
       // { path: '/equipment' , component: () => import( '../views/basicData/Equipment.vue') ,name: '设备', meta: { requiresAuth: true }},
       { path: '/Role' , component: () => import( '../views/system/basicData/Role.vue') ,name: '角色管理', meta: { requiresAuth: true }},
+      { path: '/Module' , component: () => import( '../views/system/basicData/Module.vue') ,name: '资源管理', meta: { requiresAuth: true }},
       { path: '/Account' , component: () => import( '../views/system/management/AccountUpdate.vue') ,name: '账号管理', meta: { requiresAuth: true }},
       { path: '/User' , component: () => import( '../views/system/basicData/User.vue') ,name: '用户管理', meta: { requiresAuth: true }},
     ]  

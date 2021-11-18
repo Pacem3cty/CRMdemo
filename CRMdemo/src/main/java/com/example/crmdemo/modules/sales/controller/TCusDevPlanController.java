@@ -40,11 +40,14 @@ public class TCusDevPlanController {
     @RequestMapping(value = "/getCurrentId", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult getCurrentId() {
-        Integer currentId = 0;
+        Integer currentId;
         QueryWrapper<TCusDevPlan> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("MAX(id) as id");
         List<TCusDevPlan> tCusDevPlanList = tCusDevPlanService.findAll(queryWrapper);
-        if (tCusDevPlanList.size() > 0) {
+        if (tCusDevPlanList.get(0) == null) {
+            currentId = 0;
+        }
+        else {
             currentId = tCusDevPlanList.get(0).getId();
         }
         currentId++;

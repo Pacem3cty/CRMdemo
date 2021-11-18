@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.crmdemo.modules.system.model.TModule;
 import com.example.crmdemo.modules.system.mapper.TModuleMapper;
+import com.example.crmdemo.modules.system.model.TPermission;
 import com.example.crmdemo.modules.system.service.TModuleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,8 @@ public class TModuleServiceImpl extends ServiceImpl<TModuleMapper, TModule> impl
 
     @Override
     public IPage findAll(Page page, Wrapper<TModule> queryWrapper) {
-        return null;
+        IPage iPage = tModuleMapper.selectPage(page,queryWrapper);
+        return iPage;
     }
 
     @Override
@@ -40,6 +42,11 @@ public class TModuleServiceImpl extends ServiceImpl<TModuleMapper, TModule> impl
     @Override
     public List<TModule> findAll(Wrapper<TModule> queryWrapper) {
         return tModuleMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public TModule selectOne(Wrapper<TModule> queryWrapper) {
+        return tModuleMapper.selectOne(queryWrapper);
     }
 
     @Override

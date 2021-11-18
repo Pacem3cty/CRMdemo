@@ -154,7 +154,13 @@ export default {
               // this.loading = false
             });
           this.$store
-            .dispatch("UserRole/queryRoleId",localStorage.getItem("id"))
+            .dispatch("Main/main", localStorage.getItem("id"))
+            .then(() => {})
+            .catch((e) => {
+              this.$message.error("加载角色权限发生错误：" + e);
+            });
+          this.$store
+            .dispatch("UserRole/queryRoleId", localStorage.getItem("id"))
             .then(() => {
               if (this.$store.state.UserRole.roleIdInfo.code === 200) {
                 // console.log(this.$store.state.UserRole.roleIdInfo.data);

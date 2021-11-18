@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.crmdemo.common.annoation.RequiredPermission;
 import com.example.crmdemo.common.api.CommonResult;
 import com.example.crmdemo.modules.sales.dto.TSaleChanceDto;
 import com.example.crmdemo.modules.sales.model.TSaleChance;
@@ -62,17 +63,21 @@ public class TSaleChanceController {
     @RequestMapping(value = "/getCurrentId", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult getCurrentId() {
-        Integer currentId = 0;
+        Integer currentId;
         QueryWrapper<TSaleChance> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("MAX(id) as id");
         List<TSaleChance> tSaleChanceList = tSaleChanceService.findAll(queryWrapper);
-        if (tSaleChanceList.size() > 0) {
+        if (tSaleChanceList.get(0) == null) {
+            currentId = 0;
+        }
+        else {
             currentId = tSaleChanceList.get(0).getId();
         }
         currentId++;
         return CommonResult.success(currentId);
     }
 
+    @RequiredPermission(code = "01012")
     @ApiOperation(value = "查询营销机会信息")
     @RequestMapping(value = "/queryAll", method = RequestMethod.POST)
     @ResponseBody

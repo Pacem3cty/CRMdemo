@@ -9,7 +9,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.crmdemo.common.api.CommonResult;
 
 import com.example.crmdemo.modules.system.dto.TUserDTO;
+import com.example.crmdemo.modules.system.model.TPermission;
 import com.example.crmdemo.modules.system.model.TUser;
+import com.example.crmdemo.modules.system.model.TUserRole;
+import com.example.crmdemo.modules.system.service.TPermissionService;
+import com.example.crmdemo.modules.system.service.TUserRoleService;
 import com.example.crmdemo.modules.system.service.TUserService;
 import com.example.crmdemo.util.AntiSQLInjectionUtil;
 import com.example.crmdemo.util.Md5Util;
@@ -20,6 +24,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +50,8 @@ public class TUserController {
     public void setTUserService(TUserService tUserService) {
         this.tUserService = tUserService;
     }
+
+
 
     @ApiOperation(value = "获取用户资料")
     @RequestMapping(value = "/listInfo", method = RequestMethod.POST)
@@ -96,6 +105,7 @@ public class TUserController {
             loginTip = "登录成功！";
             token = TokenUtils.sign(userName, userPwd);
         }
+
         List<Map<String, Object>> loginInfo = new ArrayList<>();
         Map<String, Object> map = new HashMap<>();
         //返回给前端的登录反馈信息 包含：对前端传输到后台的密码进行MD5处理并与数据库中相应记录的密码比对结果、登录用户名、根据登录名和密码生成Token秘钥
@@ -195,7 +205,7 @@ public class TUserController {
     @ApiOperation(value = "查询用户信息")
     @RequestMapping(value = "/queryAll", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult updateInfo(@RequestBody TUserDTO tUserDTO) {
+    public CommonResult queryAll(@RequestBody TUserDTO tUserDTO) {
         QueryWrapper<TUser> queryWrapper = new QueryWrapper<>();
 
         //用户名称
@@ -271,11 +281,14 @@ public class TUserController {
     @RequestMapping(value = "/getCurrentId", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult getCurrentId() {
-        Integer currentId = 0;
+        Integer currentId;
         QueryWrapper<TUser> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("MAX(id) as id");
         List<TUser> tUserList = tUserService.findAll(queryWrapper);
-        if (tUserList.size() > 0) {
+        if (tUserList.get(0) == null) {
+            currentId = 0;
+        }
+        else {
             currentId = tUserList.get(0).getId();
         }
         currentId++;
@@ -290,6 +303,7 @@ public class TUserController {
         ids = object.get("ids").toString();
         return CommonResult.success(tUserService.updateById(ids));
     }
+
 
 }
 

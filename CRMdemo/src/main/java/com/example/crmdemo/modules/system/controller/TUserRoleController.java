@@ -47,7 +47,7 @@ public class TUserRoleController {
             queryWrapper.select("role_id").eq("user_id", userId);
         }
         List<TUserRole> tUserRoleList = tUserRoleService.findAll(queryWrapper);
-        if (tUserRoleList.size() > 0) {
+        if (tUserRoleList.get(0) != null) {
             roleId = tUserRoleList.get(0).getRoleId();
         }
         return CommonResult.success(roleId);

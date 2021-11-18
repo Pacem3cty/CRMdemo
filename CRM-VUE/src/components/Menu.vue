@@ -100,8 +100,8 @@
           <span slot="title"><i class="el-icon-notebook-2"></i>角色管理</span>
         </el-menu-item>
 
-        <el-menu-item index="/">
-          <span slot="title"><i class="el-icon-key"></i>权限管理</span>
+        <el-menu-item index="/Module">
+          <span slot="title"><i class="el-icon-key"></i>资源管理</span>
         </el-menu-item>
 
       </el-submenu>

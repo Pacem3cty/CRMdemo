@@ -379,6 +379,7 @@ export default {
             this.loading = false; //取消加载状态
             this.tableData = this.$store.state.Sales.salesInfo.data.records;
 
+
             this.total = this.$store.state.Sales.salesInfo.data.total;
             this.currentPage = this.$store.state.Sales.salesInfo.data.current;
             this.size = this.$store.state.Sales.salesInfo.data.size;

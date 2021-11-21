@@ -25,6 +25,7 @@ import java.util.Map;
  * @author wr
  * @since 2021-10-20
  */
+
 @RestController
 @RequestMapping("/sales")
 public class TSaleChanceController {
@@ -48,6 +49,7 @@ public class TSaleChanceController {
         List<Map<String, Object>> tSaleChanceList = tSaleChanceService.query(queryWrapper);
         return CommonResult.success(tSaleChanceList);
     }
+
 
     @ApiOperation(value = "查询客户名称信息")
     @RequestMapping(value = "/listCustomerName", method = RequestMethod.POST)
@@ -115,6 +117,7 @@ public class TSaleChanceController {
         return CommonResult.success(pageResult);
     }
 
+    @RequiredPermission(code = "01013")
     @ApiOperation(value = "新增营销机会信息")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
@@ -122,6 +125,7 @@ public class TSaleChanceController {
         return CommonResult.success(tSaleChanceService.add(tSaleChance));
     }
 
+    @RequiredPermission(code = "01014")
     @ApiOperation(value = "修改营销机会信息")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
@@ -129,6 +133,7 @@ public class TSaleChanceController {
         return CommonResult.success(tSaleChanceService.update(tSaleChance));
     }
 
+    @RequiredPermission(code = "01015")
     @ApiOperation(value = "物理删除营销机会信息")
     @RequestMapping(value = "/deletePhysical", method = RequestMethod.POST)
     @ResponseBody
@@ -138,7 +143,7 @@ public class TSaleChanceController {
         return CommonResult.success(tSaleChanceService.delete(ids));
     }
 
-
+    @RequiredPermission(code = "01015")
     @ApiOperation(value = "软删除营销机会信息")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
@@ -148,6 +153,7 @@ public class TSaleChanceController {
         return CommonResult.success(tSaleChanceService.updateById(ids));
     }
 
+    @RequiredPermission(code = "01012")
     @ApiOperation(value = "查询营销机会信息（分配状态为已分配）")
     @RequestMapping(value = "/queryIsAssigned", method = RequestMethod.POST)
     @ResponseBody

@@ -63,14 +63,14 @@ export default {
   },
   mounted() {
     //
-      this.checkedData.forEach((i) => {
-        //实现回显节点半选
-        let node = this.$refs.tree.getNode(i);
-        if (node.isLeaf) {
-          //不为叶子节点时不选中
-          this.$refs.tree.setChecked(node, true); //通过 keys 设置目前勾选的节点 仅设置叶子节点的选中状态
-        }
-      });
+    this.checkedData.forEach((i) => {
+      //实现回显节点半选
+      let node = this.$refs.tree.getNode(i);
+      if (node.isLeaf) {
+        //不为叶子节点时不选中
+        this.$refs.tree.setChecked(node, true); //通过 keys 设置目前勾选的节点 仅设置叶子节点的选中状态
+      }
+    });
   },
   filters: {
     filterText: function (value) {
@@ -101,6 +101,13 @@ export default {
               });
             });
           }
+          if (this.$store.state.Module.treeListInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            return;
+          }
         })
         .catch((e) => {
           this.$message.error("加载资源列表发生错误：" + e);
@@ -118,6 +125,13 @@ export default {
               type: "success",
             });
           }
+          if (this.$store.state.Permission.checkedRoleIdInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            return;
+          }
         })
         .catch((e) => {
           this.$message.error("加载角色授权资源发生错误：" + e);
@@ -128,9 +142,7 @@ export default {
       return data.label.indexOf(value) !== -1;
     },
     authModules() {
-      if (
-        this.$refs.tree.getCheckedKeys() === this.checkedData
-      ) {
+      if (this.$refs.tree.getCheckedKeys() === this.checkedData) {
         this.$message({
           message: "所要提交的角色授权资源信息不可与原信息一致",
           type: "warning",
@@ -150,12 +162,18 @@ export default {
               message: "角色授权资源成功！",
               type: "success",
             });
-          }
-          else{
+          } else {
             this.$message.error("角色授权资源失败！无法查询到相关资源权限码");
           }
-          if(this.$store.state.Permission.authModulesInfo.code === 500){
-             this.$message.error("角色授权资源失败！无法查询到相关资源权限码");
+          if (this.$store.state.Permission.checkedRoleIdInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            return;
+          }
+          if (this.$store.state.Permission.authModulesInfo.code === 500) {
+            this.$message.error("角色授权资源失败！无法查询到相关资源权限码");
           }
         })
         .catch((e) => {

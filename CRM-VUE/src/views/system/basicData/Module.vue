@@ -6,6 +6,12 @@
       <el-breadcrumb-item>资源管理</el-breadcrumb-item>
       <div style="font-size: 25px; float: right; margin-right: 25px">
         <i
+          class="el-icon-refresh-left"
+          style="margin-right: 6px; cursor: pointer"
+          @click="queryAll"
+          title="刷新"
+        ></i>
+        <i
           class="el-icon-document-add"
           style="margin-right: 6px; cursor: pointer"
           @click="outerVisible = true"
@@ -33,24 +39,38 @@
             size="small"
             type="primary"
             icon="el-icon-arrow-down"
+            :disabled="unfoldDisabled"
             @click="unfold"
             >全部展开</el-button
           >
-          <el-button size="small" type="primary" @click="fold"
+          <el-button
+            size="small"
+            type="primary"
+            @click="fold"
+            :disabled="foldDisabled"
             >全部折叠<i class="el-icon-arrow-up"></i
           ></el-button>
         </el-button-group>
       </div>
       <div class="i-div-r">
-        <el-button type="primary" style="margin-top: 9px" @click="this.onAuth"
-          >添加目录</el-button
+        <el-tooltip
+          class="item"
+          effect="dark"
+          content="请选择需新增子资源信息的一项"
+          placement="left"
         >
+          <el-button
+            type="primary"
+            style="margin-top: 9px"
+            @click="onsubdetails"
+            >新增子资源信息</el-button
+          >
+        </el-tooltip>
       </div>
     </div>
     <div class="table-div">
       <el-table
         v-if="refreshTable"
-        :ref="treeTable"
         row-key="id"
         v-loading="loading"
         element-loading-text="加载中"
@@ -74,18 +94,6 @@
         >
         </el-table-column>
       </el-table>
-      <!-- <div class="block">
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page.sync="currentPage"
-          :page-sizes="[5, 10, 20, 30]"
-          :page-size="size"
-          layout="sizes, prev, pager, next"
-          :total="total"
-        >
-        </el-pagination>
-      </div> -->
     </div>
     <!-- 删除提示 -->
     <el-dialog
@@ -100,51 +108,51 @@
       </span>
     </el-dialog>
     <!-- 新增 -->
-    <!-- <el-dialog
-      title="新增角色信息"
+    <el-dialog
+      title="新增资源信息"
       :visible.sync="outerVisible"
       v-if="outerVisible"
       :close-on-click-modal="false"
     >
-      <RoleAdd @onAdd="onAdd" @reInit="reInit"></RoleAdd>
-    </el-dialog> -->
+      <ModuleAdd @onAdd="onAdd" @reInit="queryAll"></ModuleAdd>
+    </el-dialog>
+    <el-dialog
+      title="新增子资源信息"
+      :visible.sync="outerSubVisible"
+      v-if="outerSubVisible"
+      :close-on-click-modal="false"
+    >
+      <SubModuleAdd
+        @onAdd="onAdd"
+        @reInit="queryAll"
+        :multiple="this.multipleSelection"
+      ></SubModuleAdd>
+    </el-dialog>
     <!-- 修改 -->
-    <!-- <el-dialog
-      title="修改角色信息"
+    <el-dialog
+      title="修改资源信息"
       :visible.sync="outerUpdateVisible"
       :close-on-click-modal="false"
     >
-      <RoleUpdate
+      <ModuleUpdate
+        v-if="outerUpdateVisible"
         @onAdd="onAdd"
-        @reInit="reInit"
+        @reInit="queryAll"
         :multiple="this.multipleSelection"
-      ></RoleUpdate>
-    </el-dialog> -->
-    <!-- 资源授权 -->
-    <!-- <el-dialog
-      title="更改角色资源授权"
-      v-if="outerAuthVisible"
-      :visible.sync="outerAuthVisible"
-      :close-on-click-modal="false"
-    >
-      <RoleAuth
-        @onAdd="onAdd"
-        @reInit="reInit"
-        :multiple="this.multipleSelection"
-      ></RoleAuth>
-    </el-dialog> -->
+      ></ModuleUpdate>
+    </el-dialog>
   </div>
 </template>
 <script>
-// import RoleAdd from "../management/RoleAdd.vue";
-// import RoleUpdate from "../management/RoleUpdate.vue";
-// import RoleAuth from "../management/RoleAuth.vue";
+import ModuleAdd from "../management/ModuleAdd.vue";
+import SubModuleAdd from "../management/SubModuleAdd.vue";
+import ModuleUpdate from "../management/ModuleUpdate.vue";
 
 export default {
   components: {
-    // RoleAdd,
-    // RoleUpdate,
-    // RoleAuth
+    ModuleAdd,
+    SubModuleAdd,
+    ModuleUpdate,
   },
   data() {
     return {
@@ -159,9 +167,12 @@ export default {
         { key: "url", name: "资源地址", width: 286 },
         { key: "optValue", name: "权限码", width: 286 },
       ],
+      unfoldDisabled: false,
+      foldDisabled: true,
       loading: false,
       dialogVisible: false,
       outerVisible: false,
+      outerSubVisible: false,
       innerVisible: false,
       outerUpdateVisible: false,
       outerAuthVisible: false,
@@ -170,9 +181,6 @@ export default {
       moduleName: "",
       url: "",
       optValue: "",
-      //   currentPage: 1,
-      //   size: 5,
-      //   total: 0,
       multipleSelection: [],
     };
   },
@@ -190,6 +198,8 @@ export default {
       this.isExpand = true;
       this.$nextTick(() => {
         this.refreshTable = true;
+        this.unfoldDisabled = true;
+        this.foldDisabled = false;
       });
     },
     fold() {
@@ -197,6 +207,8 @@ export default {
       this.isExpand = false;
       this.$nextTick(() => {
         this.refreshTable = true;
+        this.foldDisabled = true;
+        this.unfoldDisabled = false;
       });
     },
     toggleSelection(rows) {
@@ -219,6 +231,13 @@ export default {
           if (this.$store.state.Module.moduleInfo.code === 200) {
             this.loading = false; //取消加载状态
             this.tableData = this.$store.state.Module.moduleInfo.data;
+          }
+          if (this.$store.state.Module.moduleInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            return;
           }
         })
         .catch((e) => {
@@ -251,19 +270,26 @@ export default {
         ids: arrayId,
       };
       this.$store
-        .dispatch("Role/del", params)
+        .dispatch("Module/del", params)
         .then(() => {
           if (
-            this.$store.state.Role.deleteInfo.code === 200 &&
-            this.$store.state.Role.deleteInfo.data === true
+            this.$store.state.Module.deleteInfo.code === 200 &&
+            this.$store.state.Module.deleteInfo.data === true
           ) {
             this.$message({
               message: "删除操作成功！",
               type: "success",
             });
-            this.reInit();
+            this.queryAll();
           } else {
             this.$message.error("执行删除操作失败！");
+          }
+          if (this.$store.state.Module.deleteInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            return;
           }
         })
         .catch((e) => {
@@ -272,7 +298,28 @@ export default {
     },
     onAdd: function () {
       this.outerVisible = false;
+      this.outerSubVisible = false;
       this.outerUpdateVisible = false;
+    },
+    onsubdetails: function () {
+      if (
+        this.multipleSelection === undefined ||
+        this.multipleSelection.length === 0
+      ) {
+        this.$message({
+          message: "请选择一条信息执行新增子资源信息操作",
+          type: "warning",
+        });
+        return;
+      }
+      if (this.multipleSelection.length > 1) {
+        this.$message({
+          message: "最多只能选择一条信息执行新增子资源信息操作",
+          type: "warning",
+        });
+        return;
+      }
+      this.outerSubVisible = true;
     },
     ondetails: function () {
       if (
@@ -293,26 +340,6 @@ export default {
         return;
       }
       this.outerUpdateVisible = true;
-    },
-    onAuth: function () {
-      if (
-        this.multipleSelection === undefined ||
-        this.multipleSelection.length === 0
-      ) {
-        this.$message({
-          message: "请选择一条角色信息执行授权管理操作",
-          type: "warning",
-        });
-        return;
-      }
-      if (this.multipleSelection.length > 1) {
-        this.$message({
-          message: "最多只能选择一条角色信息执行授权管理操作",
-          type: "warning",
-        });
-        return;
-      }
-      this.outerAuthVisible = true;
     },
   },
 };

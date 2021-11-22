@@ -243,6 +243,15 @@ export default {
             this.$emit("reInit");
             this.$message.error("获取用户角色列表失败导致无法执行修改操作！");
           }
+          if (this.$store.state.Role.roleNameInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            this.$emit("onAdd");
+            this.$emit("reInit");
+            return;
+          }
         })
         .catch((e) => {
           this.$emit("onAdd");
@@ -262,6 +271,15 @@ export default {
             this.$message.error("获取用户角色失败导致无法执行修改操作！");
             this.$emit("onAdd");
             this.$emit("reInit");
+          }
+          if (this.$store.state.UserRole.roleIdInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            this.$emit("onAdd");
+            this.$emit("reInit");
+            return;
           }
         })
         .catch((e) => {
@@ -319,6 +337,15 @@ export default {
                     } else {
                       this.$message.error("分配用户角色失败！");
                       this.resetForm();
+                    }
+                    if (this.$store.state.UserRole.updateInfo.code === 403) {
+                      this.$message({
+                        message: "当前角色无相关权限",
+                        type: "warning",
+                      });
+                      this.$emit("onAdd");
+                      this.$emit("reInit");
+                      return;
                     }
                   });
               } else {

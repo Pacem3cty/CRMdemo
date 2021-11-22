@@ -1,6 +1,7 @@
 package com.example.crmdemo.modules.system.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.crmdemo.common.api.CommonResult;
 import com.example.crmdemo.modules.system.model.TModule;
@@ -13,7 +14,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -82,6 +82,47 @@ public class TModuleController {
 //        resultList.add(treeControlPojo);//已弃用 启用后前端选择授权角色资源时中将包含最顶层节点的模块编号0 导致授权时在模块表中无法查找到相应权限吗抛出空指针异常
 
         return CommonResult.success(childList);
+    }
+
+    @ApiOperation(value = "新增资源信息")
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult<Boolean> add(@RequestBody TModule tModule) {
+        return CommonResult.success(tModuleService.add(tModule));
+    }
+
+    @ApiOperation(value = "修改资源信息")
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult<Boolean> update(@RequestBody TModule tModule) {
+        return CommonResult.success(tModuleService.update(tModule));
+    }
+
+    @ApiOperation(value = "软删除资源信息")
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult<Boolean> delete(@RequestBody String ids) {
+        JSONObject object = JSONObject.parseObject(ids);
+        ids = object.get("ids").toString();
+        return CommonResult.success(tModuleService.updateById(ids));
+    }
+
+    @ApiOperation(value = "获取新增资源编号")
+    @RequestMapping(value = "/getCurrentId", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult getCurrentId() {
+        Integer currentId;
+        QueryWrapper<TModule> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("MAX(id) as id");
+        List<TModule> tModuleList = tModuleService.findAll(queryWrapper);
+        if (tModuleList.get(0) == null) {
+            currentId = 0;
+        }
+        else {
+            currentId = tModuleList.get(0).getId();
+        }
+        currentId++;
+        return CommonResult.success(currentId);
     }
 }
 

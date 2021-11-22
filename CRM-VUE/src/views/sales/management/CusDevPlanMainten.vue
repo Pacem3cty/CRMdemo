@@ -255,6 +255,13 @@ export default {
               this.$store.state.Sales.cusDevPlanInfo.data.current;
             this.size = this.$store.state.Sales.cusDevPlanInfo.data.size;
           }
+          if (this.$store.state.Sales.cusDevPlanInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            return;
+          }
         })
         .catch((e) => {
           this.loading = false;
@@ -315,6 +322,13 @@ export default {
           } else {
             this.$message.error("执行删除操作失败！");
           }
+          if (this.$store.state.Sales.delInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            return;
+          }
         })
         .catch((e) => {
           this.$message.error("执行删除操作失败！发生错误：" + e);
@@ -363,6 +377,15 @@ export default {
             this.$emit("onAdd");
             this.$emit("reInit");
           }
+          if (this.$store.state.Sales.updateInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            this.$emit("onAdd");
+            this.$emit("reInit");
+            return;
+          }
         })
         .catch((e) => {
           this.$message.error("标记操作失败！发生错误：" + e);
@@ -406,6 +429,15 @@ export default {
             this.$message.error("标记操作失败！");
             this.$emit("onAdd");
             this.$emit("reInit");
+          }
+          if (this.$store.state.Sales.updateInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            this.$emit("onAdd");
+            this.$emit("reInit");
+            return;
           }
         })
         .catch((e) => {

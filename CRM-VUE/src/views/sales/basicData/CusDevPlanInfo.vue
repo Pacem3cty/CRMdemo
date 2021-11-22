@@ -1,60 +1,60 @@
 
 <template>
-<div>
   <div>
-     <el-descriptions
-            class="margin-top"
-            title="营销机会信息"
-            :column="3"
-            :size="size"
-            border
-          >
-            <el-descriptions-item>
-              <template slot="label">
-                <i class="el-icon-office-building"></i>客户名称</template
-              >{{this.$props.multiple[0].customerName}}
-            </el-descriptions-item>
-            <el-descriptions-item>
-              <template slot="label">
-                <i class="el-icon-s-opportunity"></i>机会来源</template
-              >{{this.$props.multiple[0].chanceSource}}
-            </el-descriptions-item>
-            <el-descriptions-item>
-              <template slot="label">
-                <i class="el-icon-s-custom"></i>联系人</template
-              >{{this.$props.multiple[0].contractPerson}}
-            </el-descriptions-item>
-            <el-descriptions-item>
-              <template slot="label">
-                <i class="el-icon-mobile-phone"></i>联系电话</template
-              >{{this.$props.multiple[0].contractPhone}}
-            </el-descriptions-item>
-            <el-descriptions-item>
-              <template slot="label">
-                <i class="el-icon-tickets"></i>机会描述</template
-              >{{this.$props.multiple[0].description}}
-            </el-descriptions-item>
-            <el-descriptions-item>
-              <template slot="label">
-                <i class="el-icon-s-data"></i>成功概率(%)</template
-              >{{this.$props.multiple[0].probability}}
-            </el-descriptions-item>
-          </el-descriptions>
-  </div>
-   <div style="font-size: 25px; float: right; margin-right: 25px">
-        <i
-          class="el-icon-refresh-left"
-          style="margin-right: 6px; cursor: pointer"
-          @click="queryAll"
-          title="刷新"
-        ></i>
-         <i
-          class="el-icon-document"
-          style="margin-right: 6px; cursor: pointer"
-          title="导出为PDF"
-        ></i>
-      </div>
-   <div class="table-div">
+    <div>
+      <el-descriptions
+        class="margin-top"
+        title="营销机会信息"
+        :column="3"
+        :size="size"
+        border
+      >
+        <el-descriptions-item>
+          <template slot="label">
+            <i class="el-icon-office-building"></i>客户名称</template
+          >{{ this.$props.multiple[0].customerName }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template slot="label">
+            <i class="el-icon-s-opportunity"></i>机会来源</template
+          >{{ this.$props.multiple[0].chanceSource }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template slot="label">
+            <i class="el-icon-s-custom"></i>联系人</template
+          >{{ this.$props.multiple[0].contractPerson }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template slot="label">
+            <i class="el-icon-mobile-phone"></i>联系电话</template
+          >{{ this.$props.multiple[0].contractPhone }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template slot="label">
+            <i class="el-icon-tickets"></i>机会描述</template
+          >{{ this.$props.multiple[0].description }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template slot="label">
+            <i class="el-icon-s-data"></i>成功概率(%)</template
+          >{{ this.$props.multiple[0].probability }}
+        </el-descriptions-item>
+      </el-descriptions>
+    </div>
+    <div style="font-size: 25px; float: right; margin-right: 25px">
+      <i
+        class="el-icon-refresh-left"
+        style="margin-right: 6px; cursor: pointer"
+        @click="queryAll"
+        title="刷新"
+      ></i>
+      <i
+        class="el-icon-document"
+        style="margin-right: 6px; cursor: pointer"
+        title="导出为PDF"
+      ></i>
+    </div>
+    <div class="table-div">
       <el-table
         v-loading="loading"
         element-loading-text="加载中"
@@ -86,31 +86,29 @@
         >
         </el-pagination>
       </div>
-   </div>
-</div>
+    </div>
+  </div>
 </template>
 <script>
-
-
 export default {
   props: ["multiple"],
-  
+
   data() {
     return {
       outerVisible: false,
       innerVisible: false,
       loading: false,
-      tableData:[],
+      tableData: [],
       currentPage: 1,
       size: 5,
       total: 0,
-       tableColumns: [
+      tableColumns: [
         { key: "id", name: "编号", width: 50 },
         { key: "saleChanceId", name: "营销机会编号", width: 50 },
         { key: "planItem", name: "计划项", width: 242 },
         { key: "planDate", name: "计划日期", width: 100 },
         { key: "exeAffect", name: "执行效果", width: 242 },
-         { key: "createDate", name: "创建日期", width: 100 },
+        { key: "createDate", name: "创建日期", width: 100 },
       ],
     };
   },
@@ -125,23 +123,32 @@ export default {
     },
   },
   methods: {
-    queryAll(){
-       this.loading = true;
+    queryAll() {
+      this.loading = true;
       const params = {
-        "current": this.currentPage,
-        "pageSize": this.size,
-        "saleChanceId": this.$props.multiple[0].id,
+        current: this.currentPage,
+        pageSize: this.size,
+        saleChanceId: this.$props.multiple[0].id,
       };
       this.$store
         .dispatch("Sales/queryCusDevPlan", params)
         .then(() => {
           if (this.$store.state.Sales.cusDevPlanInfo.code === 200) {
             this.loading = false; //取消加载状态
-            this.tableData = this.$store.state.Sales.cusDevPlanInfo.data.records;
+            this.tableData =
+              this.$store.state.Sales.cusDevPlanInfo.data.records;
 
             this.total = this.$store.state.Sales.cusDevPlanInfo.data.total;
-            this.currentPage = this.$store.state.Sales.cusDevPlanInfo.data.current;
+            this.currentPage =
+              this.$store.state.Sales.cusDevPlanInfo.data.current;
             this.size = this.$store.state.Sales.cusDevPlanInfo.data.size;
+          }
+          if (this.$store.state.Sales.cusDevPlanInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            return;
           }
         })
         .catch((e) => {
@@ -149,7 +156,7 @@ export default {
           this.$message.error("发生错误：" + e);
         });
     },
-     handleSizeChange(val) {
+    handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.size = val;
       this.currentPage = 1;
@@ -160,7 +167,7 @@ export default {
       this.currentPage = val;
       this.queryAll();
     },
-  }
+  },
 };
 </script>
 

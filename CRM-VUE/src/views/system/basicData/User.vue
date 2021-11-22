@@ -327,6 +327,13 @@ export default {
             this.currentPage = this.$store.state.User.userInfo.data.current;
             this.size = this.$store.state.User.userInfo.data.size;
           }
+          if (this.$store.state.User.userInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            return;
+          }
         })
         .catch((e) => {
           this.loading = false;
@@ -371,6 +378,13 @@ export default {
             this.reInit();
           } else {
             this.$message.error("执行删除操作失败！");
+          }
+          if (this.$store.state.User.delInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            return;
           }
         })
         .catch((e) => {

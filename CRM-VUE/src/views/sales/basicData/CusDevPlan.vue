@@ -406,6 +406,13 @@ export default {
               this.$store.state.Sales.assignedInfo.data.current;
             this.size = this.$store.state.Sales.assignedInfo.data.size;
           }
+          if (this.$store.state.Sales.assignedInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            return;
+          }
         })
         .catch((e) => {
           this.loading = false;
@@ -450,6 +457,14 @@ export default {
             this.reInit();
           } else {
             this.$message.error("执行删除操作失败！");
+          }
+          if (this.$store.state.Sales.delInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            this.reInit();
+            return;
           }
         })
         .catch((e) => {

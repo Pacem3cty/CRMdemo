@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80026
 File Encoding         : 65001
 
-Date: 2021-11-17 16:51:02
+Date: 2021-11-22 16:55:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -54,7 +54,7 @@ CREATE TABLE `t_module` (
   `module_style` varchar(255) DEFAULT NULL,
   `url` varchar(255) DEFAULT NULL,
   `parent_id` int DEFAULT NULL,
-  `parent_opt_value` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `parent_opt_value` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `grade` int DEFAULT NULL,
   `opt_value` varchar(255) DEFAULT NULL,
   `orders` int NOT NULL,
@@ -68,15 +68,15 @@ CREATE TABLE `t_module` (
 -- Records of t_module
 -- ----------------------------
 INSERT INTO `t_module` VALUES ('1', '营销管理', null, '#', '-1', '010', null, '010', '1', '0', '2021-11-05 15:51:07', null);
-INSERT INTO `t_module` VALUES ('2', '营销机会管理', null, '/SaleChance', '1', '010', null, '0101', '2', '0', '2021-11-05 15:53:35', null);
+INSERT INTO `t_module` VALUES ('2', '营销机会管理', null, '/sales', '1', '010', null, '0101', '2', '0', '2021-11-05 15:53:35', '2021-11-22 11:21:36');
 INSERT INTO `t_module` VALUES ('3', '营销机会管理查询', null, '#', '2', '0101', null, '01012', '3', '0', '2021-11-05 15:56:23', null);
-INSERT INTO `t_module` VALUES ('4', '营销机会管理添加', null, null, '2', '0101', null, '01013', '4', '0', '2021-11-11 11:22:08', null);
+INSERT INTO `t_module` VALUES ('4', '营销机会信息添加', null, '/sales/add', '2', '0101', null, '01013', '4', '0', '2021-11-11 11:22:08', '2021-11-22 11:18:37');
 INSERT INTO `t_module` VALUES ('5', '营销机会管理修改', null, null, '2', '0101', null, '01014', '5', '0', '2021-11-11 11:23:44', null);
 INSERT INTO `t_module` VALUES ('6', '营销机会管理删除', null, null, '2', '0101', null, '01015', '6', '0', '2021-11-11 11:24:01', null);
 INSERT INTO `t_module` VALUES ('7', '客户开发计划', null, null, '1', '010', null, '0102', '7', '0', '2021-11-12 14:31:14', null);
 INSERT INTO `t_module` VALUES ('8', '开发计划查询', null, null, '7', '0102', null, '01021', '8', '0', '2021-11-12 14:35:32', null);
 INSERT INTO `t_module` VALUES ('9', '计划项详情查看', null, null, '7', '0102', null, '01022', '9', '0', '2021-11-12 14:37:27', null);
-INSERT INTO `t_module` VALUES ('10', '计划项开发', null, null, '7', '0102', null, '01023', '10', '0', '2021-11-12 14:37:47', null);
+INSERT INTO `t_module` VALUES ('10', '计划项数据维护', null, null, '7', '0102', null, '01023', '10', '0', '2021-11-12 14:37:47', '2021-11-22 15:37:37');
 INSERT INTO `t_module` VALUES ('11', '客户管理', null, null, '-1', '020', null, '020', '11', '0', '2021-11-12 14:39:57', null);
 INSERT INTO `t_module` VALUES ('12', '客户信息管理', null, null, '11', '020', null, '0201', '12', '0', '2021-11-15 08:53:32', null);
 INSERT INTO `t_module` VALUES ('13', '客户信息查询', null, null, '12', '0201', null, '02011', '13', '0', '2021-11-15 08:54:01', null);
@@ -88,6 +88,8 @@ INSERT INTO `t_module` VALUES ('18', '客户流失信息查询', null, null, '17
 INSERT INTO `t_module` VALUES ('19', '客户流失信息添加', null, null, '17', '0202', null, '02022', '19', '0', '2021-11-15 08:59:02', null);
 INSERT INTO `t_module` VALUES ('20', '客户流失信息修改', null, null, '17', '0202', null, '02023', '20', '0', '2021-11-15 08:59:22', null);
 INSERT INTO `t_module` VALUES ('21', '客户流失信息删除', null, null, '17', '0202', null, '02024', '21', '0', '2021-11-15 08:59:48', null);
+INSERT INTO `t_module` VALUES ('23', '测试顶层模块', null, '#', '-1', null, null, '#', '23', '1', '2021-11-22 14:47:05', null);
+INSERT INTO `t_module` VALUES ('24', '计划项数据添加', null, '', '7', null, null, '01024', '24', '0', '2021-11-22 15:39:17', null);
 
 -- ----------------------------
 -- Table structure for t_permission
@@ -159,8 +161,8 @@ CREATE TABLE `t_role` (
 -- ----------------------------
 -- Records of t_role
 -- ----------------------------
-INSERT INTO `t_role` VALUES ('1', '系统管理员', '所有权限', '2021-11-03 10:41:06', null, '0');
-INSERT INTO `t_role` VALUES ('2', '销售', '无系统设置模块权限（除修改资料）', '2021-11-03 10:41:52', null, '0');
+INSERT INTO `t_role` VALUES ('1', '系统管理员', '所有模块权限', '2021-11-03 00:00:00', '2021-11-22 15:47:52', '0');
+INSERT INTO `t_role` VALUES ('2', '销售', '营销管理模块；系统设置模块-修改资料', '2021-11-03 00:00:00', '2021-11-22 15:47:36', '0');
 INSERT INTO `t_role` VALUES ('3', '客户经理', '无系统设置模块权限（除修改资料）', '2021-11-03 10:42:01', null, '0');
 INSERT INTO `t_role` VALUES ('4', '技术经理', '无系统设置模块权限（除修改资料）', '2021-11-03 10:42:27', null, '0');
 INSERT INTO `t_role` VALUES ('5', '人力资源经理', '无系统设置模块权限（除修改资料）', '2021-11-05 00:00:00', '2021-11-05 11:31:28', '0');

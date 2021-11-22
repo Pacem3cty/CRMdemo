@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +55,8 @@ public class MainController {
 
         Integer roleId = 0;
 
+        List<String> permissionsList = new ArrayList<>();
+
         QueryWrapper<TUserRole> tUserRoleQueryWrapper= new QueryWrapper<>();
         tUserRoleQueryWrapper.select("role_id").eq("user_id",userId);
         List<TUserRole> tUserRoleList = tUserRoleService.findAll(tUserRoleQueryWrapper);
@@ -66,9 +69,15 @@ public class MainController {
         queryWrapper.select("acl_value").eq("role_id",roleId);
         List<Map<String,Object>> permissions = tPermissionService.query(queryWrapper);
 
-        request.getSession().setAttribute("permissions",permissions);
+        for (Map<String, Object> m : permissions)
+        {//遍历List中的键值对对象
+            for (Object v : m.values())
+            {//遍历Map<String,Object>中的value值
+                permissionsList.add((String)v);
+            }
 
-        List<String> permissionsList = (List<String>) session.getAttribute("permissions");
+        }
+        request.getSession().setAttribute("permissionsList",permissionsList);
 
         System.err.println("权限列表为："+permissionsList);
     }

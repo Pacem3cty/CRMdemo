@@ -276,6 +276,15 @@ export default {
                 this.$emit("reInit");
                 this.resetForm();
               }
+              if (this.$store.state.Sales.updateInfo.code === 403) {
+                this.$message({
+                  message: "当前角色无相关权限",
+                  type: "warning",
+                });
+                this.$emit("onAdd");
+                this.$emit("reInit");
+                return;
+              }
             })
             .catch((e) => {
               this.$message.error("修改操作失败！发生错误：" + e);

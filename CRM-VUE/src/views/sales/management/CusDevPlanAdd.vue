@@ -184,6 +184,13 @@ export default {
                 this.$message.error("新增操作失败！");
                 this.resetForm();
               }
+              if (this.$store.state.Sales.addCusDevPlanInfo.code === 403) {
+                this.$message({
+                  message: "当前角色无相关权限",
+                  type: "warning",
+                });
+                return;
+              }
             })
             .catch((e) => {
               this.$message.error("新增操作失败！发生错误：" + e);

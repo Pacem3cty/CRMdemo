@@ -313,12 +313,19 @@ export default {
         .then(() => {
           if (this.$store.state.User.userInfo.code === 200) {
             this.userInfoList = this.$store.state.User.userInfo.data[0];
-              this.infoformData.id = this.userInfoList.id;
-              this.infoformData.userName = this.userInfoList.userName;
-              this.infoformData.trueName = this.userInfoList.trueName;
-              this.infoformData.phone = this.userInfoList.phone;
-              this.infoformData.email = this.userInfoList.email;
-              this.infoformData.remark = this.userInfoList.remark;
+            this.infoformData.id = this.userInfoList.id;
+            this.infoformData.userName = this.userInfoList.userName;
+            this.infoformData.trueName = this.userInfoList.trueName;
+            this.infoformData.phone = this.userInfoList.phone;
+            this.infoformData.email = this.userInfoList.email;
+            this.infoformData.remark = this.userInfoList.remark;
+          }
+          if (this.$store.state.User.userInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            return;
           }
         })
         .catch(() => {});
@@ -353,6 +360,13 @@ export default {
                 // this.loading = false
               } else {
                 this.$message.error("修改资料失败！");
+              }
+              if (this.$store.state.User.updateInfo.code === 403) {
+                this.$message({
+                  message: "当前角色无相关权限",
+                  type: "warning",
+                });
+                return;
               }
             })
             .catch((e) => {
@@ -393,6 +407,13 @@ export default {
               } else {
                 this.$message.error("修改密码失败！");
                 this.resetPwdForm();
+              }
+              if (this.$store.state.User.updatePwdInfo.code === 403) {
+                this.$message({
+                  message: "当前角色无相关权限",
+                  type: "warning",
+                });
+                return;
               }
             })
             .catch((e) => {

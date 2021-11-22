@@ -38,6 +38,7 @@ public class TSaleChanceController {
         this.tSaleChanceService = tSaleChanceService;
     }
 
+    @RequiredPermission(code = "01012")
     @ApiOperation(value = "查询创建人信息")
     @RequestMapping(value = "/listCreatePerson", method = RequestMethod.POST)
     @ResponseBody
@@ -51,6 +52,7 @@ public class TSaleChanceController {
     }
 
 
+    @RequiredPermission(code = "01012")
     @ApiOperation(value = "查询客户名称信息")
     @RequestMapping(value = "/listCustomerName", method = RequestMethod.POST)
     @ResponseBody
@@ -61,6 +63,7 @@ public class TSaleChanceController {
         return CommonResult.success(tSaleChanceList);
     }
 
+    @RequiredPermission(code = "01012")
     @ApiOperation(value = "获取新增营销机会编号")
     @RequestMapping(value = "/getCurrentId", method = RequestMethod.POST)
     @ResponseBody

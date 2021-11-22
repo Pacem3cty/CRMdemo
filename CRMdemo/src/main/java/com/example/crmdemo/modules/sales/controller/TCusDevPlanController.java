@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.crmdemo.common.annoation.RequiredPermission;
 import com.example.crmdemo.common.api.CommonResult;
 import com.example.crmdemo.modules.sales.dto.TCusDevPlanDto;
 import com.example.crmdemo.modules.sales.model.TCusDevPlan;
@@ -54,6 +55,7 @@ public class TCusDevPlanController {
         return CommonResult.success(currentId);
     }
 
+    @RequiredPermission(code = "01021")
     @ApiOperation(value = "查询计划项信息")
     @RequestMapping(value = "/queryAll", method = RequestMethod.POST)
     @ResponseBody
@@ -74,6 +76,7 @@ public class TCusDevPlanController {
         IPage<TCusDevPlan> pageResult = tCusDevPlanService.findAll(page, queryWrapper);
         return CommonResult.success(pageResult);
     }
+
 
     @ApiOperation(value = "新增营销机会信息")
     @RequestMapping(value = "/add", method = RequestMethod.POST)

@@ -224,6 +224,15 @@ export default {
             this.$emit("reInit");
             this.$message.error("获取编号失败导致无法执行添加操作！");
           }
+          if (this.$store.state.Sales.currentIdInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            this.$emit("onAdd");
+            this.$emit("reInit");
+            return;
+          }
         })
         .catch((e) => {
           this.$emit("onAdd");
@@ -276,6 +285,15 @@ export default {
                 this.$emit("onAdd");
                 this.$emit("reInit");
                 this.resetForm();
+              }
+              if (this.$store.state.Sales.addInfo.code === 403) {
+                this.$message({
+                  message: "当前角色无相关权限",
+                  type: "warning",
+                });
+                this.$emit("onAdd");
+                this.$emit("reInit");
+                return;
               }
             })
             .catch((e) => {

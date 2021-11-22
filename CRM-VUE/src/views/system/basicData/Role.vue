@@ -266,6 +266,13 @@ export default {
             this.currentPage = this.$store.state.Role.roleInfo.data.current;
             this.size = this.$store.state.Role.roleInfo.data.size;
           }
+          if (this.$store.state.Role.roleInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            return;
+          }
         })
         .catch((e) => {
           this.loading = false;
@@ -310,6 +317,13 @@ export default {
             this.reInit();
           } else {
             this.$message.error("执行删除操作失败！");
+          }
+          if (this.$store.state.Role.deleteInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            return;
           }
         })
         .catch((e) => {

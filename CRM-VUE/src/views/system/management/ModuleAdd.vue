@@ -9,20 +9,42 @@
         label-width="100px"
       >
         <el-col :span="12">
-          <el-form-item label="编号" prop="id">
+          <el-form-item label="资源编号" prop="id">
             <el-input
               v-model="addForm.id"
-              placeholder="请选择编号"
+              placeholder="请输入资源编号"
               readonly
+              :style="{ width: '100%' }"
+            >
+            </el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="父级编号" prop="parentId">
+            <el-input
+              v-model="addForm.parentId"
+              placeholder="请输入父级编号"
+              readonly
+              :style="{ width: '100%' }"
+            >
+            </el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="资源名称" prop="moduleName">
+            <el-input
+              v-model="addForm.moduleName"
+              placeholder="请输入资源名称"
+              clearable
               :style="{ width: '100%' }"
             ></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="角色名称" prop="roleName">
+          <el-form-item label="权限码" prop="optValue">
             <el-input
-              v-model="addForm.roleName"
-              placeholder="请输入角色名称"
+              v-model="addForm.optValue"
+              placeholder="请输入权限码"
               clearable
               :style="{ width: '100%' }"
             >
@@ -30,10 +52,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="角色备注" prop="roleRemark">
+          <el-form-item label="资源地址" prop="url">
             <el-input
-              v-model="addForm.roleRemark"
-              placeholder="请输入角色备注"
+              v-model="addForm.url"
+              placeholder="请输入资源地址"
               clearable
               :style="{ width: '100%' }"
             >
@@ -58,31 +80,42 @@ export default {
     return {
       addForm: {
         id: "",
-        roleName: "",
-        roleRemark: "",
+        parentId: -1,
+        moduleName: "",
+        optValue: "",
+        url: "",
+        createDate: "",
       },
-      createDate: "",
       rules: {
         id: [
           {
             required: true,
-            message: "请选择编号",
+            message: "请选择资源编号",
             trigger: "blur",
           },
         ],
-        roleName: [
+        parentId: [
           {
             required: true,
-            message: "请输入角色名称",
-            trigger: "blur",
-          },
-          {
-            pattern: /[^\d^%&',;./=?~\x22$\x22]+/,
-            message: "请输入正确的角色名称格式",
+            message: "请输入父级编号",
             trigger: "blur",
           },
         ],
-        roleRemark: [],
+        moduleName: [
+          {
+            required: true,
+            message: "请输入资源名称",
+            trigger: "blur",
+          },
+        ],
+        optValue: [
+          {
+            required: true,
+            message: "请输入权限码",
+            trigger: "blur",
+          },
+        ],
+        url: [],
       },
     };
   },
@@ -95,25 +128,25 @@ export default {
   methods: {
     init() {
       this.$store
-        .dispatch("Role/getCurrentId", null) //从API中匹配相应的路径发送请求以及请求参数
+        .dispatch("Module/getCurrentId", null) //从API中匹配相应的路径发送请求以及请求参数
         .then(() => {
-          if (this.$store.state.Role.currentIdInfo.code === 200) {
+          if (this.$store.state.Module.currentIdInfo.code === 200) {
             //状态码为200 即请求成功
-            this.addForm.id = this.$store.state.Role.currentIdInfo.data;
+            this.addForm.id = this.$store.state.Module.currentIdInfo.data;
           } else {
             this.$emit("onAdd");
             this.$emit("reInit");
             this.$message.error("获取编号失败导致无法执行添加操作！");
           }
-          if (this.$store.state.Role.currentIdInfo.code === 403) {
-                this.$message({
-                  message: "当前角色无相关权限",
-                  type: "warning",
-                });
-                this.$emit("onAdd");
-                this.$emit("reInit");
-                return;
-              }
+          if (this.$store.state.Module.currentIdInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            this.$emit("onAdd");
+            this.$emit("reInit");
+            return;
+          }
         })
         .catch((e) => {
           this.$emit("onAdd");
@@ -131,16 +164,19 @@ export default {
         if (valid) {
           const params = {
             id: this.addForm.id,
-            roleName: this.addForm.roleName,
-            roleRemark: this.addForm.roleRemark,
+            parentId: this.addForm.parentId,
+            moduleName: this.addForm.moduleName,
+            optValue: this.addForm.optValue,
+            orders: this.addForm.id,
+            url: this.addForm.url,
             isValid: 0,
             createDate: this.createDate,
             updateDate: "",
           };
           this.$store
-            .dispatch("Role/add", params)
+            .dispatch("Module/add", params)
             .then(() => {
-              if (this.$store.state.Role.addInfo.data === true) {
+              if (this.$store.state.Module.addInfo.data === true) {
                 this.$emit("onAdd");
                 this.$emit("reInit");
                 this.$message({
@@ -151,7 +187,7 @@ export default {
                 this.$message.error("新增操作失败！");
                 this.resetForm();
               }
-              if (this.$store.state.Role.addInfo.code === 403) {
+              if (this.$store.state.Module.addInfo.code === 403) {
                 this.$message({
                   message: "当前角色无相关权限",
                   type: "warning",
@@ -169,11 +205,13 @@ export default {
           console.log("error submit!");
           return false;
         }
+        // TODO 提交表单
       });
     },
     resetForm() {
-      this.addForm.roleName = "";
-      this.addForm.roleRemark = "";
+      this.updateForm.moduleName = "";
+      this.updateForm.optValue = "";
+      this.updateForm.url = "";
     },
   },
 };

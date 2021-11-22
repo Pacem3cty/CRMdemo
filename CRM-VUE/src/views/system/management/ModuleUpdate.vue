@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <el-row :gutter="15">
@@ -10,10 +9,10 @@
         label-width="100px"
       >
         <el-col :span="12">
-          <el-form-item label="编号" prop="id">
+          <el-form-item label="资源编号" prop="id">
             <el-input
               v-model="updateForm.id"
-              placeholder="请输入编号"
+              placeholder="请输入资源编号"
               readonly
               :style="{ width: '100%' }"
             >
@@ -21,20 +20,31 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="机会编号" prop="saleChanceId">
+          <el-form-item label="父级编号" prop="parentId">
             <el-input
-              v-model="updateForm.saleChanceId"
-              placeholder="请输入机会编号"
-              readonly
+              v-model="updateForm.parentId"
+              placeholder="请输入父级编号"
+              clearable
+              :style="{ width: '100%' }"
+            >
+            </el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="资源名称" prop="moduleName">
+            <el-input
+              v-model="updateForm.moduleName"
+              placeholder="请输入资源名称"
+              clearable
               :style="{ width: '100%' }"
             ></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="24">
-          <el-form-item label="计划项" prop="planItem">
+        <el-col :span="12">
+          <el-form-item label="权限码" prop="optValue">
             <el-input
-              v-model="updateForm.planItem"
-              placeholder="请输入计划项"
+              v-model="updateForm.optValue"
+              placeholder="请输入权限码"
               clearable
               :style="{ width: '100%' }"
             >
@@ -42,22 +52,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="计划日期" prop="planDate">
-            <el-date-picker
-              v-model="updateForm.planDate"
-              format="yyyy-MM-dd"
-              value-format="yyyy-MM-dd"
-              :style="{ width: '100%' }"
-              placeholder="请选择计划日期"
-              clearable
-            ></el-date-picker>
-          </el-form-item>
-        </el-col>
-        <el-col :span="24">
-          <el-form-item label="执行效果" prop="exeAffect">
+          <el-form-item label="资源地址" prop="url">
             <el-input
-              v-model="updateForm.exeAffect"
-              placeholder="请输入执行效果"
+              v-model="updateForm.url"
+              placeholder="请输入资源地址"
               clearable
               :style="{ width: '100%' }"
             >
@@ -76,98 +74,89 @@
 </template>
 <script>
 export default {
+  components: {},
   props: ["multiple"],
   data() {
     return {
       updateForm: {
         id: "",
-        saleChanceId: "",
-        planItem: "",
-        planDate: "",
-        exeAffect: "",
+        parentId: "",
+        moduleName: "",
+        optValue: "",
+        url: "",
       },
-      createDate: "",
       rules: {
         id: [
           {
             required: true,
-            message: "请输入编号",
+            message: "请选择资源编号",
             trigger: "blur",
           },
         ],
-        saleChanceId: [
+        parentId: [
           {
             required: true,
-            message: "请输入机会编号",
+            message: "请输入父级编号",
             trigger: "blur",
           },
         ],
-        planItem: [
+        moduleName: [
           {
             required: true,
-            message: "请输入计划项",
+            message: "请输入资源名称",
             trigger: "blur",
           },
         ],
-        planDate: [
+        optValue: [
           {
             required: true,
-            message: "请选择计划日期",
-            trigger: "change",
-          },
-        ],
-        exeAffect: [
-          {
-            required: true,
-            message: "请输入执行效果",
+            message: "请输入权限码",
             trigger: "blur",
           },
         ],
+        url: [],
       },
     };
   },
   computed: {},
-  watch: {
-    multiple: function () {
-      if (this.$props.multiple.length !== 0) {
-        this.init();
-      }
-    },
-  },
+  watch: {},
   created() {
     this.init();
   },
   mounted() {},
   methods: {
-    init() {
+    setUpdateDate() {
       let date = new Date();
       this.updateDate =
         date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+    },
+    init() {
       this.updateForm.id = this.$props.multiple[0].id;
-      this.updateForm.saleChanceId = this.$props.multiple[0].saleChanceId;
-      this.updateForm.planItem = this.$props.multiple[0].planItem;
-      this.updateForm.planDate = this.$props.multiple[0].planDate;
-      this.updateForm.exeAffect = this.$props.multiple[0].exeAffect;
+      this.updateForm.parentId = this.$props.multiple[0].parentId;
+      this.updateForm.moduleName = this.$props.multiple[0].moduleName;
+      this.updateForm.optValue = this.$props.multiple[0].optValue;
+      this.updateForm.url = this.$props.multiple[0].url;
     },
     submitForm() {
+      this.setUpdateDate();
       this.$refs["updateForm"].validate((valid) => {
         if (valid) {
           const params = {
             id: this.updateForm.id,
-            saleChanceId: this.updateForm.saleChanceId,
-            planItem: this.updateForm.planItem,
-            planDate: this.updateForm.planDate,
-            exeAffect: this.updateForm.exeAffect,
+            parentId: this.updateForm.parentId,
+            moduleName: this.updateForm.moduleName,
+            optValue: this.updateForm.optValue,
+            url: this.updateForm.url,
+            isValid: 0,
             createDate: this.$props.multiple[0].createDate,
             updateDate: this.updateDate,
-            isValid: 0,
           };
           this.$store
-            .dispatch("Sales/updateCusDevPlan", params)
+            .dispatch("Module/update", params)
             .then(() => {
-              if (this.$store.state.Sales.updateCusDevPlanInfo.data === true) {
+              if (this.$store.state.Module.updateInfo.data === true) {
                 this.$emit("onAdd");
-                this.$emit("queryAll");
+                this.$emit("reInit");
                 this.$message({
                   message: "修改操作成功！",
                   type: "success",
@@ -176,13 +165,13 @@ export default {
                 this.$message.error("修改操作失败！");
                 this.resetForm();
               }
-              if (this.$store.state.Sales.updateCusDevPlanInfo.code === 403) {
+              if (this.$store.state.Module.updateInfo.code === 403) {
                 this.$message({
                   message: "当前角色无相关权限",
                   type: "warning",
                 });
                 this.$emit("onAdd");
-                this.$emit("queryAll");
+                this.$emit("reInit");
                 return;
               }
             })
@@ -191,15 +180,16 @@ export default {
               this.resetForm();
             });
         } else {
-          console.log("error submit!!");
+          console.log("error submit!");
           return false;
         }
       });
     },
     resetForm() {
-      this.updateForm.planItem = this.$props.multiple[0].planItem;
-      this.updateForm.planDate = this.$props.multiple[0].planDate;
-      this.updateForm.exeAffect = this.$props.multiple[0].exeAffect;
+      this.updateForm.parentId = this.$props.multiple[0].parentId;
+      this.updateForm.moduleName = this.$props.multiple[0].moduleName;
+      this.updateForm.optValue = this.$props.multiple[0].optValue;
+      this.updateForm.url = this.$props.multiple[0].url;
     },
   },
 };

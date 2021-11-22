@@ -29,9 +29,7 @@ public class PermissionProxy {
     @Around(value = "@annotation(com.example.crmdemo.common.annoation.RequiredPermission)")//增强动作织入切点位置
     public Object around(ProceedingJoinPoint pjp) throws Throwable{
         Object result;
-        List<String> permissions = (List<String>) session.getAttribute("permissions");//得到当前登录用户的权限
-
-//        System.err.println("获取权限列表为："+permissions);
+        List<String> permissions = (List<String>) session.getAttribute("permissionsList");//得到当前登录用户的权限
 
         if(permissions == null || permissions.size() < 1){//若用户没有任何权限 则抛出无权限异常
             throw new ApiException(ResultCode.FORBIDDEN);
@@ -39,7 +37,6 @@ public class PermissionProxy {
 
         MethodSignature methodSignature = (MethodSignature) pjp.getSignature();//得到对应目标
         RequiredPermission requiredPermission = methodSignature.getMethod().getDeclaredAnnotation(RequiredPermission.class);//通过反射获取注解对象
-        System.err.println("获取注解权限码为："+requiredPermission.code());
         if(!(permissions.contains(requiredPermission.code()))){//若权限中不包含当前方法上注解指定的权限码 则抛出无权限异常
             System.err.println("抛出无权限异常");
             throw new ApiException(ResultCode.FORBIDDEN);

@@ -379,10 +379,16 @@ export default {
             this.loading = false; //取消加载状态
             this.tableData = this.$store.state.Sales.salesInfo.data.records;
 
-
             this.total = this.$store.state.Sales.salesInfo.data.total;
             this.currentPage = this.$store.state.Sales.salesInfo.data.current;
             this.size = this.$store.state.Sales.salesInfo.data.size;
+          }
+          if (this.$store.state.Sales.salesInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            return;
           }
         })
         .catch((e) => {
@@ -417,7 +423,7 @@ export default {
       this.$store
         .dispatch("Sales/del", params)
         .then(() => {
-          console.log(this.$store.state.Sales.delInfo);
+          // console.log(this.$store.state.Sales.delInfo);
           if (
             this.$store.state.Sales.delInfo.code === 200 &&
             this.$store.state.Sales.delInfo.data === true
@@ -431,6 +437,13 @@ export default {
             // this.listCreatePerson();
           } else {
             this.$message.error("执行删除操作失败！");
+          }
+          if (this.$store.state.Sales.delInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            return;
           }
         })
         .catch((e) => {

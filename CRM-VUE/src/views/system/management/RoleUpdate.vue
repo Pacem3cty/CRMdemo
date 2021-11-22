@@ -88,14 +88,14 @@ export default {
   },
   computed: {},
   watch: {
-      multiple: function () {
+    multiple: function () {
       if (this.$props.multiple.length !== 0) {
         this.init();
       }
     },
   },
   created() {
-      this.init();
+    this.init();
   },
   mounted() {},
   methods: {
@@ -104,10 +104,10 @@ export default {
       this.updateDate =
         date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     },
-    init(){
-        this.updateForm.id = this.$props.multiple[0].id;
-        this.updateForm.roleName = this.$props.multiple[0].roleName;
-        this.updateForm.roleRemark = this.$props.multiple[0].roleRemark;
+    init() {
+      this.updateForm.id = this.$props.multiple[0].id;
+      this.updateForm.roleName = this.$props.multiple[0].roleName;
+      this.updateForm.roleRemark = this.$props.multiple[0].roleRemark;
     },
     submitForm() {
       this.setUpdateDate();
@@ -125,16 +125,25 @@ export default {
             .dispatch("Role/update", params)
             .then(() => {
               if (this.$store.state.Role.updateInfo.data === true) {
-                      this.$emit("onAdd");
-                      this.$emit("reInit");
-                      this.$message({
-                        message: "修改操作成功！",
-                        type: "success",
-                      });
-                    } else {
-                      this.$message.error("修改操作失败！");
-                      this.resetForm();
-                    }
+                this.$emit("onAdd");
+                this.$emit("reInit");
+                this.$message({
+                  message: "修改操作成功！",
+                  type: "success",
+                });
+              } else {
+                this.$message.error("修改操作失败！");
+                this.resetForm();
+              }
+              if (this.$store.state.Role.updateInfo.code === 403) {
+                this.$message({
+                  message: "当前角色无相关权限",
+                  type: "warning",
+                });
+                this.$emit("onAdd");
+                this.$emit("reInit");
+                return;
+              }
             })
             .catch((e) => {
               this.$message.error("修改操作失败！发生错误：" + e);

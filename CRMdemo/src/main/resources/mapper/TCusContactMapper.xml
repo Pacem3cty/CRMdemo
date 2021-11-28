@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.crmdemo.modules.customer.mapper.TCusContactMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.crmdemo.modules.customer.model.TCusContact">
+        <id column="id" property="id" />
+        <result column="cus_id" property="cusId" />
+        <result column="contact_time" property="contactTime" />
+        <result column="contact_address" property="contactAddress" />
+        <result column="overview" property="overview" />
+        <result column="create_date" property="createDate" />
+        <result column="update_date" property="updateDate" />
+        <result column="is_valid" property="isValid" />
+    </resultMap>
+
+</mapper>

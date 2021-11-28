@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.crmdemo.modules.customer.mapper.TCusLinkmanMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.crmdemo.modules.customer.model.TCusLinkman">
+        <id column="id" property="id" />
+        <result column="cus_id" property="cusId" />
+        <result column="linkman_name" property="linkmanName" />
+        <result column="sex" property="sex" />
+        <result column="position" property="position" />
+        <result column="office_phone" property="officePhone" />
+        <result column="phone" property="phone" />
+        <result column="is_valid" property="isValid" />
+        <result column="create_date" property="createDate" />
+        <result column="update_date" property="updateDate" />
+    </resultMap>
+
+</mapper>

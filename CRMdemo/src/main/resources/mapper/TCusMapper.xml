@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.crmdemo.modules.customer.mapper.TCusMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.crmdemo.modules.customer.model.TCus">
+        <id column="id" property="id" />
+        <result column="cus_num" property="cusNum" />
+        <result column="cus_name" property="cusName" />
+        <result column="area" property="area" />
+        <result column="cus_manager" property="cusManager" />
+        <result column="level" property="level" />
+        <result column="csr" property="csr" />
+        <result column="ccr" property="ccr" />
+        <result column="cus_address" property="cusAddress" />
+        <result column="postal_code" property="postalCode" />
+        <result column="cus_phone" property="cusPhone" />
+        <result column="cus_fax" property="cusFax" />
+        <result column="website" property="website" />
+        <result column="social_credit_code" property="socialCreditCode" />
+        <result column="artificial_person" property="artificialPerson" />
+        <result column="registered_capital" property="registeredCapital" />
+        <result column="annual_turnover" property="annualTurnover" />
+        <result column="account_bank" property="accountBank" />
+        <result column="account_num" property="accountNum" />
+        <result column="loss_status" property="lossStatus" />
+        <result column="is_valid" property="isValid" />
+        <result column="create_date" property="createDate" />
+        <result column="update_date" property="updateDate" />
+    </resultMap>
+
+</mapper>

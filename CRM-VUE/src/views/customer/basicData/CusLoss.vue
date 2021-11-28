@@ -2,74 +2,59 @@
   <div>
     <el-breadcrumb separator="/" class="main-nav">
       <el-breadcrumb-item>首页</el-breadcrumb-item>
-      <el-breadcrumb-item>系统设置</el-breadcrumb-item>
-      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+      <el-breadcrumb-item>客户管理</el-breadcrumb-item>
+      <el-breadcrumb-item>客户流失管理</el-breadcrumb-item>
       <div style="font-size: 25px; float: right; margin-right: 25px">
         <i
-          class="el-icon-document-add"
+          class="el-icon-document-checked"
           style="margin-right: 6px; cursor: pointer"
-          @click="outerVisible = true"
-          title="新增"
+          @click="onInfo"
+          title="客户流失详情"
         ></i>
         <i
-          class="el-icon-edit"
+          class="el-icon-edit-outline"
           style="margin-right: 6px; cursor: pointer"
           @click="ondetails"
-          title="修改"
+          title="暂缓流失措施"
         ></i>
-        <i
+        <!-- <i
           class="el-icon-delete"
           style="margin-right: 6px; cursor: pointer"
           @click="checkDialog"
           title="删除"
-        ></i>
+        ></i> -->
       </div>
     </el-breadcrumb>
 
     <div class="demo-input-size">
       <div class="i-div">
-        <label class="i-label">用户名称</label>
+        <label class="i-label">客户名称</label>
         <el-autocomplete
           popper-class="my-autocomplete"
-          v-model="userName"
-          value-key="userName"
-          :fetch-suggestions="querySearchUserName"
+          v-model="cusName"
+          value-key="cusName"
+          :fetch-suggestions="querySearchCusName"
           :trigger-on-focus="false"
           :clearable="false"
-          placeholder="请输入用户名称"
+          placeholder="请输入客户名称"
           @select="handleSelect"
         >
         </el-autocomplete>
       </div>
 
       <div class="i-div">
-        <label class="i-label">邮箱</label>
-        <el-input v-model="email" placeholder="请输入邮箱"></el-input>
-      </div>
-
-      <div class="i-div">
-        <label class="i-label">电话</label>
-        <el-input v-model="phone" placeholder="请输入电话"></el-input>
-      </div>
-
-      <div class="i-div">
-        <label class="i-label">真实姓名</label>
+        <label class="i-label">客户经理</label>
         <el-autocomplete
           popper-class="my-autocomplete"
-          v-model="trueName"
-          value-key="trueName"
-          :fetch-suggestions="querySearchTrueName"
+          v-model="cusManager"
+          value-key="cusManager"
+          :fetch-suggestions="querySearchCusManager"
           :trigger-on-focus="false"
           :clearable="false"
-          placeholder="请输入真实姓名"
+          placeholder="请输入客户经理"
           @select="handleSelect"
         >
         </el-autocomplete>
-      </div>
-
-      <div class="i-div">
-        <label class="i-label">备注</label>
-        <el-input v-model="remark" placeholder="请输入备注"></el-input>
       </div>
 
       <div class="i-div">
@@ -125,18 +110,17 @@
       </span>
     </el-dialog>
     <!-- 新增 -->
-    <el-dialog
+    <!-- <el-dialog
       title="新增用户信息"
       :visible.sync="outerVisible"
       v-if="outerVisible"
       :close-on-click-modal="false"
     >
       <UserAdd @onAdd="onAdd" @reInit="reInit"></UserAdd>
-    </el-dialog>
+    </el-dialog> -->
     <!-- 修改 -->
-    <el-dialog
+    <!-- <el-dialog
       title="修改用户信息"
-      v-if="outerUpdateVisible"
       :visible.sync="outerUpdateVisible"
       :close-on-click-modal="false"
     >
@@ -145,33 +129,32 @@
         @reInit="reInit"
         :multiple="this.multipleSelection"
       ></UserUpdate>
-    </el-dialog>
+    </el-dialog> -->
   </div>
 </template>
 
 <script>
-import UserAdd from "../management/UserAdd.vue";
-import UserUpdate from "../management/UserUpdate.vue";
+// import UserAdd from "../management/UserAdd.vue";
+// import UserUpdate from "../management/UserUpdate.vue";
 
 export default {
   components: {
-    UserAdd,
-    UserUpdate,
+    // UserAdd,
+    // UserUpdate,
   },
   data() {
     return {
-      restaurantsUserName: [],
-      restaurantsTrueName: [],
+      restaurantsCusName: [],
+      restaurantsCusManager: [],
       value: "",
       tableData: [],
       tableColumns: [
-        { key: "id", name: "编号", width: 50 },
-        { key: "userName", name: "用户名称", width: 150 },
-        { key: "userPwd", name: "用户密码", width: 265 },
-        { key: "trueName", name: "真实姓名", width: 80 },
-        { key: "email", name: "邮箱", width: 240 },
-        { key: "phone", name: "电话", width: 150 },
-        { key: "remark", name: "备注", width: 295 },
+        { key: "id", name: "序号", width: 50 },
+        { key: "cusId", name: "客户序号", width: 80 },
+        { key: "cusName", name: "客户名称", width: 180 },
+        { key: "cusManager", name: "客户经理", width: 80 },
+        { key: "lastOrderTime", name: "最后下单时间", width: 120 },
+        { key: "lossReason", name: "流失原因", width: 580 },
         { key: "createDate", name: "创建日期", width: 100 },
         { key: "updateDate", name: "修改日期", width: 100 },
       ],
@@ -181,13 +164,8 @@ export default {
       outerVisible: false,
       innerVisible: false,
       outerUpdateVisible: false,
-      id: "",
-      userName: "",
-      userPwd: "",
-      trueName: "",
-      email: "",
-      phone: "",
-      remark: "",
+      cusName:"",
+      cusManager: "",
       createDate: "",
       updateDate: "",
       currentPage: 1,
@@ -216,43 +194,43 @@ export default {
       this.currentPage = val;
       this.queryAll();
     },
-    querySearchUserName(queryString, cb) {
-      var restaurantsUserName = this.restaurantsUserName;
+    querySearchCusName(queryString, cb) {
+      var restaurantsCusName = this.restaurantsCusName;
       var results = queryString
-        ? restaurantsUserName.filter(this.createFilterUserName(queryString))
-        : restaurantsUserName;
+        ? restaurantsCusName.filter(this.createFilterCusName(queryString))
+        : restaurantsCusName;
       // 调用 callback 返回建议列表的数据
       cb(results);
     },
-    createFilterUserName(queryString) {
-      return (restaurantsUserName) => {
+    createFilterCusName(queryString) {
+      return (restaurantsCusName) => {
         return (
-          restaurantsUserName.userName
+          restaurantsCusName.cusName
             .toLowerCase()
             .indexOf(queryString.toLowerCase()) === 0
         );
       };
     },
-    querySearchTrueName(queryString, cb) {
-      var restaurantsTrueName = this.restaurantsTrueName;
+    querySearchCusManager(queryString, cb) {
+      var restaurantsCusManager = this.restaurantsCusManager;
       var results = queryString
-        ? restaurantsTrueName.filter(this.createFilterTrueName(queryString))
-        : restaurantsTrueName;
+        ? restaurantsCusManager.filter(this.createFilterCusManager(queryString))
+        : restaurantsCusManager;
       // 调用 callback 返回建议列表的数据
       cb(results);
     },
-    createFilterTrueName(queryString) {
-      return (restaurantsTrueName) => {
+    createFilterCusManager(queryString) {
+      return (restaurantsCusManager) => {
         return (
-          restaurantsTrueName.trueName
+          restaurantsCusManager.cusManager
             .toLowerCase()
             .indexOf(queryString.toLowerCase()) === 0
         );
       };
     },
     handleSelect(item) {
-      this.userName = item.userName;
-      this.trueName = item.trueName;
+      this.cusName = item.cusName;
+      this.cusManager = item.cusManager;
     },
     toggleSelection(rows) {
       if (rows) {
@@ -266,19 +244,19 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
-    listUserName() {
-      this.restaurantsUserName = []; //清空数组 否则将导致后续记录添加导致重复
+    listCusName() {
+      this.restaurantsCusName = []; //清空数组 否则将导致后续记录添加导致重复
       this.$store
-        .dispatch("User/listUserNameInfo", null)
+        .dispatch("CusLoss/listCusName", null)
         .then(() => {
-          if (this.$store.state.User.userNameInfo.code === 200) {
+          if (this.$store.state.CusLoss.cusNameInfo.code === 200) {
             this.loading = false; //取消加载状态
-            this.$store.state.User.userNameInfo.data.forEach((e) => {
+            this.$store.state.CusLoss.cusNameInfo.data.forEach((e) => {
               const records = {
                 //可根据需求更改
-                userName: e.userName,
+                cusName: e.cusName,
               };
-              this.restaurantsUserName.push(records);
+              this.restaurantsCusName.push(records);
             });
           }
         })
@@ -286,19 +264,19 @@ export default {
           this.$message.error("发生错误：" + e);
         });
     },
-    listTrueName() {
-      this.restaurantsTrueName = []; //清空数组 否则将导致后续记录添加导致重复
+    listCusManager() {
+      this.restaurantsCusManager = []; //清空数组 否则将导致后续记录添加导致重复
       this.$store
-        .dispatch("User/listTrueNameInfo", null)
+        .dispatch("CusLoss/listCusManager", null)
         .then(() => {
-          if (this.$store.state.User.trueNameInfo.code === 200) {
+          if (this.$store.state.CusLoss.cusManagerInfo.code === 200) {
             this.loading = false; //取消加载状态
-            this.$store.state.User.trueNameInfo.data.forEach((e) => {
+            this.$store.state.CusLoss.cusManagerInfo.data.forEach((e) => {
               const records = {
                 //可根据需求更改
-                trueName: e.trueName,
+                cusManager: e.cusManager,
               };
-              this.restaurantsTrueName.push(records);
+              this.restaurantsCusManager.push(records);
             });
           }
         })
@@ -309,26 +287,23 @@ export default {
     queryAll() {
       this.loading = true;
       const params = {
-        current: this.currentPage,
-        pageSize: this.size,
-        userName: this.userName,
-        email: this.email,
-        phone: this.phone,
-        trueName: this.trueName,
-        remark: this.remark,
+        current: 1,
+        pageSize: 5,
+        cusName: this.cusName,
+        cusManager: this.cusManager,
       };
       this.$store
-        .dispatch("User/queryAllUserInfo", params)
+        .dispatch("CusLoss/queryAllCusLossInfo", params)
         .then(() => {
-          if (this.$store.state.User.userInfo.code === 200) {
+          if (this.$store.state.CusLoss.cusLossInfo.code === 200) {
             this.loading = false; //取消加载状态
-            this.tableData = this.$store.state.User.userInfo.data.records;
+            this.tableData = this.$store.state.CusLoss.cusLossInfo.data.records;
 
-            this.total = this.$store.state.User.userInfo.data.total;
-            this.currentPage = this.$store.state.User.userInfo.data.current;
-            this.size = this.$store.state.User.userInfo.data.size;
+            this.total = this.$store.state.CusLoss.cusLossInfo.data.total;
+            this.currentPage = this.$store.state.CusLoss.cusLossInfo.data.current;
+            this.size = this.$store.state.CusLoss.cusLossInfo.data.size;
           }
-          if (this.$store.state.User.userInfo.code === 403) {
+          if (this.$store.state.CusLoss.cusLossInfo.code === 403) {
             this.$message({
               message: "当前角色无相关权限",
               type: "warning",
@@ -398,8 +373,8 @@ export default {
     },
     reInit() {
       this.queryAll();
-      this.listUserName();
-      this.listTrueName();
+      this.listCusName();
+      this.listCusManager();
     },
     ondetails: function () {
       if (

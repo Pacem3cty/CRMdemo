@@ -203,7 +203,6 @@ export default {
     console.log(this.outerVisible1); //我是字符串
   },
   methods: {
-    //方法区规划 新增编号获取（当前记录最大编号+1）、新增请求、指派人信息不存在时为未分配并不设置分配日期
     setAssignDate() {
       let date = new Date();
       this.assignDate =

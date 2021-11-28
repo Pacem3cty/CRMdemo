@@ -2,18 +2,77 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
-Source Server Version : 80026
+Source Server Version : 80025
 Source Host           : localhost:3306
 Source Database       : crm
 
 Target Server Type    : MYSQL
-Target Server Version : 80026
+Target Server Version : 80025
 File Encoding         : 65001
 
-Date: 2021-11-22 16:55:46
+Date: 2021-11-29 00:02:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for t_cus
+-- ----------------------------
+DROP TABLE IF EXISTS `t_cus`;
+CREATE TABLE `t_cus` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '客户编号',
+  `cus_num` varchar(20) DEFAULT NULL,
+  `cus_name` varchar(20) DEFAULT NULL COMMENT '客户名称',
+  `area` varchar(20) DEFAULT NULL COMMENT '所属地区',
+  `cus_manager` varchar(20) DEFAULT NULL COMMENT '客户经理',
+  `level` varchar(30) DEFAULT NULL COMMENT '客户级别',
+  `csr` varchar(30) DEFAULT NULL COMMENT '客户满意度',
+  `ccr` varchar(30) DEFAULT NULL COMMENT '客户信用度',
+  `cus_address` varchar(255) DEFAULT NULL COMMENT '客户地址',
+  `postal_code` varchar(50) DEFAULT NULL COMMENT '邮编',
+  `cus_phone` varchar(20) DEFAULT NULL COMMENT '客户电话',
+  `cus_fax` varchar(20) DEFAULT NULL COMMENT '传真',
+  `website` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '客户网站',
+  `social_credit_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '统一社会信用代码',
+  `artificial_person` varchar(20) DEFAULT NULL COMMENT '法人代表',
+  `registered_capital` varchar(20) DEFAULT NULL COMMENT '注册资金',
+  `annual_turnover` varchar(20) DEFAULT NULL COMMENT '年营业额',
+  `account_bank` varchar(50) DEFAULT NULL COMMENT '开户银行',
+  `account_num` varchar(50) DEFAULT NULL COMMENT '银行账号',
+  `loss_status` int DEFAULT NULL COMMENT '流失状态',
+  `is_valid` int DEFAULT NULL COMMENT '有效状态 0 有效 1 无效',
+  `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
+  `update_date` datetime DEFAULT NULL COMMENT '修改日期',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+
+-- ----------------------------
+-- Records of t_cus
+-- ----------------------------
+INSERT INTO `t_cus` VALUES ('1', 'C20211124000001', '驣殉计算机系统有限公司', '深圳', '测试', '战略合作伙伴', '满意', '良好', '广东深圳', null, '18934879265', null, null, null, null, null, null, null, null, '0', '0', '2021-11-24 20:44:35', null);
+INSERT INTO `t_cus` VALUES ('2', 'C20211124000002', '锕锂芸计算有限公司 ', '杭州', '测试', '重要客户', '一般', '良好', '浙江杭州', null, '15008976432', null, null, '91330100799655058B', '马耘', null, null, null, null, '1', '0', '2021-11-24 00:00:00', '2021-11-27 23:45:18');
+INSERT INTO `t_cus` VALUES ('3', 'C202111270000003', '魍弌网络有限公司', '', '测试', '', '', null, '', '', '18934879265', '', null, '91330000788831167A', '丁攂', '', '', '', '', null, '0', '2021-11-27 21:20:31', null);
+
+-- ----------------------------
+-- Table structure for t_cus_contact
+-- ----------------------------
+DROP TABLE IF EXISTS `t_cus_contact`;
+CREATE TABLE `t_cus_contact` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '客户交往记录编号',
+  `cus_id` int DEFAULT NULL COMMENT '客户编号',
+  `contact_time` datetime DEFAULT NULL COMMENT '交往时间',
+  `contact_address` varchar(255) DEFAULT NULL COMMENT '交往地址',
+  `overview` varchar(255) DEFAULT NULL COMMENT '交往概述',
+  `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
+  `update_date` datetime DEFAULT NULL COMMENT '修改日期',
+  `is_valid` int DEFAULT NULL COMMENT '有效状态 0 有效 1 无效',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+
+-- ----------------------------
+-- Records of t_cus_contact
+-- ----------------------------
+INSERT INTO `t_cus_contact` VALUES ('1', '1', '2021-11-28 16:20:32', '广东广州', '', '2021-11-28 16:20:40', null, '0');
 
 -- ----------------------------
 -- Table structure for t_cus_dev_plan
@@ -43,6 +102,122 @@ INSERT INTO `t_cus_dev_plan` VALUES ('4', '3', '测试计划项4', '2021-10-28 0
 INSERT INTO `t_cus_dev_plan` VALUES ('5', '2', '测试计划项3', '2021-11-03 00:00:00', '测试执行效果3', '2021-11-03 00:00:00', '2021-11-03 10:11:05', '1');
 INSERT INTO `t_cus_dev_plan` VALUES ('6', '3', '测试计划项6', '2021-11-04 00:00:00', '测试执行效果6', '2021-11-04 15:36:32', null, '0');
 INSERT INTO `t_cus_dev_plan` VALUES ('7', '4', '测试计划项7', '2021-11-04 00:00:00', '测试执行效果7', '2021-11-04 15:42:25', null, '0');
+
+-- ----------------------------
+-- Table structure for t_cus_linkman
+-- ----------------------------
+DROP TABLE IF EXISTS `t_cus_linkman`;
+CREATE TABLE `t_cus_linkman` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '客户联系人编号',
+  `cus_id` int DEFAULT NULL COMMENT '客户编号',
+  `linkman_name` varchar(20) DEFAULT NULL COMMENT '联系人名称',
+  `sex` int DEFAULT NULL COMMENT '性别 0 男 | 1 女',
+  `position` varchar(50) DEFAULT NULL COMMENT '职位',
+  `office_phone` varchar(50) DEFAULT NULL COMMENT '办公电话',
+  `phone` varchar(50) DEFAULT NULL COMMENT '手机号码',
+  `is_valid` int DEFAULT NULL COMMENT '有效状态',
+  `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
+  `update_date` datetime DEFAULT NULL COMMENT '修改日期',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+
+-- ----------------------------
+-- Records of t_cus_linkman
+-- ----------------------------
+INSERT INTO `t_cus_linkman` VALUES ('1', '1', '测试', '0', null, null, null, '0', '2021-11-28 16:21:11', null);
+
+-- ----------------------------
+-- Table structure for t_cus_loss
+-- ----------------------------
+DROP TABLE IF EXISTS `t_cus_loss`;
+CREATE TABLE `t_cus_loss` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '客户流失记录编号',
+  `cus_id` int DEFAULT NULL COMMENT '客户编号',
+  `cus_name` varchar(20) DEFAULT NULL,
+  `cus_manager` varchar(20) DEFAULT NULL COMMENT '客户经理',
+  `last_order_time` datetime DEFAULT NULL COMMENT '最后下单时间',
+  `confirm_loss_time` datetime DEFAULT NULL COMMENT '确认流失时间',
+  `state` int DEFAULT NULL COMMENT '流失状态',
+  `loss_reason` varchar(255) DEFAULT NULL COMMENT '流失原因',
+  `is_valid` int DEFAULT NULL COMMENT '有效状态',
+  `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
+  `update_date` datetime DEFAULT NULL COMMENT '更新日期',
+  PRIMARY KEY (`id`),
+  KEY `cus_id` (`cus_id`),
+  CONSTRAINT `cus_id` FOREIGN KEY (`cus_id`) REFERENCES `t_cus` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+
+-- ----------------------------
+-- Records of t_cus_loss
+-- ----------------------------
+INSERT INTO `t_cus_loss` VALUES ('1', '1', '驣殉计算机系统有限公司', '测试', '2021-05-08 21:04:46', null, '1', null, '0', '2021-11-26 21:06:09', null);
+
+-- ----------------------------
+-- Table structure for t_cus_order
+-- ----------------------------
+DROP TABLE IF EXISTS `t_cus_order`;
+CREATE TABLE `t_cus_order` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '订单编号',
+  `cus_id` int DEFAULT NULL COMMENT '客户编号',
+  `order_num` varchar(40) DEFAULT NULL COMMENT '订单编号',
+  `order_date` datetime DEFAULT NULL COMMENT '下单时间',
+  `address` varchar(255) DEFAULT NULL COMMENT '地址',
+  `state` int DEFAULT NULL COMMENT '状态',
+  `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
+  `update_date` datetime DEFAULT NULL COMMENT '修改日期',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+-- ----------------------------
+-- Records of t_cus_order
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_cus_reprieve
+-- ----------------------------
+DROP TABLE IF EXISTS `t_cus_reprieve`;
+CREATE TABLE `t_cus_reprieve` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '暂缓记录编号',
+  `loss_id` int DEFAULT NULL COMMENT '流失编号',
+  `measure` varchar(255) DEFAULT NULL COMMENT '暂缓措施',
+  `is_valid` int DEFAULT NULL COMMENT '有效状态',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+-- ----------------------------
+-- Records of t_cus_reprieve
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_cus_service
+-- ----------------------------
+DROP TABLE IF EXISTS `t_cus_service`;
+CREATE TABLE `t_cus_service` (
+  `id` int NOT NULL COMMENT '客户服务编号',
+  `service_type` varchar(30) DEFAULT NULL COMMENT '服务类型',
+  `overview` varchar(255) DEFAULT NULL COMMENT '概述',
+  `customer` varchar(30) DEFAULT NULL COMMENT '客户',
+  `state` varchar(20) DEFAULT NULL COMMENT '服务状态',
+  `service_request` varchar(255) DEFAULT NULL COMMENT '服务请求',
+  `create_person` varchar(100) DEFAULT NULL COMMENT '创建人',
+  `assign_person` varchar(100) DEFAULT NULL COMMENT '指派人',
+  `assign_date` datetime DEFAULT NULL COMMENT '分配日期',
+  `service_process` varchar(255) DEFAULT NULL COMMENT '服务处理',
+  `process_person` varchar(20) DEFAULT NULL COMMENT '处理人',
+  `process_date` datetime DEFAULT NULL COMMENT '处理时间',
+  `process_result` varchar(255) DEFAULT NULL COMMENT '处理结果',
+  `csr` varchar(50) DEFAULT NULL COMMENT '客户满意度',
+  `is_valid` int DEFAULT NULL COMMENT '有效状态',
+  `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
+  `update_date` datetime DEFAULT NULL COMMENT '修改日期',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+-- ----------------------------
+-- Records of t_cus_service
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for t_module
@@ -90,6 +265,28 @@ INSERT INTO `t_module` VALUES ('20', '客户流失信息修改', null, null, '17
 INSERT INTO `t_module` VALUES ('21', '客户流失信息删除', null, null, '17', '0202', null, '02024', '21', '0', '2021-11-15 08:59:48', null);
 INSERT INTO `t_module` VALUES ('23', '测试顶层模块', null, '#', '-1', null, null, '#', '23', '1', '2021-11-22 14:47:05', null);
 INSERT INTO `t_module` VALUES ('24', '计划项数据添加', null, '', '7', null, null, '01024', '24', '0', '2021-11-22 15:39:17', null);
+
+-- ----------------------------
+-- Table structure for t_order_details
+-- ----------------------------
+DROP TABLE IF EXISTS `t_order_details`;
+CREATE TABLE `t_order_details` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '详情编号',
+  `order_id` int DEFAULT NULL COMMENT '订单编号',
+  `goods_name` varchar(255) DEFAULT NULL COMMENT '商品名称',
+  `goods_num` int DEFAULT NULL COMMENT '商品数量',
+  `unit` varchar(20) DEFAULT NULL COMMENT '商品单位',
+  `price` decimal(10,2) DEFAULT NULL COMMENT '单价',
+  `total` decimal(10,2) DEFAULT NULL COMMENT '总金额',
+  `is_valid` int DEFAULT NULL COMMENT '有效状态',
+  `create_date` datetime DEFAULT NULL COMMENT '创建日期',
+  `update_date` datetime DEFAULT NULL COMMENT '修改日期',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+-- ----------------------------
+-- Records of t_order_details
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for t_permission

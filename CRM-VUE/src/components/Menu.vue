@@ -29,11 +29,11 @@
           <span >客户管理</span>
         </template>
 
-        <el-menu-item index="/equipment">
+        <el-menu-item index="/Cus">
           <span slot="title"><i class="el-icon-s-management"></i>客户信息管理</span>
         </el-menu-item>
 
-         <el-menu-item index="/dict">
+         <el-menu-item index="/CusLoss">
           <span slot="title"><i class="el-icon-s-release"></i>客户流失管理</span>
         </el-menu-item>
       </el-submenu>

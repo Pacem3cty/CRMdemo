@@ -51,8 +51,6 @@ public class TUserController {
         this.tUserService = tUserService;
     }
 
-
-
     @ApiOperation(value = "获取用户资料")
     @RequestMapping(value = "/listInfo", method = RequestMethod.POST)
     @ResponseBody
@@ -207,6 +205,7 @@ public class TUserController {
     @ResponseBody
     public CommonResult queryAll(@RequestBody TUserDTO tUserDTO) {
         QueryWrapper<TUser> queryWrapper = new QueryWrapper<>();
+
 
         //用户名称
         if (tUserDTO.getUserName() != null && !tUserDTO.getUserName().equals("")) {

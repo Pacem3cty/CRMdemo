@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.crmdemo.modules.customer.mapper.TCusReprieveMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.crmdemo.modules.customer.model.TCusReprieve">
+        <id column="id" property="id" />
+        <result column="loss_id" property="lossId" />
+        <result column="measure" property="measure" />
+        <result column="is_valid" property="isValid" />
+        <result column="create_date" property="createDate" />
+        <result column="update_date" property="updateDate" />
+    </resultMap>
+
+</mapper>

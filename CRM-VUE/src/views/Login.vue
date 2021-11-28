@@ -171,9 +171,7 @@ export default {
                   )
                   .then(() => {
                     if (this.$store.state.Role.queryRoleNameInfo.code === 200) {
-                      console.log(
-                        this.$store.state.Role.queryRoleNameInfo.data
-                      );
+                      console.log(    this.$store.state.Role.queryRoleNameInfo.data)
                       localStorage.setItem(
                         "roleName",
                         this.$store.state.Role.queryRoleNameInfo.data

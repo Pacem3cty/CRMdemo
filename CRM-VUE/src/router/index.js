@@ -31,7 +31,8 @@ const routes = [
     children: [
       { path: '/Salechance' , component: () => import( '../views/sales/basicData/SaleChance.vue') ,name: '营销机会', meta: { requiresAuth: true }},
       { path: '/CusDevPlan' , component: () => import( '../views/sales/basicData/CusDevPlan.vue') ,name: '客户开发计划', meta: { requiresAuth: true }},
-      // { path: '/quotation' , component: () => import( '../views/management/Quotation.vue') ,name: '报价单', meta: { requiresAuth: true }},
+      { path: '/Cus' , component: () => import( '../views/customer/basicData/Cus.vue') ,name: '客户信息', meta: { requiresAuth: true }},
+      { path: '/CusLoss' , component: () => import( '../views/customer/basicData/CusLoss.vue') ,name: '客户流失', meta: { requiresAuth: true }},
       // { path: '/customerCenter' , component: () => import( '../views/management/CustomerCenter.vue') ,name: '客户中心', meta: { requiresAuth: true }},
       // { path: '/equipment' , component: () => import( '../views/basicData/Equipment.vue') ,name: '设备', meta: { requiresAuth: true }},
       { path: '/Role' , component: () => import( '../views/system/basicData/Role.vue') ,name: '角色管理', meta: { requiresAuth: true }},

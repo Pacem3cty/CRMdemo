@@ -94,6 +94,16 @@
           :width="item.width"
         >
         </el-table-column>
+         <el-table-column prop="devResult" label="支付状态" width="85">
+          <template slot-scope="scope">
+            <span v-if="scope.row.devResult === 0"
+              ><el-tag type="info">未支付</el-tag></span
+            >
+            <span v-else-if="scope.row.devResult === 1"
+              ><el-tag type="success">已支付</el-tag></span
+            >
+          </template>
+        </el-table-column>
       </el-table>
       <div class="block">
         <el-pagination
@@ -140,12 +150,12 @@
         :append-to-body="true"
         :close-on-click-modal="false"
       >
-        <CusLinkmanAdd
+        <CusOrderAdd
           v-if="outerAddVisible"
           @onAdd="onAdd"
           @queryAll="queryAll"
           :id="this.id"
-        ></CusLinkmanAdd>
+        ></CusOrderAdd>
       </el-dialog>
       <el-dialog
         title="修改联系人信息"
@@ -154,24 +164,24 @@
         :append-to-body="true"
         :close-on-click-modal="false"
       >
-        <CusLinkmanUpdate
+        <CusOrderUpdate
           @onAdd="onAdd"
           @queryAll="queryAll"
           :multiple="this.multipleSelection"
           :id="this.id"
-        ></CusLinkmanUpdate>
+        ></CusOrderUpdate>
       </el-dialog>
     </div>
   </div>
 </template>
 <script>
-import CusLinkmanAdd from "../management/CusLinkmanAdd.vue";
-import CusLinkmanUpdate from "../management/CusLinkmanUpdate.vue";
+import CusOrderAdd from "../management/CusOrderAdd.vue";
+import CusOrderUpdate from "../management/CusOrderUpdate.vue";
 export default {
   props: ["multiple"],
   components: {
-    CusLinkmanAdd,
-    CusLinkmanUpdate,
+    CusOrderAdd,
+    CusOrderUpdate,
   },
   data() {
     return {
@@ -188,10 +198,9 @@ export default {
       total: 0,
       tableColumns: [
         { key: "id", name: "编号", width: 50 },
-        { key: "linkmanName", name: "姓名", width: 80 },
-        { key: "position", name: "职位", width: 195 },
-        { key: "officePhone", name: "办公电话", width: 150 },
-        { key: "phone", name: "手机号码", width: 150 },
+        { key: "orderNum", name: "订单编号", width: 80 },
+        { key: "orderDate", name: "下单时间", width: 195 },
+        { key: "address", name: "订单地址", width: 150 },
       ],
       multipleSelection: [],
       dialogVisible: false,
@@ -218,19 +227,19 @@ export default {
         cusId: this.$props.multiple[0].id,
       };
       this.$store
-        .dispatch("CusLinkman/queryAllCusLinkmanInfo", params)
+        .dispatch("CusOrder/queryAllCusOrderInfo", params)
         .then(() => {
-          if (this.$store.state.CusLinkman.cusLinkmanInfo.code === 200) {
+          if (this.$store.state.CusOrder.cusOrderInfo.code === 200) {
             this.loading = false; //取消加载状态
             this.tableData =
-              this.$store.state.CusLinkman.cusLinkmanInfo.data.records;
+              this.$store.state.CusOrder.cusOrderInfo.data.records;
 
-            this.total = this.$store.state.CusLinkman.cusLinkmanInfo.data.total;
+            this.total = this.$store.state.CusOrder.cusOrderInfo.data.total;
             this.currentPage =
-              this.$store.state.CusLinkman.cusLinkmanInfo.data.current;
-            this.size = this.$store.state.CusLinkman.cusLinkmanInfo.data.size;
+              this.$store.state.CusOrder.cusOrderInfo.data.current;
+            this.size = this.$store.state.CusOrder.cusOrderInfo.data.size;
           }
-          if (this.$store.state.CusLinkman.cusLinkmanInfo.code === 403) {
+          if (this.$store.state.CusOrder.cusOrderInfo.code === 403) {
             this.$message({
               message: "当前角色无相关权限",
               type: "warning",
@@ -282,12 +291,12 @@ export default {
         ids: arrayId,
       };
       this.$store
-        .dispatch("CusLinkman/del", params)
+        .dispatch("CusOrder/del", params)
         .then(() => {
-          console.log(this.$store.state.CusLinkman.deleteInfo);
+          console.log(this.$store.state.CusOrder.deleteInfo);
           if (
-            this.$store.state.CusLinkman.deleteInfo.code === 200 &&
-            this.$store.state.CusLinkman.deleteInfo.data === true
+            this.$store.state.CusOrder.deleteInfo.code === 200 &&
+            this.$store.state.CusOrder.deleteInfo.data === true
           ) {
             this.$message({
               message: "删除操作成功！",
@@ -297,7 +306,7 @@ export default {
           } else {
             this.$message.error("执行删除操作失败！");
           }
-          if (this.$store.state.CusLinkman.deleteInfo.code === 403) {
+          if (this.$store.state.CusOrder.deleteInfo.code === 403) {
             this.$message({
               message: "当前角色无相关权限",
               type: "warning",
@@ -318,27 +327,13 @@ export default {
       this.setUpdateDate();
       const params = {
         id: this.$props.multiple[0].id,
-        chanceSource: this.$props.multiple[0].chanceSource,
-        customerName: this.$props.multiple[0].customerName,
-        probability: this.$props.multiple[0].probability,
-        overview: this.$props.multiple[0].overview,
-        contractPerson: this.$props.multiple[0].contractPerson,
-        contractPhone: this.$props.multiple[0].contractPhone,
-        description: this.$props.multiple[0].description,
-        createPerson: this.$props.multiple[0].createPerson,
-        createDate: this.$props.multiple[0].createDate,
-        assignPerson: this.$props.multiple[0].assignPerson,
-        assignDate: this.$props.multiple[0].assignDate,
         state: 1,
-        devResult: 1,
-        isValid: 0,
-        updateDate: this.updateDate,
       };
       this.$store
-        .dispatch("Sales/update", params)
+        .dispatch("CusOrder/update", params)
         .then(() => {
-          console.log(this.$store.state.Sales.updateInfo);
-          if (this.$store.state.Sales.updateInfo.data === true) {
+          console.log(this.$store.state.CusOrder.updateInfo);
+          if (this.$store.state.CusOrder.updateInfo.data === true) {
             this.signSuccessDialogVisible = false;
             this.$emit("onAdd");
             this.$emit("reInit");
@@ -352,7 +347,7 @@ export default {
             this.$emit("onAdd");
             this.$emit("reInit");
           }
-          if (this.$store.state.Sales.updateInfo.code === 403) {
+          if (this.$store.state.CusOrder.updateInfo.code === 403) {
             this.$message({
               message: "当前角色无相关权限",
               type: "warning",

@@ -120,7 +120,7 @@
       </div>
     </div>
     <div>
-      <!-- 标记开发失败提示 -->
+      <!-- 标记开发成功提示 -->
       <el-dialog
         :close-on-click-modal="false"
         :visible.sync="signSuccessDialogVisible"
@@ -133,7 +133,7 @@
           <el-button type="primary" @click="signSuccess">确定</el-button>
         </span>
       </el-dialog>
-      <!-- 标记开发成功提示 -->
+      <!-- 标记开发失败提示 -->
       <el-dialog
         :close-on-click-modal="false"
         :visible.sync="signFailureDialogVisible"

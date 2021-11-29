@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
-Source Server Version : 80025
+Source Server Version : 80026
 Source Host           : localhost:3306
 Source Database       : crm
 
 Target Server Type    : MYSQL
-Target Server Version : 80025
+Target Server Version : 80026
 File Encoding         : 65001
 
-Date: 2021-11-29 00:02:10
+Date: 2021-11-29 16:50:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -67,12 +67,15 @@ CREATE TABLE `t_cus_contact` (
   `update_date` datetime DEFAULT NULL COMMENT '修改日期',
   `is_valid` int DEFAULT NULL COMMENT '有效状态 0 有效 1 无效',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of t_cus_contact
 -- ----------------------------
-INSERT INTO `t_cus_contact` VALUES ('1', '1', '2021-11-28 16:20:32', '广东广州', '', '2021-11-28 16:20:40', null, '0');
+INSERT INTO `t_cus_contact` VALUES ('1', '1', '2021-11-28 00:00:00', '广东广州', '测试概述', '2021-11-28 00:00:00', '2021-11-29 15:41:31', '0');
+INSERT INTO `t_cus_contact` VALUES ('2', '1', '2021-11-15 00:00:00', '广东深圳', '测试交往概述', '2021-11-29 15:26:58', null, '1');
+INSERT INTO `t_cus_contact` VALUES ('3', '1', '2021-11-03 00:00:00', '测试地址', '测试概述', '2021-11-29 15:41:54', null, '0');
+INSERT INTO `t_cus_contact` VALUES ('4', '1', '2021-11-03 00:00:00', '测试地址', '测试概述', '2021-11-29 15:45:18', null, '0');
 
 -- ----------------------------
 -- Table structure for t_cus_dev_plan
@@ -119,12 +122,13 @@ CREATE TABLE `t_cus_linkman` (
   `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
   `update_date` datetime DEFAULT NULL COMMENT '修改日期',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of t_cus_linkman
 -- ----------------------------
-INSERT INTO `t_cus_linkman` VALUES ('1', '1', '测试', '0', null, null, null, '0', '2021-11-28 16:21:11', null);
+INSERT INTO `t_cus_linkman` VALUES ('1', '1', '测试姓名', '1', '测试性别', '18000000000', null, '0', '2021-11-29 00:00:00', '2021-11-29 14:01:33');
+INSERT INTO `t_cus_linkman` VALUES ('8', '1', '测试姓名', '0', '测试职位', '18000000000', null, '0', '2021-11-29 15:48:56', null);
 
 -- ----------------------------
 -- Table structure for t_cus_loss
@@ -163,6 +167,7 @@ CREATE TABLE `t_cus_order` (
   `order_date` datetime DEFAULT NULL COMMENT '下单时间',
   `address` varchar(255) DEFAULT NULL COMMENT '地址',
   `state` int DEFAULT NULL COMMENT '状态',
+  `is_valid` int DEFAULT NULL COMMENT '有效状态 0 有效 1 无效',
   `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
   `update_date` datetime DEFAULT NULL COMMENT '修改日期',
   PRIMARY KEY (`id`)

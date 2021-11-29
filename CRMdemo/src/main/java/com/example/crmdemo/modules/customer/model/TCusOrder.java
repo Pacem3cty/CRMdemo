@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author wr
- * @since 2021-11-24
+ * @since 2021-11-29
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -42,8 +42,11 @@ public class TCusOrder implements Serializable {
     @ApiModelProperty(value = "地址")
     private String address;
 
-    @ApiModelProperty(value = "状态")
+    @ApiModelProperty(value = "支付状态 0 未支付 1 已支付")
     private Integer state;
+
+    @ApiModelProperty(value = "有效状态")
+    private Integer isValid;
 
     @ApiModelProperty(value = "创建日期")
     private Date createDate;

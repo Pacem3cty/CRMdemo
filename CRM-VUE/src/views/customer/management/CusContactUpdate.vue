@@ -4,39 +4,25 @@
       <el-form ref="updateForm" :model="updateForm" :rules="rules" size="medium" label-width="100px">
         <el-col :span="12">
           <el-form-item label="编号" prop="id">
-            <el-input v-model="updateForm.id" placeholder="请输入编号" readonly :style="{width: '100%'}">
+            <el-input v-model="updateForm.id" placeholder="请选择编号" readonly :style="{width: '100%'}">
             </el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="姓名" prop="linkmanName">
-            <el-input v-model="updateForm.linkmanName" placeholder="请输入姓名" clearable :style="{width: '100%'}">
-            </el-input>
+          <el-form-item label="交往时间" prop="contactTime">
+            <el-date-picker v-model="updateForm.contactTime" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
+              :style="{width: '100%'}" placeholder="请选择交往时间" clearable></el-date-picker>
           </el-form-item>
         </el-col>
-        <el-col :span="12">
-          <el-form-item label="性别" prop="sex">
-            <el-select v-model="updateForm.sex" placeholder="请选择性别" clearable :style="{width: '100%'}">
-              <el-option v-for="(item, index) in sexOptions" :key="index" :label="item.label"
-                :value="item.value" :disabled="item.disabled"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="职位" prop="position">
-            <el-input v-model="updateForm.position" placeholder="请输入职位" clearable :style="{width: '100%'}">
-            </el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="办公号码" prop="officePhone">
-            <el-input v-model="updateForm.officePhone" placeholder="请输入办公号码" clearable
+        <el-col :span="24">
+          <el-form-item label="交往地址" prop="contactAddress">
+            <el-input v-model="updateForm.contactAddress" placeholder="请输入交往地址" clearable
               :style="{width: '100%'}"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="12">
-          <el-form-item label="手机号码" prop="phone">
-            <el-input v-model="updateForm.phone" placeholder="请输入手机号码" clearable :style="{width: '100%'}">
+        <el-col :span="24">
+          <el-form-item label="交往概述" prop="overview">
+            <el-input v-model="updateForm.overview" placeholder="请输入交往概述" clearable :style="{width: '100%'}">
             </el-input>
           </el-form-item>
         </el-col>
@@ -53,53 +39,38 @@
 <script>
 export default {
   components: {},
-  props: ["multiple"],
+  props: ["multiple","id"],
   data() {
     return {
       updateForm: {
         id: this.$props.multiple[0].id,
-        linkmanName: this.$props.multiple[0].linkmanName,
-        sex: this.$props.multiple[0].sex,
-        position: this.$props.multiple[0].position,
-        officePhone: this.$props.multiple[0].officePhone,
-        phone: this.$props.multiple[0].phone,
+        contactTime: this.$props.multiple[0].contactTime,
+        contactAddress: this.$props.multiple[0].contactAddress,
+        overview: this.$props.multiple[0].overview,
       },
       updateDate:"",
       rules: {
         id: [{
           required: true,
-          message: '请输入编号',
+          message: '请选择编号',
           trigger: 'blur'
         }],
-        linkmanName: [{
+        contactTime: [{
           required: true,
-          message: '请输入姓名',
-          trigger: 'blur'
-        }],
-        sex: [{
-          required: true,
-          message: '请选择性别',
+          message: '请选择交往时间',
           trigger: 'change'
         }],
-        position: [{
+        contactAddress: [{
           required: true,
-          message: '请输入职位',
+          message: '请输入交往地址',
           trigger: 'blur'
         }],
-        officePhone: [{
+        overview: [{
           required: true,
-          message: '请输入办公号码',
+          message: '请输入交往概述',
           trigger: 'blur'
         }],
-        phone: [],
       },
-      sexOptions: [{
-        "label": "男",
-        "value": 0
-      }, {
-        "label": "女",
-        "value": 1
-      }],
     }
   },
   computed: {},
@@ -107,7 +78,7 @@ export default {
   created() {},
   mounted() {},
   methods: {
-      setUpdateDate() {
+    setUpdateDate() {
       let date = new Date();
       this.updateDate =
         date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
@@ -117,22 +88,21 @@ export default {
       this.$refs["updateForm"].validate((valid) => {
         if (valid) {
           const params = {
-            id: this.addForm.id,
-            linkmanName: this.addForm.linkmanName,
-            sex: this.addForm.sex,
-            position: this.addForm.position,
-            officePhone: this.addForm.officePhone,
-            phone: this.addForm.phone,
+            id: this.updateForm.id,
+            cusId:this.$props.id,
+            contactTime: this.updateForm.contactTime,
+            contactAddress: this.updateForm.contactAddress,
+            overview: this.updateForm.overview,
             isValid: 0,
             createDate: this.$props.multiple[0].createDate,
             updateDate: this.updateDate,
           };
           this.$store
-            .dispatch("Cus/update", params)
+            .dispatch("CusContact/update", params)
             .then(() => {
-              if (this.$store.state.Cus.updateInfo.data === true) {
+              if (this.$store.state.CusContact.updateInfo.data === true) {
                 this.$emit("onAdd");
-                this.$emit("reInit");
+                this.$emit("queryAll");
                 this.$message({
                   message: "修改操作成功！",
                   type: "success",
@@ -140,16 +110,16 @@ export default {
               } else {
                 this.$message.error("修改操作失败！");
                 this.$emit("onAdd");
-                this.$emit("reInit");
+                this.$emit("queryAll");
                 this.resetForm();
               }
-              if (this.$store.state.Cus.updateInfo.code === 403) {
+              if (this.$store.state.CusContact.updateInfo.code === 403) {
                 this.$message({
                   message: "当前角色无相关权限",
                   type: "warning",
                 });
                 this.$emit("onAdd");
-                this.$emit("reInit");
+                this.$emit("queryAll");
                 return;
               }
             })
@@ -164,11 +134,9 @@ export default {
       });
     },
     resetForm() {
-      this.addForm.linkmanName = this.$props.multiple[0].id;
-      this.addForm.sex = this.$props.multiple[0].sex;
-      this.addForm.position = this.$props.multiple[0].position;
-      this.addForm.officePhone = this.$props.multiple[0].officePhone;
-      this.addForm.phone = this.$props.multiple[0].phone;
+      this.updateForm.contactTime = this.$props.multiple[0].contactTime;
+      this.updateForm.contactAddress = this.$props.multiple[0].contactAddress;
+      this.updateForm.overview = this.$props.multiple[0].overview;
     },
   }
 }

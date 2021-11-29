@@ -66,6 +66,7 @@
            <el-button
             type="primary"
             style="margin-top: 9px"
+            @click="this.onorder"
             >订单管理</el-button
           >
       </div>
@@ -177,6 +178,19 @@
         :multiple="this.multipleSelection"
       ></CusLinkmanMainten>
     </el-dialog>
+    <!-- 客户订单 -->
+    <el-dialog
+      title="管理客户订单信息"
+      v-if="outerOrderVisible"
+      :visible.sync="outerOrderVisible"
+      :close-on-click-modal="false"
+    >
+      <CusOrderMainten
+        @onAdd="onAdd"
+        @reInit="reInit"
+        :multiple="this.multipleSelection"
+      ></CusOrderMainten>
+    </el-dialog>
   </div>
 </template>
 
@@ -185,13 +199,15 @@ import CusAdd from "../management/CusAdd.vue";
 import CusUpdate from "../management/CusUpdate.vue";
 import CusContactMainten from "../management/CusContactMainten.vue";
 import CusLinkmanMainten from "../management/CusLinkmanMainten.vue";
+import CusOrderMainten from "../management/CusOrderMainten.vue";
 
 export default {
   components: {
     CusAdd,
     CusUpdate,
     CusContactMainten,
-    CusLinkmanMainten
+    CusLinkmanMainten,
+    CusOrderMainten
   },
   data() {
     return {
@@ -227,6 +243,7 @@ export default {
       outerVisible: false,
       outerLinkmanVisible: false,
       outerContactVisible: false,
+      outerOrderVisible:false,
       outerUpdateVisible: false,
       cusName: "",
       cusNum: "",
@@ -276,23 +293,6 @@ export default {
         );
       };
     },
-    // querySearchTrueName(queryString, cb) {
-    //   var restaurantsTrueName = this.restaurantsTrueName;
-    //   var results = queryString
-    //     ? restaurantsTrueName.filter(this.createFilterTrueName(queryString))
-    //     : restaurantsTrueName;
-    //   // 调用 callback 返回建议列表的数据
-    //   cb(results);
-    // },
-    // createFilterTrueName(queryString) {
-    //   return (restaurantsTrueName) => {
-    //     return (
-    //       restaurantsTrueName.trueName
-    //         .toLowerCase()
-    //         .indexOf(queryString.toLowerCase()) === 0
-    //     );
-    //   };
-    // },
     handleSelect(item) {
       this.cusName = item.cusName;
     },
@@ -480,6 +480,26 @@ export default {
         return;
       }
       this.outerContactVisible = true;
+    },
+    onorder: function () {
+      if (
+        this.multipleSelection === undefined ||
+        this.multipleSelection.length === 0
+      ) {
+        this.$message({
+          message: "请选择一条信息执行管理订单信息操作",
+          type: "warning",
+        });
+        return;
+      }
+      if (this.multipleSelection.length > 1) {
+        this.$message({
+          message: "最多只能选择一条信息执行管理订单信息操作",
+          type: "warning",
+        });
+        return;
+      }
+      this.outerOrderVisible = true;
     },
   },
 };

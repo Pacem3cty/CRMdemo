@@ -18,7 +18,7 @@
             ></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="12">
+        <!-- <el-col :span="12">
           <el-form-item label="客户编号" prop="cusId">
             <el-input
               v-model="addForm.cusId"
@@ -27,7 +27,7 @@
               :style="{ width: '100%' }"
             ></el-input>
           </el-form-item>
-        </el-col>
+        </el-col> -->
         <el-col :span="12">
           <el-form-item label="姓名" prop="linkmanName">
             <el-input
@@ -103,19 +103,19 @@
 <script>
 export default {
   components: {},
-  props: [],
+  props: ["id"],
   data() {
     return {
       addForm: {
         id: undefined,
-        cusId:this.$props.cusId,
+        // cusId:this.$props.id,
         linkmanName: undefined,
         sex: undefined,
         position: undefined,
         officePhone: undefined,
         phone: undefined,
       },
-      createDate: {},
+      createDate: "",
       rules: {
         id: [
           {
@@ -128,6 +128,11 @@ export default {
           {
             required: true,
             message: "请输入姓名",
+            trigger: "blur",
+          },
+           {
+            pattern: /[^\d^%&',;./=?~\x22$\x22]+/,
+            message: "请输入正确的姓名格式",
             trigger: "blur",
           },
         ],
@@ -151,8 +156,19 @@ export default {
             message: "请输入办公号码",
             trigger: "blur",
           },
+           {
+            pattern: /^1[0-9]{10}$/,
+            message: "请输入正确的手机号码格式！",
+            trigger: "blur",
+          },
         ],
-        phone: [],
+        phone: [
+           {
+            pattern: /^1[0-9]{10}$/,
+            message: "请输入正确的手机号码格式！",
+            trigger: "blur",
+          },
+        ],
       },
       sexOptions: [
         {
@@ -191,13 +207,13 @@ export default {
               type: "warning",
             });
             this.$emit("onAdd");
-            this.$emit("reInit");
+            this.$emit("queryAll");
             return;
           }
         })
         .catch((e) => {
           this.$emit("onAdd");
-          this.$emit("reInit");
+          this.$emit("queryAll");
           this.$message.error(
             "获取编号失败导致无法执行添加操作！发生错误：" + e
           );
@@ -211,7 +227,8 @@ export default {
         if (valid) {
           const params = {
             id: this.addForm.id,
-            cusId:this.addForm.cusId,
+            // cusId:this.addForm.cusId,
+            cusId:this.$props.id,
             linkmanName: this.addForm.linkmanName,
             sex: this.addForm.sex,
             position: this.addForm.position,
@@ -226,7 +243,7 @@ export default {
             .then(() => {
               if (this.$store.state.CusLinkman.addInfo.data === true) {
                 this.$emit("onAdd");
-                this.$emit("reInit");
+                this.$emit("queryAll");
                 this.$message({
                   message: "新增操作成功！",
                   type: "success",
@@ -234,7 +251,7 @@ export default {
               } else {
                 this.$message.error("新增操作失败！");
                 this.$emit("onAdd");
-                this.$emit("reInit");
+                this.$emit("queryAll");
                 this.resetForm();
               }
               if (this.$store.state.CusLinkman.addInfo.code === 403) {
@@ -243,7 +260,7 @@ export default {
                   type: "warning",
                 });
                 this.$emit("onAdd");
-                this.$emit("reInit");
+                this.$emit("queryAll");
                 return;
               }
             })

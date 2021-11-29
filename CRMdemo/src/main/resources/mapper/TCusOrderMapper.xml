@@ -10,6 +10,7 @@
         <result column="order_date" property="orderDate" />
         <result column="address" property="address" />
         <result column="state" property="state" />
+        <result column="is_valid" property="isValid" />
         <result column="create_date" property="createDate" />
         <result column="update_date" property="updateDate" />
     </resultMap>

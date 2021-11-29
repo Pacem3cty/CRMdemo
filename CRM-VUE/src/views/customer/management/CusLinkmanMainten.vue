@@ -135,7 +135,7 @@
           v-if="outerAddVisible"
           @onAdd="onAdd"
           @queryAll="queryAll"
-          :cusId="this.$props.multiple[0].id"
+          :id="this.id"
         ></CusLinkmanAdd>
       </el-dialog>
       <el-dialog
@@ -149,6 +149,7 @@
           @onAdd="onAdd"
           @queryAll="queryAll"
           :multiple="this.multipleSelection"
+          :id="this.id"
         ></CusLinkmanUpdate>
       </el-dialog>
     </div>
@@ -165,6 +166,7 @@ export default {
   },
   data() {
     return {
+      id:this.$props.multiple[0].id,
       outerUpdateVisible: false,
       outerAddVisible: false,
       outerVisible: false,
@@ -270,7 +272,7 @@ export default {
         ids: arrayId,
       };
       this.$store
-        .dispatch("CusContact/del", params)
+        .dispatch("CusLinkman/del", params)
         .then(() => {
           console.log(this.$store.state.CusLinkman.deleteInfo);
           if (

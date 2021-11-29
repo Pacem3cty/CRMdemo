@@ -5,7 +5,6 @@
         class="margin-top"
         title="客户基本信息"
         :column="3"
-        :size="size"
         border
       >
         <el-descriptions-item>
@@ -120,7 +119,7 @@
         </span>
       </el-dialog>
       <el-dialog
-        title="新增联系人信息"
+        title="新增交往记录信息"
         :visible.sync="outerAddVisible"
         :append-to-body="true"
         :close-on-click-modal="false"
@@ -129,12 +128,12 @@
           v-if="outerAddVisible"
           @onAdd="onAdd"
           @queryAll="queryAll"
-          :salesChanceId="this.$props.multiple[0].id"
+          :id="this.$props.multiple[0].id"
           :modal-append-to-body="true"
         ></CusContactAdd>
       </el-dialog>
       <el-dialog
-        title="修改联系人信息"
+        title="修改交往记录信息"
         :visible.sync="outerUpdateVisible"
         :append-to-body="true"
         :close-on-click-modal="false"
@@ -143,6 +142,7 @@
           @onAdd="onAdd"
           @queryAll="queryAll"
           :multiple="this.multipleSelection"
+          :id="this.$props.multiple[0].id"
         ></CusContactUpdate>
       </el-dialog>
     </div>
@@ -159,6 +159,7 @@ export default {
   },
   data() {
     return {
+      id:this.$props.multiple[0].id,
       signSuccessDialogVisible:false,
       signFailureDialogVisible:false,
       outerUpdateVisible: false,

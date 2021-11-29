@@ -155,7 +155,12 @@ export default {
             });
           this.$store
             .dispatch("Main/main", localStorage.getItem("id"))
-            .then(() => {})
+            .then(() => {
+              this.$message({
+                  message: "获取权限成功！",
+                  type: "success",
+                });
+            })
             .catch((e) => {
               this.$message.error("加载角色权限发生错误：" + e);
             });

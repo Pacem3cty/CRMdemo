@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -96,6 +97,25 @@ public class TOrderDetailsController {
         }
         currentId++;
         return CommonResult.success(currentId);
+    }
+
+    @ApiOperation(value = "获取订单总额")
+    @RequestMapping(value = "/getOrderTotal", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult getOrderTotal(@RequestBody Object orderId) {
+        BigDecimal orderTotal;
+        QueryWrapper<TOrderDetails> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("SUM(total) as total").eq("order_id",orderId).eq("is_valid",0);
+
+        List<TOrderDetails> tOrderDetailsList = tOrderDetailsService.findAll(queryWrapper);
+
+        if (tOrderDetailsList.get(0) == null) {
+            orderTotal = new BigDecimal(0);
+        }
+        else {
+            orderTotal = tOrderDetailsList.get(0).getTotal();
+        }
+        return CommonResult.success(orderTotal);
     }
 }
 

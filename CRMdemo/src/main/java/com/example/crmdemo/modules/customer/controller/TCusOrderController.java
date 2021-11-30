@@ -3,16 +3,21 @@ package com.example.crmdemo.modules.customer.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.crmdemo.common.api.CommonResult;
 import com.example.crmdemo.modules.customer.dto.TCusOrderDTO;
+
 import com.example.crmdemo.modules.customer.model.TCusOrder;
 import com.example.crmdemo.modules.customer.service.TCusOrderService;
+
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,6 +31,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/cusOrder")
 public class TCusOrderController {
+
+    Integer currentId;
 
     private TCusOrderService tCusOrderService;
 
@@ -82,7 +89,6 @@ public class TCusOrderController {
     @RequestMapping(value = "/getCurrentId", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult getCurrentId() {
-        Integer currentId;
         QueryWrapper<TCusOrder> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("MAX(id) as id");
         List<TCusOrder> tCusContactList = tCusOrderService.findAll(queryWrapper);
@@ -94,6 +100,44 @@ public class TCusOrderController {
         }
         currentId++;
         return CommonResult.success(currentId);
+    }
+
+    @ApiOperation(value = "标记为已支付")
+    @RequestMapping(value = "/signPaid", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult signPaid(@RequestBody String jsonStr) {
+        TCusOrder tCusOrder = new TCusOrder();
+
+        JSONObject jsonObject = JSONObject.parseObject(jsonStr);
+        Integer id = jsonObject.getInteger("id");//角色编号
+        Date updateDate = jsonObject.getDate("updateDate");
+
+        UpdateWrapper<TCusOrder> updateWrapper = new UpdateWrapper<>();
+
+        updateWrapper.set("state", 1).set("update_date",updateDate).eq("id", id).eq("is_valid", 0);
+
+        return CommonResult.success(tCusOrderService.updatePart(tCusOrder,updateWrapper));
+    }
+
+    @ApiOperation(value = "获取新增订单编号")
+    @RequestMapping(value = "/getOrderNum", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult getCusNum() {
+        QueryWrapper<TCusOrder> queryWrapper = new QueryWrapper<>();
+
+        String date = new SimpleDateFormat("yyyyMMdd").format(new Date());
+
+        queryWrapper.select("MAX(id) as id");
+        List<TCusOrder> tCusList = tCusOrderService.findAll(queryWrapper);
+        if (tCusList.get(0) == null) {
+            currentId = 0;
+        }
+        else {
+            currentId = tCusList.get(0).getId();
+        }
+        currentId++;
+        String orderNum = "O"+date+String.format("%07d", currentId);//生成由日期+前位补0的7位序号码组成的客户编号
+        return CommonResult.success(orderNum);
     }
 
 }

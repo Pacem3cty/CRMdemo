@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.crmdemo.common.api.CommonResult;
 
+import com.example.crmdemo.modules.customer.model.TCus;
+import com.example.crmdemo.modules.customer.model.TCusOrder;
 import com.example.crmdemo.modules.system.dto.TUserDTO;
 import com.example.crmdemo.modules.system.model.TPermission;
 import com.example.crmdemo.modules.system.model.TUser;
@@ -27,10 +29,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * <p>
@@ -302,7 +302,6 @@ public class TUserController {
         ids = object.get("ids").toString();
         return CommonResult.success(tUserService.updateById(ids));
     }
-
 
 }
 

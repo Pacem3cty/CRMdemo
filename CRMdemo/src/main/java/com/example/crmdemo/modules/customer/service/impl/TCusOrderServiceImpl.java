@@ -98,6 +98,11 @@ public class TCusOrderServiceImpl extends ServiceImpl<TCusOrderMapper, TCusOrder
 
     @Override
     public boolean updatePart(TCusOrder tCusOrder, Wrapper<TCusOrder> updateWrapper) {
-        return false;
+        AtomicBoolean flg= new AtomicBoolean(true);
+        int n = tCusOrderMapper.update(tCusOrder,updateWrapper);
+        if(n == 0 ){
+            flg.set(false);
+        }
+        return flg.get();
     }
 }

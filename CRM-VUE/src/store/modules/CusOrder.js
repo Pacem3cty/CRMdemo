@@ -1,4 +1,4 @@
-import { queryAllCusOrderInfo, getCurrentId, update, add, del } from '../../api/CusOrder'
+import { queryAllCusOrderInfo, getCurrentId, update, add, del,signPaid,getOrderNum } from '../../api/CusOrder'
 
 const state = {
     cusOrderInfo: {},
@@ -6,6 +6,8 @@ const state = {
     deleteInfo: {},
     updateInfo: {},
     addInfo: {},
+    signPaidInfo:{},
+    orderNumInfo:{}
 }
 
 
@@ -24,6 +26,12 @@ const mutations = {
     },
     SET_UPDATEINFO: (state, updateInfo) => {
         state.updateInfo = updateInfo
+    },
+    SET_SIGNPAIDINFO: (state, signPaidInfo) => {
+        state.signPaidInfo = signPaidInfo
+    },
+    SET_ORDERNUMINFO: (state, orderNumInfo) => {
+        state.orderNumInfo = orderNumInfo
     },
 }
 
@@ -78,6 +86,28 @@ const actions = {
             del(param).then(response => {
                 //   const { data } = response
                 commit('SET_DELETEINFO', response)
+                resolve()
+            }).catch(error => {
+                reject(error)
+            })
+        })
+    },
+    signPaid({ commit }, param) {
+        return new Promise((resolve, reject) => {
+            signPaid(param).then(response => {
+                //   const { data } = response
+                commit('SET_SIGNPAIDINFO', response)
+                resolve()
+            }).catch(error => {
+                reject(error)
+            })
+        })
+    },
+    getOrderNum({ commit }, param) {
+        return new Promise((resolve, reject) => {
+            getOrderNum(param).then(response => {
+                //   const { data } = response
+                commit('SET_ORDERNUMINFO', response)
                 resolve()
             }).catch(error => {
                 reject(error)

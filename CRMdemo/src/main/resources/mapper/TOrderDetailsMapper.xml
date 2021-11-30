@@ -11,6 +11,7 @@
         <result column="unit" property="unit" />
         <result column="price" property="price" />
         <result column="total" property="total" />
+        <result column="remark" property="remark" />
         <result column="is_valid" property="isValid" />
         <result column="create_date" property="createDate" />
         <result column="update_date" property="updateDate" />

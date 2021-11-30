@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80026
 File Encoding         : 65001
 
-Date: 2021-11-29 16:50:42
+Date: 2021-11-30 16:49:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -49,8 +49,8 @@ CREATE TABLE `t_cus` (
 -- ----------------------------
 -- Records of t_cus
 -- ----------------------------
-INSERT INTO `t_cus` VALUES ('1', 'C20211124000001', '驣殉计算机系统有限公司', '深圳', '测试', '战略合作伙伴', '满意', '良好', '广东深圳', null, '18934879265', null, null, null, null, null, null, null, null, '0', '0', '2021-11-24 20:44:35', null);
-INSERT INTO `t_cus` VALUES ('2', 'C20211124000002', '锕锂芸计算有限公司 ', '杭州', '测试', '重要客户', '一般', '良好', '浙江杭州', null, '15008976432', null, null, '91330100799655058B', '马耘', null, null, null, null, '1', '0', '2021-11-24 00:00:00', '2021-11-27 23:45:18');
+INSERT INTO `t_cus` VALUES ('1', 'C202111240000001', '驣殉计算机系统有限公司', '深圳', '测试', '战略合作伙伴', '满意', '良好', '广东深圳', null, '18934879265', null, null, null, null, null, null, null, null, '0', '0', '2021-11-24 20:44:35', null);
+INSERT INTO `t_cus` VALUES ('2', 'C202111240000002', '锕锂芸计算有限公司 ', '杭州', '测试', '重要客户', '一般', '良好', '浙江杭州', null, '15008976432', null, null, '91330100799655058B', '马耘', null, null, null, null, '1', '0', '2021-11-24 00:00:00', '2021-11-27 23:45:18');
 INSERT INTO `t_cus` VALUES ('3', 'C202111270000003', '魍弌网络有限公司', '', '测试', '', '', null, '', '', '18934879265', '', null, '91330000788831167A', '丁攂', '', '', '', '', null, '0', '2021-11-27 21:20:31', null);
 
 -- ----------------------------
@@ -73,7 +73,7 @@ CREATE TABLE `t_cus_contact` (
 -- Records of t_cus_contact
 -- ----------------------------
 INSERT INTO `t_cus_contact` VALUES ('1', '1', '2021-11-28 00:00:00', '广东广州', '测试概述', '2021-11-28 00:00:00', '2021-11-29 15:41:31', '0');
-INSERT INTO `t_cus_contact` VALUES ('2', '1', '2021-11-15 00:00:00', '广东深圳', '测试交往概述', '2021-11-29 15:26:58', null, '1');
+INSERT INTO `t_cus_contact` VALUES ('2', '1', '2021-11-15 00:00:00', '广东深圳', '测试交往概述', '2021-11-29 15:26:58', null, '0');
 INSERT INTO `t_cus_contact` VALUES ('3', '1', '2021-11-03 00:00:00', '测试地址', '测试概述', '2021-11-29 15:41:54', null, '0');
 INSERT INTO `t_cus_contact` VALUES ('4', '1', '2021-11-03 00:00:00', '测试地址', '测试概述', '2021-11-29 15:45:18', null, '0');
 
@@ -171,11 +171,14 @@ CREATE TABLE `t_cus_order` (
   `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
   `update_date` datetime DEFAULT NULL COMMENT '修改日期',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of t_cus_order
 -- ----------------------------
+INSERT INTO `t_cus_order` VALUES ('1', '1', 'O202111300000001', '2021-11-30 00:00:00', '广东深圳', '1', '0', '2021-11-30 00:00:00', '2021-11-30 00:00:00');
+INSERT INTO `t_cus_order` VALUES ('3', '1', 'O202111300000002', '2021-11-04 00:00:00', '广东广州', '1', '0', '2021-11-30 10:18:22', '2021-11-30 00:00:00');
+INSERT INTO `t_cus_order` VALUES ('5', '1', 'O202111300000004', '2021-11-06 00:00:00', '测试地址', '0', '0', '2021-11-30 10:35:01', null);
 
 -- ----------------------------
 -- Table structure for t_cus_reprieve
@@ -283,15 +286,20 @@ CREATE TABLE `t_order_details` (
   `unit` varchar(20) DEFAULT NULL COMMENT '商品单位',
   `price` decimal(10,2) DEFAULT NULL COMMENT '单价',
   `total` decimal(10,2) DEFAULT NULL COMMENT '总金额',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   `is_valid` int DEFAULT NULL COMMENT '有效状态',
-  `create_date` datetime DEFAULT NULL COMMENT '创建日期',
+  `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
   `update_date` datetime DEFAULT NULL COMMENT '修改日期',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of t_order_details
 -- ----------------------------
+INSERT INTO `t_order_details` VALUES ('1', '1', '测试商品1', '1', '盒', '199.99', '199.99', null, '0', '2021-11-30 00:00:00', '2021-11-30 15:59:07');
+INSERT INTO `t_order_details` VALUES ('2', '1', '测试商品2', '4', '箱', '499.50', '1998.00', null, '0', '2021-11-30 15:46:45', null);
+INSERT INTO `t_order_details` VALUES ('3', '1', '测试商品3', '2', '箱', '600.00', '1200.00', null, '0', '2021-11-30 00:00:00', '2021-11-30 16:13:01');
+INSERT INTO `t_order_details` VALUES ('4', '1', '测试商品4', '3', '瓶', '399.50', '1198.50', null, '0', '2021-11-30 00:00:00', '2021-11-30 16:17:03');
 
 -- ----------------------------
 -- Table structure for t_permission

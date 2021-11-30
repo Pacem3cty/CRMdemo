@@ -3,64 +3,50 @@
     <div>
       <el-descriptions
         class="margin-top"
-        title="客户基本信息"
+        title="客户-订单详情信息"
         :column="3"
-        :size="size"
         border
       >
         <el-descriptions-item>
           <template slot="label">
-            <i class="el-icon-s-opportunity"></i>客户编号</template
-          >{{ this.$props.multiple[0].cusNum }}
+            <i class="el-icon-s-custom"></i>客户编号</template
+          >{{ this.$props.cusNum }}
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label">
             <i class="el-icon-office-building"></i>客户名称</template
-          >{{ this.$props.multiple[0].cusName }}
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <i class="el-icon-s-custom"></i>法人代表</template
-          >{{ this.$props.multiple[0].artificialPerson }}
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <i class="el-icon-s-custom"></i>客户经理</template
-          >{{ this.$props.multiple[0].cusManager }}
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <i class="el-icon-s-custom"></i>客户级别</template
-          >{{ this.$props.multiple[0].level }}
+          >{{ this.$props.cusName }}
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label">
             <i class="el-icon-mobile-phone"></i>客户电话</template
-          >{{ this.$props.multiple[0].cusPhone }}
+          >{{ this.$props.cusPhone }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template slot="label">
+            <i class="el-icon-s-order"></i>订单编号</template
+          >{{ this.$props.multiple[0].orderNum }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template slot="label">
+            <i class="el-icon-s-custom"></i>下单时间</template
+          >{{ this.$props.multiple[0].orderDate }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template slot="label">下单地址</template
+          >{{ this.$props.multiple[0].address }}
         </el-descriptions-item>
       </el-descriptions>
     </div>
-    <!-- <div style="font-size: 25px; float: left; margin-left: 25px">
+    <div style="font-size: 25px; float: left; margin-left: 25px">
       <i
         class="el-icon-success"
         style="margin-right: 6px; :6px ; cursor: pointer"
-        @click="this.onsignpaid"
+        @click="signPaidDialogVisible = true"
         title="标记已支付"
       ></i>
-    </div> -->
+    </div>
     <div style="font-size: 25px; float: right; margin-right: 25px">
-      <i
-        class="el-icon-s-order"
-        style="margin-right: 6px; cursor: pointer"
-        title="修改订单项详情"
-        @click="onorderdetails"
-      ></i>
-      <i
-        class="el-icon-document-checked"
-        style="margin-right: 6px; cursor: pointer"
-        @click="onInfo"
-        title="订单项详情"
-      ></i>
       <i
         class="el-icon-document-add"
         style="margin-right: 6px; cursor: pointer"
@@ -85,6 +71,11 @@
         @click="queryAll"
         title="刷新"
       ></i>
+      <i
+        class="el-icon-document"
+        style="margin-right: 6px; cursor: pointer"
+        title="导出为PDF"
+      ></i>
     </div>
     <div class="table-div">
       <el-table
@@ -106,16 +97,6 @@
           :width="item.width"
         >
         </el-table-column>
-        <el-table-column prop="state" label="支付状态" width="85">
-          <template slot-scope="scope">
-            <span v-if="scope.row.state === 0"
-              ><el-tag type="info">未支付</el-tag></span
-            >
-            <span v-else-if="scope.row.state === 1"
-              ><el-tag type="success">已支付</el-tag></span
-            >
-          </template>
-        </el-table-column>
       </el-table>
       <div class="block">
         <el-pagination
@@ -131,49 +112,17 @@
       </div>
     </div>
     <div>
-      <!-- <el-dialog
+      <el-dialog
         :close-on-click-modal="false"
         :visible.sync="signPaidDialogVisible"
         :append-to-body="true"
         width="30%"
         ><i slot="title" class="el-icon-warning">警告</i>
-        <span>确认订单已支付？标记已支付后将无法进行订单详情信息维护</span>
+        <span>确认订单已支付？标记已支付后将无法修改此订单详情信息</span>
         <span slot="footer" class="dialog-footer">
           <el-button @click="signPaidDialogVisible = false">取消</el-button>
           <el-button type="primary" @click="signPaid">确定</el-button>
         </span>
-      </el-dialog> -->
-      <el-dialog
-        title="订单项详情查看"
-        v-if="outerVisible"
-        :visible.sync="outerVisible"
-        :append-to-body="true"
-        :close-on-click-modal="false"
-      >
-        <OrderDetailsInfo
-          @onAdd="onAdd"
-          @queryAll="queryAll"
-          :multiple="this.multipleSelection"
-          :cusNum="this.cusNum"
-          :cusName="this.cusName"
-          :cusPhone="this.cusPhone"
-        ></OrderDetailsInfo>
-      </el-dialog>
-      <el-dialog
-        title="订单项详情管理"
-        v-if="outerOrderDetailsVisible"
-        :visible.sync="outerOrderDetailsVisible"
-        :append-to-body="true"
-        :close-on-click-modal="false"
-      >
-        <OrderDetailsMainten
-          @onAdd="onAdd"
-          @queryAll="queryAll"
-          :multiple="this.multipleSelection"
-          :cusNum="this.cusNum"
-          :cusName="this.cusName"
-          :cusPhone="this.cusPhone"
-        ></OrderDetailsMainten>
       </el-dialog>
       <!-- 删除提示 -->
       <el-dialog
@@ -189,55 +138,50 @@
         </span>
       </el-dialog>
       <el-dialog
-        title="新增订单信息"
+        title="新增订单详情信息"
         :visible.sync="outerAddVisible"
         :append-to-body="true"
         :close-on-click-modal="false"
       >
-        <CusOrderAdd
+        <OrderDetailsAdd
           v-if="outerAddVisible"
           @onAdd="onAdd"
           @queryAll="queryAll"
-          :id="this.id"
-        ></CusOrderAdd>
+          :id="this.$props.multiple[0].id"
+          :modal-append-to-body="true"
+        ></OrderDetailsAdd>
       </el-dialog>
       <el-dialog
-        title="修改订单信息"
-        v-if="outerUpdateVisible"
+        title="修改订单详情信息"
         :visible.sync="outerUpdateVisible"
         :append-to-body="true"
         :close-on-click-modal="false"
       >
-        <CusOrderUpdate
+        <OrderDetailsUpdate
           @onAdd="onAdd"
           @queryAll="queryAll"
           :multiple="this.multipleSelection"
-          :id="this.id"
-        ></CusOrderUpdate>
+          :id="this.$props.multiple[0].id"
+        ></OrderDetailsUpdate>
       </el-dialog>
     </div>
   </div>
 </template>
 <script>
-import CusOrderAdd from "../management/CusOrderAdd.vue";
-import CusOrderUpdate from "../management/CusOrderUpdate.vue";
-import OrderDetailsMainten from "../management/OrderDetailsMainten.vue";
-import OrderDetailsInfo from "../basicData/OrderDetailsInfo.vue";
-
+import OrderDetailsAdd from "../management/OrderDetailsAdd.vue";
+import OrderDetailsUpdate from "../management/OrderDetailsUpdate.vue";
 export default {
-  props: ["multiple"],
+  props: ["multiple", "cusNum", "cusName", "cusPhone"],
   components: {
-    CusOrderAdd,
-    CusOrderUpdate,
-    OrderDetailsMainten,
-    OrderDetailsInfo,
+    OrderDetailsAdd,
+    OrderDetailsUpdate,
   },
   data() {
     return {
-      outerOrderDetailsVisible: false,
+      id: this.$props.multiple[0].id,
+      signPaidDialogVisible: false,
       outerUpdateVisible: false,
       outerAddVisible: false,
-      // signPaidDialogVisible:false,
       outerVisible: false,
       innerVisible: false,
       loading: false,
@@ -246,17 +190,17 @@ export default {
       size: 5,
       total: 0,
       tableColumns: [
-        { key: "id", name: "编号", width: 50 },
-        { key: "orderNum", name: "订单编号", width: 150 },
-        { key: "orderDate", name: "下单时间", width: 100 },
-        { key: "address", name: "订单地址", width: 360 },
+        { key: "id", name: "序号", width: 50 },
+        { key: "goodsName", name: "商品名称", width: 200 },
+        { key: "unit", name: "单位", width: 50 },
+        { key: "price", name: "单价", width: 100 },
+        { key: "goodsNum", name: "数量", width: 50 },
+        { key: "total", name: "总价", width: 100 },
+        { key: "remark", name: "备注", width: 200 },
       ],
       multipleSelection: [],
       dialogVisible: false,
-      id: this.$props.multiple[0].id,
-      cusNum: this.$props.multiple[0].cusNum,
-      cusName: this.$props.multiple[0].cusName,
-      cusPhone: this.$props.multiple[0].cusPhone,
+      // cusId: this.$props.multiple[0].id,
       updateDate: "",
     };
   },
@@ -271,27 +215,68 @@ export default {
     },
   },
   methods: {
+    signPaid() {
+      this.setUpdateDate();
+      const params = {
+        id: this.$props.multiple[0].id,
+        updateDate: this.updateDate,
+      };
+      this.$store
+        .dispatch("CusOrder/signPaid", params)
+        .then(() => {
+          console.log(this.$store.state.CusOrder.signPaidInfo);
+          if (this.$store.state.CusOrder.signPaidInfo.data === true) {
+            this.signPaidDialogVisible = false;
+            this.$emit("onAdd");
+            this.$emit("queryAll");
+            this.$message({
+              message: "标记操作成功！",
+              type: "success",
+            });
+          } else {
+            this.signPaidDialogVisible = false;
+            this.$message.error("标记操作失败！");
+            this.$emit("onAdd");
+            this.$emit("queryAll");
+          }
+          if (this.$store.state.CusOrder.signPaidInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            this.signPaidDialogVisible = false;
+            this.queryAll();
+            return;
+          }
+        })
+        .catch((e) => {
+          this.$message.error("标记操作失败！发生错误：" + e);
+          this.signPaidDialogVisible = false;
+        });
+    },
     queryAll() {
       this.loading = true;
       const params = {
         current: this.currentPage,
         pageSize: this.size,
-        cusId: this.$props.multiple[0].id,
+        orderId: this.$props.multiple[0].id,
       };
       this.$store
-        .dispatch("CusOrder/queryAllCusOrderInfo", params)
+        .dispatch("OrderDetails/queryAllOrderDetailsInfo", params)
         .then(() => {
-          if (this.$store.state.CusOrder.cusOrderInfo.code === 200) {
+          if (this.$store.state.OrderDetails.orderDetailsInfo.code === 200) {
             this.loading = false; //取消加载状态
             this.tableData =
-              this.$store.state.CusOrder.cusOrderInfo.data.records;
+              this.$store.state.OrderDetails.orderDetailsInfo.data.records;
 
-            this.total = this.$store.state.CusOrder.cusOrderInfo.data.total;
+            this.total =
+              this.$store.state.OrderDetails.orderDetailsInfo.data.total;
             this.currentPage =
-              this.$store.state.CusOrder.cusOrderInfo.data.current;
-            this.size = this.$store.state.CusOrder.cusOrderInfo.data.size;
+              this.$store.state.OrderDetails.orderDetailsInfo.data.current;
+            this.size =
+              this.$store.state.OrderDetails.orderDetailsInfo.data.size;
           }
-          if (this.$store.state.CusOrder.cusOrderInfo.code === 403) {
+          if (this.$store.state.OrderDetails.orderDetailsInfo.code === 403) {
             this.$message({
               message: "当前角色无相关权限",
               type: "warning",
@@ -343,12 +328,12 @@ export default {
         ids: arrayId,
       };
       this.$store
-        .dispatch("CusOrder/del", params)
+        .dispatch("OrderDetails/del", params)
         .then(() => {
-          console.log(this.$store.state.CusOrder.deleteInfo);
+          // console.log(this.$store.state.CusContact.deleteInfo);
           if (
-            this.$store.state.CusOrder.deleteInfo.code === 200 &&
-            this.$store.state.CusOrder.deleteInfo.data === true
+            this.$store.state.OrderDetails.deleteInfo.code === 200 &&
+            this.$store.state.OrderDetails.deleteInfo.data === true
           ) {
             this.$message({
               message: "删除操作成功！",
@@ -358,7 +343,7 @@ export default {
           } else {
             this.$message.error("执行删除操作失败！");
           }
-          if (this.$store.state.CusOrder.deleteInfo.code === 403) {
+          if (this.$store.state.OrderDetails.deleteInfo.code === 403) {
             this.$message({
               message: "当前角色无相关权限",
               type: "warning",
@@ -375,47 +360,9 @@ export default {
       this.updateDate =
         date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     },
-    // signPaid() {
-    //   this.setUpdateDate();
-    //   const params = {
-    //     id: this.multipleSelection[0].id,
-    //     updateDate:this.updateDate
-    //   };
-    //   this.$store
-    //     .dispatch("CusOrder/signPaid", params)
-    //     .then(() => {
-    //       console.log(this.$store.state.CusOrder.signPaidInfo);
-    //       if (this.$store.state.CusOrder.signPaidInfo.data === true) {
-    //         this.signPaidDialogVisible = false;
-    //         this.queryAll();
-    //         this.$message({
-    //           message: "标记操作成功！",
-    //           type: "success",
-    //         });
-    //       } else {
-    //         this.signPaidDialogVisible = false;
-    //         this.$message.error("标记操作失败！");
-    //         this.queryAll();
-    //       }
-    //       if (this.$store.state.CusOrder.signPaidInfo.code === 403) {
-    //         this.$message({
-    //           message: "当前角色无相关权限",
-    //           type: "warning",
-    //         });
-    //         this.signPaidDialogVisible = false;
-    //         this.queryAll();
-    //         return;
-    //       }
-    //     })
-    //     .catch((e) => {
-    //       this.$message.error("标记操作失败！发生错误：" + e);
-    //       this.signPaidDialogVisible = false;
-    //     });
-    // },
     onAdd: function () {
       this.outerAddVisible = false;
       this.outerUpdateVisible = false;
-      this.outerOrderDetailsVisible = false;
     },
     ondetails: function () {
       if (
@@ -436,60 +383,6 @@ export default {
         return;
       }
       this.outerUpdateVisible = true;
-    },
-    onInfo: function () {
-      if (
-        this.multipleSelection === undefined ||
-        this.multipleSelection.length === 0
-      ) {
-        this.$message({
-          message: "请选择一条信息查看订单详情",
-          type: "warning",
-        });
-        return;
-      }
-      if (this.multipleSelection.length > 1) {
-        this.$message({
-          message: "最多只能选择一条信息查看订单详情",
-          type: "warning",
-        });
-        return;
-      }
-      if (this.multipleSelection[0].state === 0) {
-        this.$message({
-          message: "未支付订单无法查看详情",
-          type: "warning",
-        });
-        return;
-      }
-      this.outerVisible = true;
-    },
-    onorderdetails: function () {
-      if (
-        this.multipleSelection === undefined ||
-        this.multipleSelection.length === 0
-      ) {
-        this.$message({
-          message: "请选择一条信息执行管理订单详情操作",
-          type: "warning",
-        });
-        return;
-      }
-      if (this.multipleSelection.length > 1) {
-        this.$message({
-          message: "最多只能选择一条信息执行管理订单详情操作",
-          type: "warning",
-        });
-        return;
-      }
-      if (this.multipleSelection[0].state === 1) {
-        this.$message({
-          message: "已支付订单无法修改详情",
-          type: "warning",
-        });
-        return;
-      }
-      this.outerOrderDetailsVisible = true;
     },
   },
 };

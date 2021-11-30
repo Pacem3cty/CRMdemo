@@ -49,6 +49,9 @@ public class TOrderDetails implements Serializable {
     @ApiModelProperty(value = "总金额")
     private BigDecimal total;
 
+    @ApiModelProperty(value = "备注")
+    private String remark;
+
     @ApiModelProperty(value = "有效状态")
     private Integer isValid;
 

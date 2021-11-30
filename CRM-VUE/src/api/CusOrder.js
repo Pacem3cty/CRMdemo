@@ -19,3 +19,11 @@ export function update(params) {
 export function del(params) {
   return post("/api/cusOrder/delete", params)
 }
+
+export function signPaid(params) {
+  return post("/api/cusOrder/signPaid", params)
+}
+
+export function getOrderNum(params) {
+  return post("/api/cusOrder/getOrderNum", params)
+}

@@ -120,10 +120,10 @@ export default {
               if (
                 this.$store.state.Login.loginInfo.data[0].pwdIsTrue === true
               ) {
-                this.$message({
-                  message: this.$store.state.Login.loginInfo.data[0].loginTip,
-                  type: "success",
-                });
+                // this.$message({
+                //   message: this.$store.state.Login.loginInfo.data[0].loginTip,
+                //   type: "success",
+                // });
                 localStorage.setItem(
                   "token",
                   this.$store.state.Login.loginInfo.data[0].token
@@ -156,10 +156,10 @@ export default {
           this.$store
             .dispatch("Main/main", localStorage.getItem("id"))
             .then(() => {
-              this.$message({
-                  message: "获取权限成功！",
-                  type: "success",
-                });
+              // this.$message({
+              //     message: "获取权限成功！",
+              //     type: "success",
+              //   });
             })
             .catch((e) => {
               this.$message.error("加载角色权限发生错误：" + e);
@@ -181,6 +181,10 @@ export default {
                         "roleName",
                         this.$store.state.Role.queryRoleNameInfo.data
                       );
+                      this.$message({
+                  message: this.$store.state.Login.loginInfo.data[0].loginTip,
+                  type: "success",
+                });
                       this.$router.push("/home");
                     }
                   });

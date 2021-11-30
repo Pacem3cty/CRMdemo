@@ -15,38 +15,69 @@
               placeholder="请选择编号"
               readonly
               :style="{ width: '100%' }"
+            ></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="商品名称" prop="goodsName">
+            <el-input
+              v-model="addForm.goodsName"
+              placeholder="请选择商品名称"
+              :style="{ width: '100%' }"
+            ></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="单位" prop="unit">
+            <el-input
+              v-model="addForm.unit"
+              placeholder="请输入单位"
+              clearable
+              :style="{ width: '100%' }"
             >
             </el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="订单编号" prop="orderNum">
+          <el-form-item label="单价" prop="price">
             <el-input
-              v-model="addForm.orderNum"
-              placeholder="请选择订单编号"
+              v-model="addForm.price"
+              placeholder="请输入单价"
+              clearable
+              :style="{ width: '100%' }"
+            >
+              <template slot="prepend">¥</template>
+            </el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="数量" prop="goodsNum">
+            <el-input
+              v-model="addForm.goodsNum"
+              placeholder="请输入数量"
+              clearable
+              :style="{ width: '100%' }"
+            >
+            </el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="总价" prop="total">
+            <el-input
+              v-model="addForm.total"
+              placeholder="请输入总价"
               readonly
               :style="{ width: '100%' }"
             >
+              <template slot="prepend">¥</template>
             </el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="下单时间" prop="orderDate">
-            <el-date-picker
-              v-model="addForm.orderDate"
-              format="yyyy-MM-dd"
-              value-format="yyyy-MM-dd"
-              :style="{ width: '100%' }"
-              placeholder="请输入下单时间"
-              clearable
-            ></el-date-picker>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="地址" prop="address">
+          <el-form-item label="备注" prop="remark">
             <el-input
-              v-model="addForm.address"
-              placeholder="请输入地址"
+              v-model="addForm.remark"
+              placeholder="请输入备注"
               clearable
               :style="{ width: '100%' }"
             >
@@ -71,9 +102,12 @@ export default {
     return {
       addForm: {
         id: undefined,
-        orderNum: undefined,
-        orderDate: null,
-        address: undefined,
+        goodsName: undefined,
+        unit: undefined,
+        price: undefined,
+        goodsNum: undefined,
+        total: undefined,
+        remark: undefined,
       },
       createDate: "",
       rules: {
@@ -84,82 +118,98 @@ export default {
             trigger: "blur",
           },
         ],
-        orderNum: [
+        goodsName: [
           {
             required: true,
-            message: "请选择订单编号",
+            message: "请选择商品名称",
             trigger: "blur",
           },
         ],
-        orderDate: [
+        unit: [
           {
             required: true,
-            message: "请输入下单时间",
-            trigger: "change",
+            message: "请输入单位",
+            trigger: "blur",
           },
-        ],
-        address: [
           {
-            required: true,
-            message: "请输入地址",
+            pattern: /^[\u4e00-\u9fa5]{0,}$/,
+            message: "请输入中文",
             trigger: "blur",
           },
         ],
+        price: [
+          {
+            required: true,
+            message: "请输入单价",
+            trigger: "blur",
+          },
+          {
+            pattern: /^[0-9].*$/,
+            message: "请输入数字",
+            trigger: "blur",
+          },
+        ],
+        goodsNum: [
+          {
+            required: true,
+            message: "请输入数量",
+            trigger: "blur",
+          },
+          {
+            pattern: /^[0-9].*$/,
+            message: "请输入数字",
+            trigger: "blur",
+          },
+        ],
+        total: [
+          {
+            required: true,
+            message: "请输入总价",
+            trigger: "blur",
+          },
+          {
+            pattern: /^[0-9].*$/,
+            message: "请输入数字",
+            trigger: "blur",
+          },
+        ],
+        remark: [],
       },
     };
   },
   computed: {},
-  watch: {},
+  watch: {
+    "addForm.goodsNum": function () {
+      this.calTotal();
+    },
+    "addForm.price": function () {
+      this.calTotal();
+    },
+  },
   created() {
     this.init();
   },
   mounted() {},
   methods: {
+    calTotal() {
+      this.addForm.total = this.addForm.price * this.addForm.goodsNum;
+    },
     init() {
       let date = new Date();
       this.createDate =
         date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
       this.$store
-        .dispatch("CusOrder/getCurrentId", null) //从API中匹配相应的路径发送请求以及请求参数
+        .dispatch("OrderDetails/getCurrentId", null) //从API中匹配相应的路径发送请求以及请求参数
         .then(() => {
-          if (this.$store.state.CusOrder.currentIdInfo.code === 200) {
+          if (this.$store.state.OrderDetails.currentIdInfo.code === 200) {
             //状态码为200 即请求成功
-            this.addForm.id = this.$store.state.CusOrder.currentIdInfo.data;
+            this.addForm.id = this.$store.state.OrderDetails.currentIdInfo.data;
           } else {
             this.$emit("onAdd");
             this.$emit("queryAll");
             this.$message.error("获取编号失败导致无法执行添加操作！");
           }
-          if (this.$store.state.CusOrder.currentIdInfo.code === 403) {
-            this.$message({
-              message: "当前角色无相关权限",
-              type: "warning",
-            });
-            this.$emit("onAdd");
-            this.$emit("queryAll");
-            return;
-          }
-        })
-        .catch((e) => {
-          this.$emit("onAdd");
-          this.$emit("queryAll");
-          this.$message.error(
-            "获取编号失败导致无法执行添加操作！发生错误：" + e
-          );
-        });
-      this.$store
-        .dispatch("CusOrder/getOrderNum", null) //从API中匹配相应的路径发送请求以及请求参数
-        .then(() => {
-          if (this.$store.state.CusOrder.orderNumInfo.code === 200) {
-            //状态码为200 即请求成功
-            this.addForm.orderNum =
-              this.$store.state.CusOrder.orderNumInfo.data;
-          } else {
-            this.$emit("onAdd");
-            this.$emit("queryAll");
-            this.$message.error("获取角色编号失败导致无法执行添加操作！");
-          }
-          if (this.$store.state.CusOrder.orderNumInfo.code === 403) {
+          if (this.$store.state.OrderDetails.currentIdInfo.code === 403) {
             this.$message({
               message: "当前角色无相关权限",
               type: "warning",
@@ -185,20 +235,21 @@ export default {
         if (valid) {
           const params = {
             id: this.addForm.id,
-            // cusId:this.addForm.cusId,
-            cusId: this.$props.id,
-            orderNum: this.addForm.orderNum,
-            orderDate: this.addForm.orderDate,
-            address: this.addForm.address,
-            state: 0,
+            orderId: this.$props.id,
+            goodsName: this.addForm.goodsName,
+            goodsNum: this.addForm.goodsNum,
+            unit: this.addForm.unit,
+            price: this.addForm.price,
+            total: this.addForm.total,
+            remark: this.addForm.remark,
             isValid: 0,
             createDate: this.createDate,
             updateDate: "",
           };
           this.$store
-            .dispatch("CusOrder/add", params)
+            .dispatch("OrderDetails/add", params)
             .then(() => {
-              if (this.$store.state.CusOrder.addInfo.data === true) {
+              if (this.$store.state.OrderDetails.addInfo.data === true) {
                 this.$emit("onAdd");
                 this.$emit("queryAll");
                 this.$message({
@@ -211,7 +262,7 @@ export default {
                 this.$emit("queryAll");
                 this.resetForm();
               }
-              if (this.$store.state.CusOrder.addInfo.code === 403) {
+              if (this.$store.state.OrderDetails.addInfo.code === 403) {
                 this.$message({
                   message: "当前角色无相关权限",
                   type: "warning",
@@ -232,8 +283,7 @@ export default {
       });
     },
     resetForm() {
-      this.addForm.orderDate = "";
-      this.addForm.address = "";
+      this.$refs["addForm"].resetFields();
     },
   },
 };

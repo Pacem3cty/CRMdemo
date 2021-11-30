@@ -179,7 +179,7 @@ export default {
       ],
       multipleSelection: [],
       dialogVisible: false,
-      cusId: this.$props.multiple[0].id,
+      // cusId: this.$props.multiple[0].id,
       updateDate: "",
     };
   },

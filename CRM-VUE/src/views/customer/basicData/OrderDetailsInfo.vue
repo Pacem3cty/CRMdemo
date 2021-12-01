@@ -1,5 +1,11 @@
 <template>
   <div>
+    <div style="display: inline; font-size: 15px">
+      <label style="margin-right: 6px; :6px ; cursor: pointer">
+        <i class="el-icon-money"></i>订单总金额：</label
+      >
+      <label style="color: blue">¥ {{ orderTotal }}</label>
+    </div>
     <div>
       <el-descriptions
         class="margin-top"
@@ -42,7 +48,7 @@
          <i
         class="el-icon-refresh-left"
         style="margin-right: 6px; cursor: pointer"
-        @click="queryAll"
+        @click="reInit"
         title="刷新"
       ></i>
       <i
@@ -118,10 +124,11 @@ export default {
       dialogVisible: false,
       // cusId: this.$props.multiple[0].id,
       updateDate: "",
+      orderTotal:""
     };
   },
   created() {
-    this.queryAll();
+    this.reInit();
   },
   watch: {
     multiple: function () {
@@ -131,6 +138,10 @@ export default {
     },
   },
   methods: {
+    reInit() {
+      this.queryAll();
+      this.getOrderTotal();
+    },
     queryAll() {
       this.loading = true;
       const params = {
@@ -154,6 +165,27 @@ export default {
               this.$store.state.OrderDetails.orderDetailsInfo.data.size;
           }
           if (this.$store.state.OrderDetails.orderDetailsInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            return;
+          }
+        })
+        .catch((e) => {
+          this.loading = false;
+          this.$message.error("发生错误：" + e);
+        });
+    },
+    getOrderTotal() {
+      this.$store
+        .dispatch("OrderDetails/getOrderTotal", this.$props.multiple[0].id)
+        .then(() => {
+          if (this.$store.state.OrderDetails.orderTotalInfo.code === 200) {
+            this.orderTotal =
+              this.$store.state.OrderDetails.orderTotalInfo.data;
+          }
+          if (this.$store.state.OrderDetails.orderTotalInfo.code === 403) {
             this.$message({
               message: "当前角色无相关权限",
               type: "warning",

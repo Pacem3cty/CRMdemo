@@ -206,7 +206,7 @@ export default {
             this.addForm.id = this.$store.state.OrderDetails.currentIdInfo.data;
           } else {
             this.$emit("onAdd");
-            this.$emit("queryAll");
+            this.$emit("reInit");
             this.$message.error("获取编号失败导致无法执行添加操作！");
           }
           if (this.$store.state.OrderDetails.currentIdInfo.code === 403) {
@@ -215,13 +215,13 @@ export default {
               type: "warning",
             });
             this.$emit("onAdd");
-            this.$emit("queryAll");
+            this.$emit("reInit");
             return;
           }
         })
         .catch((e) => {
           this.$emit("onAdd");
-          this.$emit("queryAll");
+          this.$emit("reInit");
           this.$message.error(
             "获取编号失败导致无法执行添加操作！发生错误：" + e
           );
@@ -251,7 +251,7 @@ export default {
             .then(() => {
               if (this.$store.state.OrderDetails.addInfo.data === true) {
                 this.$emit("onAdd");
-                this.$emit("queryAll");
+                this.$emit("reInit");
                 this.$message({
                   message: "新增操作成功！",
                   type: "success",
@@ -259,7 +259,7 @@ export default {
               } else {
                 this.$message.error("新增操作失败！");
                 this.$emit("onAdd");
-                this.$emit("queryAll");
+                this.$emit("reInit");
                 this.resetForm();
               }
               if (this.$store.state.OrderDetails.addInfo.code === 403) {
@@ -268,7 +268,7 @@ export default {
                   type: "warning",
                 });
                 this.$emit("onAdd");
-                this.$emit("queryAll");
+                this.$emit("reInit");
                 return;
               }
             })

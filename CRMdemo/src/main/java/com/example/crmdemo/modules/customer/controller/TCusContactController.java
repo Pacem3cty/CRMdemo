@@ -49,7 +49,7 @@ public class TCusContactController {
         queryWrapper.orderByAsc("id");//按升序排序
 
         Page page = new Page();//分页查询page类
-        page.setCurrent(tCusContactDTO.getCurrent());//获取当前页数
+        page.setCurrent(tCusContactDTO.getCurrent());//获取当前记录索引值
         page.setSize(tCusContactDTO.getPageSize());//获取每页显示条目
         IPage<TCusContact> pageResult = tCusContactService.findAll(page, queryWrapper);
         return CommonResult.success(pageResult);

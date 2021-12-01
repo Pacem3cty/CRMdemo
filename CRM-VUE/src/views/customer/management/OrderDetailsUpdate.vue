@@ -184,7 +184,7 @@ export default {
     "updateForm.goodsNum": function () {
       this.calTotal();
     },
-    "update.price": function () {
+    "updateForm.price": function () {
       this.calTotal();
     },
   },
@@ -221,7 +221,7 @@ export default {
             .then(() => {
               if (this.$store.state.OrderDetails.updateInfo.data === true) {
                 this.$emit("onAdd");
-                this.$emit("queryAll");
+                this.$emit("reInit");
                 this.$message({
                   message: "修改操作成功！",
                   type: "success",
@@ -229,7 +229,7 @@ export default {
               } else {
                 this.$message.error("修改操作失败！");
                 this.$emit("onAdd");
-                this.$emit("queryAll");
+                this.$emit("reInit");
                 this.resetForm();
               }
               if (this.$store.state.OrderDetails.updateInfo.code === 403) {
@@ -238,7 +238,7 @@ export default {
                   type: "warning",
                 });
                 this.$emit("onAdd");
-                this.$emit("queryAll");
+                this.$emit("reInit");
                 return;
               }
             })

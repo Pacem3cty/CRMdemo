@@ -1,11 +1,10 @@
-package com.example.crmdemo.modules.customer.dto;
+package com.example.crmdemo.modules.stats.dto;
 
-import com.example.crmdemo.modules.customer.model.TOrderDetails;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class TOrderDetailsDTO extends TOrderDetails {
+public class CusCTRBDTO {
     @ApiModelProperty(value = "当前记录索引值")
     private Integer current;
 

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.crmdemo.modules.stats.mapper.CusCTRBMapper">
+    <select id="pageListCusCTRB" parameterType="com.baomidou.mybatisplus.extension.plugins.pagination.Page"
+            resultType="com.example.crmdemo.modules.stats.model.CusCTRB">
+        SELECT t_cus.id,
+               cus_num,
+               cus_name,
+               cus_phone,
+               cus_manager,
+               SUM(order_total)                         AS ctrb,
+               COUNT(t_cus_order.id)                    AS orderCount,
+               SUM(order_total) / COUNT(t_cus_order.id) as aov
+        FROM t_cus_order,
+             t_cus
+        WHERE t_cus_order.state = 1
+          AND t_cus.is_valid = 0
+          AND t_cus_order.is_valid = 0
+          AND t_cus.id = cus_id
+        GROUP BY t_cus_order.cus_id
+    </select>
+</mapper>

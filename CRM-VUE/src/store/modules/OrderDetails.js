@@ -1,4 +1,4 @@
-import { queryAllOrderDetailsInfo, getCurrentId, update, add, del } from '../../api/OrderDetails'
+import { queryAllOrderDetailsInfo, getCurrentId, update, add, del,getOrderTotal } from '../../api/OrderDetails'
 
 const state = {
     orderDetailsInfo: {},
@@ -7,7 +7,8 @@ const state = {
     updateInfo: {},
     addInfo: {},
     signPaidInfo:{},
-    orderNumInfo:{}
+    orderNumInfo:{},
+    orderTotalInfo:{}
 }
 
 
@@ -26,6 +27,9 @@ const mutations = {
     },
     SET_UPDATEINFO: (state, updateInfo) => {
         state.updateInfo = updateInfo
+    },
+    SET_ORDERTOTALINFO: (state, orderTotalInfo) => {
+        state.orderTotalInfo = orderTotalInfo
     },
 }
 
@@ -80,6 +84,17 @@ const actions = {
             del(param).then(response => {
                 //   const { data } = response
                 commit('SET_DELETEINFO', response)
+                resolve()
+            }).catch(error => {
+                reject(error)
+            })
+        })
+    },
+    getOrderTotal({ commit }, param) {
+        return new Promise((resolve, reject) => {
+            getOrderTotal(param).then(response => {
+                //   const { data } = response
+                commit('SET_ORDERTOTALINFO', response)
                 resolve()
             }).catch(error => {
                 reject(error)

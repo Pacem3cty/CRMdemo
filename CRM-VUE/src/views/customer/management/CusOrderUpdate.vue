@@ -17,7 +17,7 @@
         <el-col :span="12">
           <el-form-item label="下单时间" prop="orderDate">
             <el-date-picker v-model="updateForm.orderDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
-              :style="{width: '100%'}" placeholder="请输入下单时间" clearable></el-date-picker>
+              :style="{width: '100%'}" placeholder="请输入下单时间" :picker-options="pickerOptions" clearable></el-date-picker>
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -72,6 +72,29 @@ export default {
           trigger: 'blur'
         }],
       },
+      dateRange: [],
+      pickerMinDate: "",
+      pickerOptions: {
+        onPick: ({ maxDate, minDate }) => {
+          this.pickerMinDate = minDate.getTime();
+          if (maxDate) {
+            this.pickerMinDate = "";
+          }
+        },
+        // 限制不能选择今天之后的日期
+        disabledDate: (time) => {
+          if (this.pickerMinDate !== "") {
+            let one = 31 * 24 * 3600 * 1000;
+            let minTime = this.pickerMinDate - one;
+            let maxTime = this.pickerMinDate + one;
+            if (maxTime > new Date()) {
+              maxTime = new Date();
+            }
+            return time.getTime() < minTime || time.getTime() > maxTime;
+          }
+          return time.getTime() > Date.now();
+        },
+      },
     }
   },
   computed: {},
@@ -96,6 +119,7 @@ export default {
             orderNum: this.updateForm.orderNum,
             orderDate: this.updateForm.orderDate,
             address: this.updateForm.address,
+            orderTotal:this.$props.multiple[0].orderTotal,
             state: this.$props.multiple[0].state,
             isValid: 0,
             createDate: this.$props.multiple[0].createDate,

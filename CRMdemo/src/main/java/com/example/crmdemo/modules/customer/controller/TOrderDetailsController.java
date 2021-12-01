@@ -50,7 +50,7 @@ public class TOrderDetailsController {
         queryWrapper.orderByAsc("id");//按升序排序
 
         Page page = new Page();//分页查询page类
-        page.setCurrent(tOrderDetailsDTO.getCurrent());//获取当前页数
+        page.setCurrent(tOrderDetailsDTO.getCurrent());//获取当前记录索引值
         page.setSize(tOrderDetailsDTO.getPageSize());//获取每页显示条目
         IPage<TOrderDetails> pageResult = tOrderDetailsService.findAll(page, queryWrapper);
         return CommonResult.success(pageResult);

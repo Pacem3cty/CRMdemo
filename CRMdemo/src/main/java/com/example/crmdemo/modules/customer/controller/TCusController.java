@@ -59,7 +59,7 @@ public class TCusController {
         queryWrapper.orderByAsc("id");//按升序排序
 
         Page page = new Page();//分页查询page类
-        page.setCurrent(tCusDTO.getCurrent());//获取当前页数
+        page.setCurrent(tCusDTO.getCurrent());//获取当前记录索引值
         page.setSize(tCusDTO.getPageSize());//获取每页显示条目
         IPage<TCus> pageResult = tCusService.findAll(page, queryWrapper);
         return CommonResult.success(pageResult);

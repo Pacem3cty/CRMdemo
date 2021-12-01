@@ -16,6 +16,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -56,7 +57,7 @@ public class TCusOrderController {
         queryWrapper.orderByAsc("id");//按升序排序
 
         Page page = new Page();//分页查询page类
-        page.setCurrent(tCusOrderDTO.getCurrent());//获取当前页数
+        page.setCurrent(tCusOrderDTO.getCurrent());//获取当前记录索引值
         page.setSize(tCusOrderDTO.getPageSize());//获取每页显示条目
         IPage<TCusOrder> pageResult = tCusOrderService.findAll(page, queryWrapper);
         return CommonResult.success(pageResult);
@@ -110,11 +111,11 @@ public class TCusOrderController {
 
         JSONObject jsonObject = JSONObject.parseObject(jsonStr);
         Integer id = jsonObject.getInteger("id");//角色编号
-        Date updateDate = jsonObject.getDate("updateDate");
+        BigDecimal orderTotal =jsonObject.getBigDecimal("orderTotal");
 
         UpdateWrapper<TCusOrder> updateWrapper = new UpdateWrapper<>();
 
-        updateWrapper.set("state", 1).set("update_date",updateDate).eq("id", id).eq("is_valid", 0);
+        updateWrapper.set("state", 1).set("order_total",orderTotal).set("update_date",new Date()).eq("id", id).eq("is_valid", 0);
 
         return CommonResult.success(tCusOrderService.updatePart(tCusOrder,updateWrapper));
     }

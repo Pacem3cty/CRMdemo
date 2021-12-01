@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80026
 File Encoding         : 65001
 
-Date: 2021-11-30 16:49:54
+Date: 2021-12-01 16:49:08
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -166,19 +166,20 @@ CREATE TABLE `t_cus_order` (
   `order_num` varchar(40) DEFAULT NULL COMMENT '订单编号',
   `order_date` datetime DEFAULT NULL COMMENT '下单时间',
   `address` varchar(255) DEFAULT NULL COMMENT '地址',
+  `order_total` decimal(10,2) DEFAULT NULL COMMENT '订单总额',
   `state` int DEFAULT NULL COMMENT '状态',
   `is_valid` int DEFAULT NULL COMMENT '有效状态 0 有效 1 无效',
   `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
   `update_date` datetime DEFAULT NULL COMMENT '修改日期',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of t_cus_order
 -- ----------------------------
-INSERT INTO `t_cus_order` VALUES ('1', '1', 'O202111300000001', '2021-11-30 00:00:00', '广东深圳', '1', '0', '2021-11-30 00:00:00', '2021-11-30 00:00:00');
-INSERT INTO `t_cus_order` VALUES ('3', '1', 'O202111300000002', '2021-11-04 00:00:00', '广东广州', '1', '0', '2021-11-30 10:18:22', '2021-11-30 00:00:00');
-INSERT INTO `t_cus_order` VALUES ('5', '1', 'O202111300000004', '2021-11-06 00:00:00', '测试地址', '0', '0', '2021-11-30 10:35:01', null);
+INSERT INTO `t_cus_order` VALUES ('1', '1', 'O202111300000001', '2021-11-30 00:00:00', '广东深圳', '4696.49', '1', '0', '2021-11-30 00:00:00', '2021-12-01 10:15:37');
+INSERT INTO `t_cus_order` VALUES ('3', '1', 'O202111300000002', '2021-11-04 00:00:00', '广东广州', null, '0', '0', '2021-11-30 10:18:22', '2021-11-30 00:00:00');
+INSERT INTO `t_cus_order` VALUES ('6', '2', 'O202112010000006', '2021-09-08 00:00:00', '浙江杭州', '1800.00', '1', '0', '2021-12-01 12:10:23', '2021-12-01 12:21:04');
 
 -- ----------------------------
 -- Table structure for t_cus_reprieve
@@ -291,15 +292,16 @@ CREATE TABLE `t_order_details` (
   `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
   `update_date` datetime DEFAULT NULL COMMENT '修改日期',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of t_order_details
 -- ----------------------------
-INSERT INTO `t_order_details` VALUES ('1', '1', '测试商品1', '1', '盒', '199.99', '199.99', null, '0', '2021-11-30 00:00:00', '2021-11-30 15:59:07');
+INSERT INTO `t_order_details` VALUES ('1', '1', '测试商品1', '1', '盒', '299.99', '299.99', null, '0', '2021-11-30 00:00:00', '2021-12-01 09:34:55');
 INSERT INTO `t_order_details` VALUES ('2', '1', '测试商品2', '4', '箱', '499.50', '1998.00', null, '0', '2021-11-30 15:46:45', null);
 INSERT INTO `t_order_details` VALUES ('3', '1', '测试商品3', '2', '箱', '600.00', '1200.00', null, '0', '2021-11-30 00:00:00', '2021-11-30 16:13:01');
 INSERT INTO `t_order_details` VALUES ('4', '1', '测试商品4', '3', '瓶', '399.50', '1198.50', null, '0', '2021-11-30 00:00:00', '2021-11-30 16:17:03');
+INSERT INTO `t_order_details` VALUES ('5', '6', '测试商品1', '3', '箱', '600.00', '1800.00', null, '0', '2021-12-01 12:21:01', null);
 
 -- ----------------------------
 -- Table structure for t_permission

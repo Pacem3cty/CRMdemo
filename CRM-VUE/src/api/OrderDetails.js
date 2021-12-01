@@ -19,3 +19,7 @@ export function update(params) {
 export function del(params) {
   return post("/api/cusOrderDetails/delete", params)
 }
+
+export function getOrderTotal(params) {
+  return post("/api/cusOrderDetails/getOrderTotal", params)
+}

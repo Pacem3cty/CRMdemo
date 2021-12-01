@@ -1,5 +1,11 @@
 <template>
   <div>
+    <div style="display: inline; font-size: 15px">
+      <label style="margin-right: 6px; :6px ; cursor: pointer">
+        <i class="el-icon-money"></i>订单总金额：</label
+      >
+      <label style="color: blue">¥ {{ orderTotal }}</label>
+    </div>
     <div>
       <el-descriptions
         class="margin-top"
@@ -139,27 +145,28 @@
       </el-dialog>
       <el-dialog
         title="新增订单详情信息"
+        v-if="outerAddVisible"
         :visible.sync="outerAddVisible"
         :append-to-body="true"
         :close-on-click-modal="false"
       >
         <OrderDetailsAdd
-          v-if="outerAddVisible"
           @onAdd="onAdd"
-          @queryAll="queryAll"
+          @reInit="reInit"
           :id="this.$props.multiple[0].id"
           :modal-append-to-body="true"
         ></OrderDetailsAdd>
       </el-dialog>
       <el-dialog
         title="修改订单详情信息"
+        v-if="outerUpdateVisible"
         :visible.sync="outerUpdateVisible"
         :append-to-body="true"
         :close-on-click-modal="false"
       >
         <OrderDetailsUpdate
           @onAdd="onAdd"
-          @queryAll="queryAll"
+          @reInit="reInit"
           :multiple="this.multipleSelection"
           :id="this.$props.multiple[0].id"
         ></OrderDetailsUpdate>
@@ -193,19 +200,20 @@ export default {
         { key: "id", name: "序号", width: 50 },
         { key: "goodsName", name: "商品名称", width: 200 },
         { key: "unit", name: "单位", width: 50 },
-        { key: "price", name: "单价", width: 100 },
+        { key: "price", name: "单价/¥", width: 100 },
         { key: "goodsNum", name: "数量", width: 50 },
-        { key: "total", name: "总价", width: 100 },
+        { key: "total", name: "总价/¥", width: 100 },
         { key: "remark", name: "备注", width: 200 },
       ],
       multipleSelection: [],
       dialogVisible: false,
       // cusId: this.$props.multiple[0].id,
       updateDate: "",
+      orderTotal: "",
     };
   },
   created() {
-    this.queryAll();
+    this.reInit();
   },
   watch: {
     multiple: function () {
@@ -215,11 +223,16 @@ export default {
     },
   },
   methods: {
+    reInit() {
+      this.queryAll();
+      this.getOrderTotal();
+    },
     signPaid() {
       this.setUpdateDate();
       const params = {
         id: this.$props.multiple[0].id,
-        updateDate: this.updateDate,
+        orderTotal:this.orderTotal,
+        // updateDate: this.updateDate,
       };
       this.$store
         .dispatch("CusOrder/signPaid", params)
@@ -289,6 +302,27 @@ export default {
           this.$message.error("发生错误：" + e);
         });
     },
+    getOrderTotal() {
+      this.$store
+        .dispatch("OrderDetails/getOrderTotal", this.$props.multiple[0].id)
+        .then(() => {
+          if (this.$store.state.OrderDetails.orderTotalInfo.code === 200) {
+            this.orderTotal =
+              this.$store.state.OrderDetails.orderTotalInfo.data;
+          }
+          if (this.$store.state.OrderDetails.orderTotalInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            return;
+          }
+        })
+        .catch((e) => {
+          this.loading = false;
+          this.$message.error("发生错误：" + e);
+        });
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.size = val;
@@ -339,7 +373,7 @@ export default {
               message: "删除操作成功！",
               type: "success",
             });
-            this.queryAll();
+            this.reInit();
           } else {
             this.$message.error("执行删除操作失败！");
           }

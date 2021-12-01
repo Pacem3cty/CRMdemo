@@ -40,15 +40,13 @@
         </el-descriptions-item>
       </el-descriptions>
     </div>
-    <!-- <div style="font-size: 25px; float: left; margin-left: 25px">
-      <i
+    <div style="font-size: 25px; float: left; margin-left: 25px">
+      <!-- <i
         class="el-icon-success"
         style="margin-right: 6px; :6px ; cursor: pointer"
         @click="this.onsignpaid"
         title="标记已支付"
-      ></i>
-    </div> -->
-    <div style="font-size: 25px; float: right; margin-right: 25px">
+      ></i> -->
       <i
         class="el-icon-s-order"
         style="margin-right: 6px; cursor: pointer"
@@ -61,6 +59,8 @@
         @click="onInfo"
         title="订单项详情"
       ></i>
+    </div>
+    <div style="font-size: 25px; float: right; margin-right: 25px">
       <i
         class="el-icon-document-add"
         style="margin-right: 6px; cursor: pointer"
@@ -249,7 +249,8 @@ export default {
         { key: "id", name: "编号", width: 50 },
         { key: "orderNum", name: "订单编号", width: 150 },
         { key: "orderDate", name: "下单时间", width: 100 },
-        { key: "address", name: "订单地址", width: 360 },
+        { key: "address", name: "订单地址", width: 260 },
+        { key: "orderTotal", name: "总金额/¥", width: 100 },
       ],
       multipleSelection: [],
       dialogVisible: false,

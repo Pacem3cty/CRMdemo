@@ -396,6 +396,33 @@ export default {
       }
       this.outerUpdateVisible = true;
     },
+    onInfo: function () {
+      if (
+        this.multipleSelection === undefined ||
+        this.multipleSelection.length === 0
+      ) {
+        this.$message({
+          message: "请选择一条信息查看订单详情",
+          type: "warning",
+        });
+        return;
+      }
+      if (this.multipleSelection.length > 1) {
+        this.$message({
+          message: "最多只能选择一条信息查看订单详情",
+          type: "warning",
+        });
+        return;
+      }
+      if (this.multipleSelection[0].state === 0) {
+        this.$message({
+          message: "未支付订单无法查看详情",
+          type: "warning",
+        });
+        return;
+      }
+      this.outerVisible = true;
+    },
   },
 };
 </script>

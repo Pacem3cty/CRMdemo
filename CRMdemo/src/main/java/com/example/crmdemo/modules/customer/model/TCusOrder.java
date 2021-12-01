@@ -2,6 +2,8 @@ package com.example.crmdemo.modules.customer.model;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
+
+import java.math.BigDecimal;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
@@ -38,6 +40,9 @@ public class TCusOrder implements Serializable {
 
     @ApiModelProperty(value = "下单时间")
     private Date orderDate;
+
+    @ApiModelProperty(value = "订单总额")
+    private BigDecimal orderTotal;
 
     @ApiModelProperty(value = "地址")
     private String address;

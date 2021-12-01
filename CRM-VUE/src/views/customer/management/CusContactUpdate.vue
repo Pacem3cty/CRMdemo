@@ -1,28 +1,55 @@
 <template>
   <div>
     <el-row :gutter="15">
-      <el-form ref="updateForm" :model="updateForm" :rules="rules" size="medium" label-width="100px">
+      <el-form
+        ref="updateForm"
+        :model="updateForm"
+        :rules="rules"
+        size="medium"
+        label-width="100px"
+      >
         <el-col :span="12">
           <el-form-item label="编号" prop="id">
-            <el-input v-model="updateForm.id" placeholder="请选择编号" readonly :style="{width: '100%'}">
+            <el-input
+              v-model="updateForm.id"
+              placeholder="请选择编号"
+              readonly
+              :style="{ width: '100%' }"
+            >
             </el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="交往时间" prop="contactTime">
-            <el-date-picker v-model="updateForm.contactTime" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
-              :style="{width: '100%'}" placeholder="请选择交往时间" clearable></el-date-picker>
+            <el-date-picker
+              v-model="updateForm.contactTime"
+              format="yyyy-MM-dd"
+              value-format="yyyy-MM-dd"
+              :style="{ width: '100%' }"
+              placeholder="请选择交往时间"
+              :picker-options="pickerOptions"
+              clearable
+            ></el-date-picker>
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="交往地址" prop="contactAddress">
-            <el-input v-model="updateForm.contactAddress" placeholder="请输入交往地址" clearable
-              :style="{width: '100%'}"></el-input>
+            <el-input
+              v-model="updateForm.contactAddress"
+              placeholder="请输入交往地址"
+              clearable
+              :style="{ width: '100%' }"
+            ></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="交往概述" prop="overview">
-            <el-input v-model="updateForm.overview" placeholder="请输入交往概述" clearable :style="{width: '100%'}">
+            <el-input
+              v-model="updateForm.overview"
+              placeholder="请输入交往概述"
+              clearable
+              :style="{ width: '100%' }"
+            >
             </el-input>
           </el-form-item>
         </el-col>
@@ -39,7 +66,7 @@
 <script>
 export default {
   components: {},
-  props: ["multiple","id"],
+  props: ["multiple", "id"],
   data() {
     return {
       updateForm: {
@@ -48,30 +75,61 @@ export default {
         contactAddress: this.$props.multiple[0].contactAddress,
         overview: this.$props.multiple[0].overview,
       },
-      updateDate:"",
+      updateDate: "",
       rules: {
-        id: [{
-          required: true,
-          message: '请选择编号',
-          trigger: 'blur'
-        }],
-        contactTime: [{
-          required: true,
-          message: '请选择交往时间',
-          trigger: 'change'
-        }],
-        contactAddress: [{
-          required: true,
-          message: '请输入交往地址',
-          trigger: 'blur'
-        }],
-        overview: [{
-          required: true,
-          message: '请输入交往概述',
-          trigger: 'blur'
-        }],
+        id: [
+          {
+            required: true,
+            message: "请选择编号",
+            trigger: "blur",
+          },
+        ],
+        contactTime: [
+          {
+            required: true,
+            message: "请选择交往时间",
+            trigger: "change",
+          },
+        ],
+        contactAddress: [
+          {
+            required: true,
+            message: "请输入交往地址",
+            trigger: "blur",
+          },
+        ],
+        overview: [
+          {
+            required: true,
+            message: "请输入交往概述",
+            trigger: "blur",
+          },
+        ],
       },
-    }
+      dateRange: [],
+      pickerMinDate: "",
+      pickerOptions: {
+        onPick: ({ maxDate, minDate }) => {
+          this.pickerMinDate = minDate.getTime();
+          if (maxDate) {
+            this.pickerMinDate = "";
+          }
+        },
+        // 限制不能选择今天之后的日期
+        disabledDate: (time) => {
+          if (this.pickerMinDate !== "") {
+            let one = 31 * 24 * 3600 * 1000;
+            let minTime = this.pickerMinDate - one;
+            let maxTime = this.pickerMinDate + one;
+            if (maxTime > new Date()) {
+              maxTime = new Date();
+            }
+            return time.getTime() < minTime || time.getTime() > maxTime;
+          }
+          return time.getTime() > Date.now();
+        },
+      },
+    };
   },
   computed: {},
   watch: {},
@@ -89,7 +147,7 @@ export default {
         if (valid) {
           const params = {
             id: this.updateForm.id,
-            cusId:this.$props.id,
+            cusId: this.$props.id,
             contactTime: this.updateForm.contactTime,
             contactAddress: this.updateForm.contactAddress,
             overview: this.updateForm.overview,
@@ -138,9 +196,8 @@ export default {
       this.updateForm.contactAddress = this.$props.multiple[0].contactAddress;
       this.updateForm.overview = this.$props.multiple[0].overview;
     },
-  }
-}
-
+  },
+};
 </script>
 <style>
 </style>

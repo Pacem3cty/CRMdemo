@@ -34,4 +34,8 @@ public interface TCusService extends IService<TCus> {
     boolean updateById(String ids);
 
     boolean updatePart(TCus tCus, Wrapper<TCus> updateWrapper);
+
+    List<TCus> queryLossCus();
+
+    Integer updateCusLossStatusByIds(List<Integer> cusIds);
 }

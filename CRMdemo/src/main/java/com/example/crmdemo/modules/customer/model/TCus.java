@@ -84,7 +84,7 @@ public class TCus implements Serializable {
     @ApiModelProperty(value = "银行账号")
     private String accountNum;
 
-    @ApiModelProperty(value = "流失状态 0 未流失 1 暂缓流失 2 流失")
+    @ApiModelProperty(value = "流失状态 0 未流失 1 流失")
     private Integer lossStatus;
 
     @ApiModelProperty(value = "有效状态 0 有效 1 无效")

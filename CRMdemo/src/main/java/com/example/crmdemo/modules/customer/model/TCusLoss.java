@@ -31,8 +31,9 @@ public class TCusLoss implements Serializable {
     private Integer id;
 
     @ApiModelProperty(value = "客户编号")
-    private Integer cusId;
+    private String cusNum;
 
+    @ApiModelProperty(value = "客户名称")
     private String cusName;
 
     @ApiModelProperty(value = "客户经理")
@@ -44,7 +45,7 @@ public class TCusLoss implements Serializable {
     @ApiModelProperty(value = "确认流失时间")
     private Date confirmLossTime;
 
-    @ApiModelProperty(value = "流失状态")
+    @ApiModelProperty(value = "流失状态 0 暂缓流失 | 1 确认流失")
     private Integer state;
 
     @ApiModelProperty(value = "流失原因")

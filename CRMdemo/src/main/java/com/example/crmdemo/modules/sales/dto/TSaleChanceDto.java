@@ -4,7 +4,7 @@ import com.example.crmdemo.modules.sales.model.TSaleChance;
 import io.swagger.annotations.ApiModelProperty;
 
 public class TSaleChanceDto extends TSaleChance {
-    @ApiModelProperty(value = "当前记录索引值")
+    @ApiModelProperty(value = "当前页")
     private Integer current;
 
     @ApiModelProperty(value = "每页显示数目")

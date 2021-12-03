@@ -53,7 +53,7 @@ public class TRoleController {
         queryWrapper.orderByAsc("id");//按升序排序
 
         Page page = new Page();//分页查询page类
-        page.setCurrent(tRoleDTO.getCurrent());//获取当前记录索引值
+        page.setCurrent(tRoleDTO.getCurrent());//获取当前页
         page.setSize(tRoleDTO.getPageSize());//获取每页显示条目
         IPage<TRole> pageResult = tRoleService.findAll(page, queryWrapper);
         return CommonResult.success(pageResult);

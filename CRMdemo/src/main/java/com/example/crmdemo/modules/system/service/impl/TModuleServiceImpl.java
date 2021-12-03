@@ -101,4 +101,9 @@ public class TModuleServiceImpl extends ServiceImpl<TModuleMapper, TModule> impl
         });
         return flg.get();
     }
+
+    @Override
+    public List<TModule> queryOptValue(Integer[] array) {
+        return tModuleMapper.queryOptValueByIds(array);
+    }
 }

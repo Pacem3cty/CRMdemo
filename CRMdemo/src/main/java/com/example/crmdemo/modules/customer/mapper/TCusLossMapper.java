@@ -2,6 +2,10 @@ package com.example.crmdemo.modules.customer.mapper;
 
 import com.example.crmdemo.modules.customer.model.TCusLoss;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.crmdemo.modules.customer.model.TCusOrder;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>

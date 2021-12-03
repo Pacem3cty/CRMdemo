@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.crmdemo.modules.service.mapper.TCusServiceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.crmdemo.modules.service.model.TCusService">
+        <id column="id" property="id" />
+        <result column="service_type" property="serviceType" />
+        <result column="overview" property="overview" />
+        <result column="customer" property="customer" />
+        <result column="state" property="state" />
+        <result column="service_request" property="serviceRequest" />
+        <result column="create_person" property="createPerson" />
+        <result column="assign_person" property="assignPerson" />
+        <result column="assign_date" property="assignDate" />
+        <result column="service_process" property="serviceProcess" />
+        <result column="process_person" property="processPerson" />
+        <result column="process_date" property="processDate" />
+        <result column="process_result" property="processResult" />
+        <result column="csr" property="csr" />
+        <result column="is_valid" property="isValid" />
+        <result column="create_date" property="createDate" />
+        <result column="update_date" property="updateDate" />
+    </resultMap>
+
+</mapper>

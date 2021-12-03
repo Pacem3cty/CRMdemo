@@ -383,6 +383,7 @@ export default {
             accountBank: this.updateForm.accountBank,
             accountNum: this.updateForm.accountNum,
             isValid: 0,
+            lossStatus:this.$props.multiple[0].lossStatus,
             createDate: this.$props.multiple[0].createDate,
             updateDate: this.updateDate,
           };

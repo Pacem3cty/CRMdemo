@@ -18,4 +18,17 @@
         <result column="update_date" property="updateDate" />
     </resultMap>
 
+    <!-- 根据资源编号查询权限码 -->
+<select id="queryOptValueByIds" resultType="com.example.crmdemo.modules.system.model.TModule">
+    SELECT
+        id,
+        opt_value
+    FROM
+        t_module
+    WHERE
+        id IN
+    <foreach collection="array" open="(" separator="," close=")" item="item">
+        #{item}
+    </foreach>
+</select>
 </mapper>

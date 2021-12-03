@@ -114,7 +114,7 @@ public class TSaleChanceController {
         queryWrapper.orderByAsc("id");//按升序排序
 
         Page page = new Page();//分页查询page类
-        page.setCurrent(tSaleChanceDto.getCurrent());//获取当前记录索引值
+        page.setCurrent(tSaleChanceDto.getCurrent());//获取当前页
         page.setSize(tSaleChanceDto.getPageSize());//获取每页显示条目
         IPage<TSaleChance> pageResult = tSaleChanceService.findAll(page, queryWrapper);
         return CommonResult.success(pageResult);
@@ -189,7 +189,7 @@ public class TSaleChanceController {
         queryWrapper.orderByAsc("id");//按升序排序
 
         Page page = new Page();//分页查询page类
-        page.setCurrent(tSaleChanceDto.getCurrent());//获取当前记录索引值
+        page.setCurrent(tSaleChanceDto.getCurrent());//获取当前页
         page.setSize(tSaleChanceDto.getPageSize());//获取每页显示条目
         IPage<TSaleChance> pageResult = tSaleChanceService.findAll(page, queryWrapper);
         return CommonResult.success(pageResult);

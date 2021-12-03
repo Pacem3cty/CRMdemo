@@ -24,7 +24,6 @@ public class CusCTRBServiceImpl extends ServiceImpl<CusCTRBMapper, CusCTRB> impl
     @Override
     public List<CusCTRB> findCusCTRB(Page page, Wrapper<CusCTRB> queryWrapper) {
         List<CusCTRB> result =  cusCTRBMapper.pageListCusCTRB(page,new QueryWrapper<CusCTRB>());
-
         return result;
     }
 }

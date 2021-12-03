@@ -8,9 +8,9 @@ import './assets/css/main.css'
 import locale from 'element-ui/lib/locale/lang/zh-CN'
 import axios from 'axios'
 import md5 from 'js-md5';
+import * as echarts from 'echarts';
 
-
- 
+Vue.prototype.$echarts = echarts 
 Vue.prototype.$md5 = md5
 Vue.prototype.$axios = axios    //全局注册，使用方法为:this.$axios
 

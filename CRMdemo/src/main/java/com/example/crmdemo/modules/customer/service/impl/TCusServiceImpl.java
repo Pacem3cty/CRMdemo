@@ -3,8 +3,10 @@ package com.example.crmdemo.modules.customer.service.impl;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.crmdemo.modules.customer.mapper.TCusOrderMapper;
 import com.example.crmdemo.modules.customer.model.TCus;
 import com.example.crmdemo.modules.customer.mapper.TCusMapper;
+import com.example.crmdemo.modules.customer.model.TCusOrder;
 import com.example.crmdemo.modules.customer.service.TCusService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -99,4 +101,16 @@ public class TCusServiceImpl extends ServiceImpl<TCusMapper, TCus> implements TC
     public boolean updatePart(TCus tCus, Wrapper<TCus> updateWrapper) {
         return false;
     }
+
+    @Override
+    public List<TCus> queryLossCus() {
+        return tCusMapper.queryLossCus();
+    }
+
+    @Override
+    public Integer updateCusLossStatusByIds(List<Integer> cusIds) {
+        return tCusMapper.updateCusLossStatusByIds(cusIds);
+    }
+
+
 }

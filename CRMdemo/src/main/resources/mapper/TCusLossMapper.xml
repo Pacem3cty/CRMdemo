@@ -4,17 +4,17 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.example.crmdemo.modules.customer.model.TCusLoss">
-        <id column="id" property="id" />
-        <result column="cus_id" property="cusId" />
-        <result column="cus_name" property="cusName" />
-        <result column="cus_manager" property="cusManager" />
-        <result column="last_order_time" property="lastOrderTime" />
-        <result column="confirm_loss_time" property="confirmLossTime" />
-        <result column="state" property="state" />
-        <result column="loss_reason" property="lossReason" />
-        <result column="is_valid" property="isValid" />
-        <result column="create_date" property="createDate" />
-        <result column="update_date" property="updateDate" />
+        <id column="id" property="id"/>
+        <result column="cus_id" property="cusId"/>
+        <result column="cus_num" property="cusNum"/>
+        <result column="cus_manager" property="cusManager"/>
+        <result column="last_order_time" property="lastOrderTime"/>
+        <result column="confirm_loss_time" property="confirmLossTime"/>
+        <result column="state" property="state"/>
+        <result column="loss_reason" property="lossReason"/>
+        <result column="is_valid" property="isValid"/>
+        <result column="create_date" property="createDate"/>
+        <result column="update_date" property="updateDate"/>
     </resultMap>
 
 </mapper>

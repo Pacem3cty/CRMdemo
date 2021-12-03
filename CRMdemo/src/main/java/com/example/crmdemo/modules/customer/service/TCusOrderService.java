@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.crmdemo.modules.customer.model.TCusOrder;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -34,4 +35,6 @@ public interface TCusOrderService extends IService<TCusOrder> {
     boolean updateById(String ids);
 
     boolean updatePart(TCusOrder tCusOrder, Wrapper<TCusOrder> updateWrapper);
+
+    List<TCusOrder> queryLastOrderDate(List<Integer> cusIds);
 }

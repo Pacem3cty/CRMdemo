@@ -3,6 +3,10 @@ package com.example.crmdemo.modules.customer.mapper;
 import com.example.crmdemo.modules.customer.model.TCusOrder;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+
+import java.util.List;
+
+
 /**
  * <p>
  *  Mapper 接口
@@ -13,4 +17,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface TCusOrderMapper extends BaseMapper<TCusOrder> {
 
+    List<TCusOrder> queryLastOrderDateByIds(List<Integer> cusIds);
 }

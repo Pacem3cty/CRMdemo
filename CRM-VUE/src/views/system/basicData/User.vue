@@ -171,7 +171,7 @@ export default {
         { key: "trueName", name: "真实姓名", width: 80 },
         { key: "email", name: "邮箱", width: 240 },
         { key: "phone", name: "电话", width: 150 },
-        { key: "remark", name: "备注", width: 295 },
+        { key: "remark", name: "备注", width: 290 },
         { key: "createDate", name: "创建日期", width: 100 },
         { key: "updateDate", name: "修改日期", width: 100 },
       ],
@@ -197,6 +197,7 @@ export default {
     };
   },
   created() {
+    this.notice();
     this.reInit();
   },
   mounted() {},
@@ -205,6 +206,17 @@ export default {
     // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
+    notice() {
+      const h = this.$createElement;
+      this.$notify({
+        title: "提示消息：",
+        message: h(
+          "i",
+          { style: "color: black" },
+          "角色信息可在用户新增/修改弹窗中设置"
+        ),
+      });
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.size = val;

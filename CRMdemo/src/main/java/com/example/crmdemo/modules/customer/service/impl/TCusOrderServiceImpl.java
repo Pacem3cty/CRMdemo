@@ -105,4 +105,10 @@ public class TCusOrderServiceImpl extends ServiceImpl<TCusOrderMapper, TCusOrder
         }
         return flg.get();
     }
+
+    @Override
+    public List<TCusOrder> queryLastOrderDate(List<Integer> cusIds) {
+        return tCusOrderMapper.queryLastOrderDateByIds(cusIds);
+    }
+
 }

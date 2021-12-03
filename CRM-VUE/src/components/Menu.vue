@@ -65,7 +65,7 @@
           <i class="el-icon-data-analysis"></i>
           <span >统计报表</span>
         </template>
-        <el-menu-item index="/equipment">
+        <el-menu-item index="/CusCTRB">
           <span slot="title"><i class="el-icon-data-line"></i>客户贡献分析</span>
         </el-menu-item>
          <el-menu-item index="/dict">

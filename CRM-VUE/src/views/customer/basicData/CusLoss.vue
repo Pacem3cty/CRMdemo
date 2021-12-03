@@ -83,6 +83,16 @@
           :width="item.width"
         >
         </el-table-column>
+        <el-table-column prop="state" label="流失状态" width="85">
+          <template slot-scope="scope">
+            <span v-if="scope.row.state === 0"
+              ><el-tag type="warning">暂缓流失</el-tag></span
+            >
+            <span v-else-if="scope.row.state === 1"
+              ><el-tag type="danger">确认流失</el-tag></span
+            >
+          </template>
+        </el-table-column>
       </el-table>
       <div class="block">
         <el-pagination
@@ -150,11 +160,11 @@ export default {
       tableData: [],
       tableColumns: [
         { key: "id", name: "序号", width: 50 },
-        { key: "cusId", name: "客户序号", width: 80 },
-        { key: "cusName", name: "客户名称", width: 180 },
+        { key: "cusNum", name: "客户序号", width: 160 },
+        { key: "cusName", name: "客户名称", width: 200 },
         { key: "cusManager", name: "客户经理", width: 80 },
         { key: "lastOrderTime", name: "最后下单时间", width: 120 },
-        { key: "lossReason", name: "流失原因", width: 580 },
+        { key: "lossReason", name: "流失原因", width: 533 },
         { key: "createDate", name: "创建日期", width: 100 },
         { key: "updateDate", name: "修改日期", width: 100 },
       ],

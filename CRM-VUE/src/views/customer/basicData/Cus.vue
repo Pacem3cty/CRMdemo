@@ -100,7 +100,7 @@
               ><el-tag type="warning">暂缓流失</el-tag></span
             >
             <span v-else-if="scope.row.lossStatus === 2"
-              ><el-tag type="danger">已流失</el-tag></span
+              ><el-tag type="danger">确认流失</el-tag></span
             >
           </template>
         </el-table-column>

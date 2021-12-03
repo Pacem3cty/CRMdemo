@@ -35,4 +35,5 @@ public interface TModuleService extends IService<TModule> {
 
     boolean updateById(String ids);
 
+    List<TModule> queryOptValue(Integer[] array);
 }

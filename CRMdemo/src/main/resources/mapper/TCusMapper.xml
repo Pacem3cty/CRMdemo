@@ -29,4 +29,42 @@
         <result column="update_date" property="updateDate" />
     </resultMap>
 
+    <!--查询流失客户
+    流失客户规则定义：
+    客户自创建起超过六个月未与企业产生任何有效（已支付）订单
+    或
+    最后下单日期距离当前日期超过六个月的客户
+    满足以上条件则定义为流失客户
+    -->
+    <select id="queryLossCus" resultType="com.example.crmdemo.modules.customer.model.TCus">
+        SELECT *
+        FROM t_cus c
+        WHERE is_valid = 0
+          AND loss_status = 0
+          AND DATE_ADD(
+                      c.create_date,
+                      INTERVAL 6 MONTH
+        ) &lt; NOW()
+          AND c.id NOT IN (
+            SELECT DISTINCT cus_id
+            FROM t_cus_order o
+            WHERE is_valid = 0
+              AND o.state = 1
+              AND DATE_ADD(
+                          o.create_date,
+                          INTERVAL 6 MONTH
+        ) &gt; NOW()
+        )
+    </select>
+
+    <!-- 批量更新客户流失状态 -->
+    <update id="updateCusLossStatusByIds" >
+        UPDATE t_cus
+        SET loss_status = 1
+        WHERE
+        id IN
+        <foreach collection="list" item="item" open="(" close=")" separator="," >
+            #{item}
+        </foreach>
+    </update>
 </mapper>

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80026
 File Encoding         : 65001
 
-Date: 2021-12-01 16:49:08
+Date: 2021-12-03 16:49:28
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS `t_cus`;
 CREATE TABLE `t_cus` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '客户编号',
   `cus_num` varchar(20) DEFAULT NULL,
-  `cus_name` varchar(20) DEFAULT NULL COMMENT '客户名称',
+  `cus_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '客户名称',
   `area` varchar(20) DEFAULT NULL COMMENT '所属地区',
   `cus_manager` varchar(20) DEFAULT NULL COMMENT '客户经理',
   `level` varchar(30) DEFAULT NULL COMMENT '客户级别',
@@ -44,14 +44,15 @@ CREATE TABLE `t_cus` (
   `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
   `update_date` datetime DEFAULT NULL COMMENT '修改日期',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of t_cus
 -- ----------------------------
-INSERT INTO `t_cus` VALUES ('1', 'C202111240000001', '驣殉计算机系统有限公司', '深圳', '测试', '战略合作伙伴', '满意', '良好', '广东深圳', null, '18934879265', null, null, null, null, null, null, null, null, '0', '0', '2021-11-24 20:44:35', null);
-INSERT INTO `t_cus` VALUES ('2', 'C202111240000002', '锕锂芸计算有限公司 ', '杭州', '测试', '重要客户', '一般', '良好', '浙江杭州', null, '15008976432', null, null, '91330100799655058B', '马耘', null, null, null, null, '1', '0', '2021-11-24 00:00:00', '2021-11-27 23:45:18');
-INSERT INTO `t_cus` VALUES ('3', 'C202111270000003', '魍弌网络有限公司', '', '测试', '', '', null, '', '', '18934879265', '', null, '91330000788831167A', '丁攂', '', '', '', '', null, '0', '2021-11-27 21:20:31', null);
+INSERT INTO `t_cus` VALUES ('1', 'C202111240000001', '驣殉计算机系统有限公司', '深圳', '测试', '战略合作伙伴', '满意', '良好', '广东深圳', null, '18934879265', null, null, '91440300708461136T', '马砉螣', null, null, null, null, '0', '0', '2021-11-24 20:44:35', null);
+INSERT INTO `t_cus` VALUES ('2', 'C202111240000002', '锕锂芸计算有限公司 ', '杭州', '测试', '重要客户', '一般', '良好', '浙江杭州', null, '15008976432', null, null, '91330100799655058B', '马耘', null, null, null, null, '0', '0', '2021-11-24 00:00:00', '2021-11-27 23:45:18');
+INSERT INTO `t_cus` VALUES ('3', 'C202111270000003', '魍弌网络有限公司', '', '测试', '', '', null, '', '', '18934879265', '', null, '91330000788831167A', '丁攂', '', '', '', '', '1', '0', '2021-04-27 21:20:31', null);
+INSERT INTO `t_cus` VALUES ('4', 'C202111270000004', '枔誏网技术有限公司', null, '测试', null, null, null, null, null, '18823846863', null, null, '911101087975504981', '曹椁葳', null, null, null, null, '1', '0', '2021-01-26 08:56:40', null);
 
 -- ----------------------------
 -- Table structure for t_cus_contact
@@ -136,8 +137,8 @@ INSERT INTO `t_cus_linkman` VALUES ('8', '1', '测试姓名', '0', '测试职位
 DROP TABLE IF EXISTS `t_cus_loss`;
 CREATE TABLE `t_cus_loss` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '客户流失记录编号',
-  `cus_id` int DEFAULT NULL COMMENT '客户编号',
-  `cus_name` varchar(20) DEFAULT NULL,
+  `cus_num` varchar(20) DEFAULT NULL COMMENT '客户编号',
+  `cus_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `cus_manager` varchar(20) DEFAULT NULL COMMENT '客户经理',
   `last_order_time` datetime DEFAULT NULL COMMENT '最后下单时间',
   `confirm_loss_time` datetime DEFAULT NULL COMMENT '确认流失时间',
@@ -147,14 +148,14 @@ CREATE TABLE `t_cus_loss` (
   `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
   `update_date` datetime DEFAULT NULL COMMENT '更新日期',
   PRIMARY KEY (`id`),
-  KEY `cus_id` (`cus_id`),
-  CONSTRAINT `cus_id` FOREIGN KEY (`cus_id`) REFERENCES `t_cus` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+  KEY `cus_id` (`cus_num`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of t_cus_loss
 -- ----------------------------
-INSERT INTO `t_cus_loss` VALUES ('1', '1', '驣殉计算机系统有限公司', '测试', '2021-05-08 21:04:46', null, '1', null, '0', '2021-11-26 21:06:09', null);
+INSERT INTO `t_cus_loss` VALUES ('14', 'C202111270000003', '魍弌网络有限公司', '测试', '2018-12-06 00:00:00', null, '0', null, '0', '2021-12-03 16:47:23', '2021-12-03 16:47:23');
+INSERT INTO `t_cus_loss` VALUES ('15', 'C202111270000004', '枔誏网技术有限公司', '测试', '2013-08-13 00:00:00', null, '0', null, '0', '2021-12-03 16:47:23', '2021-12-03 16:47:23');
 
 -- ----------------------------
 -- Table structure for t_cus_order
@@ -172,7 +173,7 @@ CREATE TABLE `t_cus_order` (
   `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
   `update_date` datetime DEFAULT NULL COMMENT '修改日期',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of t_cus_order
@@ -180,6 +181,9 @@ CREATE TABLE `t_cus_order` (
 INSERT INTO `t_cus_order` VALUES ('1', '1', 'O202111300000001', '2021-11-30 00:00:00', '广东深圳', '4696.49', '1', '0', '2021-11-30 00:00:00', '2021-12-01 10:15:37');
 INSERT INTO `t_cus_order` VALUES ('3', '1', 'O202111300000002', '2021-11-04 00:00:00', '广东广州', null, '0', '0', '2021-11-30 10:18:22', '2021-11-30 00:00:00');
 INSERT INTO `t_cus_order` VALUES ('6', '2', 'O202112010000006', '2021-09-08 00:00:00', '浙江杭州', '1800.00', '1', '0', '2021-12-01 12:10:23', '2021-12-01 12:21:04');
+INSERT INTO `t_cus_order` VALUES ('7', '3', 'O202112030000007', '2018-12-06 00:00:00', '广东广州', null, '0', '0', '2021-12-03 12:27:24', null);
+INSERT INTO `t_cus_order` VALUES ('8', '3', 'O202112030000008', '2015-12-02 00:00:00', '广州深圳', null, '0', '0', '2021-12-03 12:51:03', null);
+INSERT INTO `t_cus_order` VALUES ('9', '4', 'O202112030000009', '2013-08-13 00:00:00', '广东深圳', null, '0', '0', '2021-12-03 15:27:58', null);
 
 -- ----------------------------
 -- Table structure for t_cus_reprieve
@@ -319,7 +323,7 @@ CREATE TABLE `t_permission` (
   KEY `t_permission_ibfk_2` (`module_id`),
   CONSTRAINT `t_permission_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `t_role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `t_permission_ibfk_2` FOREIGN KEY (`module_id`) REFERENCES `t_module` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of t_permission
@@ -355,6 +359,17 @@ INSERT INTO `t_permission` VALUES ('28', '2', '7', '0102', '2021-11-17 09:30:56'
 INSERT INTO `t_permission` VALUES ('29', '2', '8', '01021', '2021-11-17 09:30:56', '2021-11-17 09:30:56');
 INSERT INTO `t_permission` VALUES ('30', '2', '9', '01022', '2021-11-17 09:30:56', '2021-11-17 09:30:56');
 INSERT INTO `t_permission` VALUES ('31', '2', '10', '01023', '2021-11-17 09:30:56', '2021-11-17 09:30:56');
+INSERT INTO `t_permission` VALUES ('32', '3', '11', '020', '2021-12-03 16:12:04', '2021-12-03 16:12:04');
+INSERT INTO `t_permission` VALUES ('33', '3', '12', '0201', '2021-12-03 16:12:04', '2021-12-03 16:12:04');
+INSERT INTO `t_permission` VALUES ('34', '3', '13', '02011', '2021-12-03 16:12:04', '2021-12-03 16:12:04');
+INSERT INTO `t_permission` VALUES ('35', '3', '14', '02012', '2021-12-03 16:12:04', '2021-12-03 16:12:04');
+INSERT INTO `t_permission` VALUES ('36', '3', '15', '02013', '2021-12-03 16:12:04', '2021-12-03 16:12:04');
+INSERT INTO `t_permission` VALUES ('37', '3', '16', '02014', '2021-12-03 16:12:04', '2021-12-03 16:12:04');
+INSERT INTO `t_permission` VALUES ('38', '3', '17', '0202', '2021-12-03 16:12:04', '2021-12-03 16:12:04');
+INSERT INTO `t_permission` VALUES ('39', '3', '18', '02021', '2021-12-03 16:12:04', '2021-12-03 16:12:04');
+INSERT INTO `t_permission` VALUES ('40', '3', '19', '02022', '2021-12-03 16:12:04', '2021-12-03 16:12:04');
+INSERT INTO `t_permission` VALUES ('41', '3', '20', '02023', '2021-12-03 16:12:04', '2021-12-03 16:12:04');
+INSERT INTO `t_permission` VALUES ('42', '3', '21', '02024', '2021-12-03 16:12:04', '2021-12-03 16:12:04');
 
 -- ----------------------------
 -- Table structure for t_role
@@ -435,7 +450,7 @@ CREATE TABLE `t_user` (
 -- ----------------------------
 INSERT INTO `t_user` VALUES ('1', 'Pacem3cty', 'e10adc3949ba59abbe56e057f20f883e', '吴芮', '1556250364@qq.com', '19868586764', '一定要出重拳', '0', '2021-10-09 16:15:20', '2021-11-03 10:03:46');
 INSERT INTO `t_user` VALUES ('2', 'Pacem', 'e35cf7b66449df565f93c607d5a81d09', '吴㕙', '1556251364@qq.com', '19868586762', '牙医shakeit', '0', '2021-10-29 00:00:00', '2021-11-03 09:22:21');
-INSERT INTO `t_user` VALUES ('3', '测试', 'e35cf7b66449df565f93c607d5a81d09', '测试', '', '18000000000', '测试备注', '0', '2021-11-03 00:00:00', '2021-11-11 09:59:44');
+INSERT INTO `t_user` VALUES ('3', '测试', 'e35cf7b66449df565f93c607d5a81d09', '测试', '', '18000000000', '测试备注', '0', '2021-11-03 00:00:00', '2021-12-03 16:38:24');
 
 -- ----------------------------
 -- Table structure for t_user_role
@@ -459,4 +474,4 @@ CREATE TABLE `t_user_role` (
 -- ----------------------------
 INSERT INTO `t_user_role` VALUES ('1', '1', '1', '2021-11-12 10:48:16', null);
 INSERT INTO `t_user_role` VALUES ('2', '2', '2', '2021-11-12 11:17:53', null);
-INSERT INTO `t_user_role` VALUES ('3', '3', '3', '2021-11-03 00:00:00', '2021-11-11 09:59:44');
+INSERT INTO `t_user_role` VALUES ('3', '3', '3', '2021-11-03 00:00:00', '2021-12-03 16:38:24');

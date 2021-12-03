@@ -99,4 +99,9 @@ public class TCusLossServiceImpl extends ServiceImpl<TCusLossMapper, TCusLoss> i
     public boolean updatePart(TCusLoss tCusLoss, Wrapper<TCusLoss> updateWrapper) {
         return false;
     }
+
+    @Override
+    public TCusLoss selectOne(Wrapper<TCusLoss> queryWrapper) {
+        return tCusLossMapper.selectOne(queryWrapper);
+    }
 }

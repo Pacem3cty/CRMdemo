@@ -58,7 +58,7 @@ public class TCusLossController {
         queryWrapper.orderByAsc("id");//按升序排序
 
         Page page = new Page();//分页查询page类
-        page.setCurrent(tCusLossDTO.getCurrent());//获取当前记录索引值
+        page.setCurrent(tCusLossDTO.getCurrent());//获取当前页
         page.setSize(tCusLossDTO.getPageSize());//获取每页显示条目
         IPage<TCus> pageResult = tCusLossService.findAll(page, queryWrapper);
         return CommonResult.success(pageResult);
@@ -83,5 +83,6 @@ public class TCusLossController {
         List<Map<String, Object>> tCusLossList = tCusLossService.query(queryWrapper);
         return CommonResult.success(tCusLossList);
     }
+
 }
 

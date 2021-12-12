@@ -89,4 +89,16 @@ public class TPermissionServiceImpl extends ServiceImpl<TPermissionMapper, TPerm
     public boolean updateById(String ids) {
         return false;
     }
+
+    @Override
+    public Integer countPermissionByRoleId(Integer roleId) {
+        return tPermissionMapper.countPermissionByRoleId(roleId);
+    }
+
+    @Override
+    public void deletePermissionByRoleId(Integer roleId) {
+        tPermissionMapper.deletePermissionByRoleId(roleId);
+    }
+
+
 }

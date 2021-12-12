@@ -36,7 +36,7 @@ public class TModuleController {
         this.tModuleService = tModuleService;
     }
 
-    @ApiOperation(value = "查询所有资源信息（加载树形表格）")
+    @ApiOperation(value = "查询所有资源信息（加载前端树形表格）")
     @RequestMapping(value = "/queryAll", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult queryAll() throws StackOverflowError{//抛出在将空对象转换为JSON格式数据时出现无限递归调用的异常
@@ -57,7 +57,7 @@ public class TModuleController {
         return CommonResult.success(treeTableList);
     }
 
-    @ApiOperation(value = "查询所有资源信息（加载树形控件）")
+    @ApiOperation(value = "查询所有资源信息（加载前端树形控件）")
     @RequestMapping(value = "/loadData", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult loadData() throws StackOverflowError{//抛出空对象转换为JSON格式数据时无限递归调用的异常
@@ -79,7 +79,7 @@ public class TModuleController {
 //        treeControlPojo.setLabel("授权资源列表");
 //        treeControlPojo.setChildList(childList);
 
-//        resultList.add(treeControlPojo);//已弃用 启用后前端选择授权角色资源时中将包含最顶层节点的模块编号0 导致授权时在模块表中无法查找到相应权限吗抛出空指针异常
+//        resultList.add(treeControlPojo);//已弃用 启用后前端选择授权角色资源时中将包含最顶层节点的模块编号0 导致授权时在模块表中无法查找到相应权限码抛出空指针异常
 
         return CommonResult.success(childList);
     }

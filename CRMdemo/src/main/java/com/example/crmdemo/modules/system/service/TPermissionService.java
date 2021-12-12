@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.crmdemo.modules.system.model.TModule;
 import com.example.crmdemo.modules.system.model.TPermission;
 import com.baomidou.mybatisplus.extension.service.IService;
+import io.swagger.models.auth.In;
 
 import java.util.List;
 import java.util.Map;
@@ -37,4 +38,8 @@ public interface TPermissionService extends IService<TPermission> {
     boolean delete(String ids);
 
     boolean updateById(String ids);
+
+    Integer countPermissionByRoleId(Integer roleId);
+
+    void deletePermissionByRoleId(Integer roleId);
 }

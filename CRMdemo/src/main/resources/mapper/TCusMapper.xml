@@ -4,29 +4,29 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.example.crmdemo.modules.customer.model.TCus">
-        <id column="id" property="id" />
-        <result column="cus_num" property="cusNum" />
-        <result column="cus_name" property="cusName" />
-        <result column="area" property="area" />
-        <result column="cus_manager" property="cusManager" />
-        <result column="level" property="level" />
-        <result column="csr" property="csr" />
-        <result column="ccr" property="ccr" />
-        <result column="cus_address" property="cusAddress" />
-        <result column="postal_code" property="postalCode" />
-        <result column="cus_phone" property="cusPhone" />
-        <result column="cus_fax" property="cusFax" />
-        <result column="website" property="website" />
-        <result column="social_credit_code" property="socialCreditCode" />
-        <result column="artificial_person" property="artificialPerson" />
-        <result column="registered_capital" property="registeredCapital" />
-        <result column="annual_turnover" property="annualTurnover" />
-        <result column="account_bank" property="accountBank" />
-        <result column="account_num" property="accountNum" />
-        <result column="loss_status" property="lossStatus" />
-        <result column="is_valid" property="isValid" />
-        <result column="create_date" property="createDate" />
-        <result column="update_date" property="updateDate" />
+        <id column="id" property="id"/>
+        <result column="cus_num" property="cusNum"/>
+        <result column="cus_name" property="cusName"/>
+        <result column="area" property="area"/>
+        <result column="cus_manager" property="cusManager"/>
+        <result column="level" property="level"/>
+        <result column="csr" property="csr"/>
+        <result column="ccr" property="ccr"/>
+        <result column="cus_address" property="cusAddress"/>
+        <result column="postal_code" property="postalCode"/>
+        <result column="cus_phone" property="cusPhone"/>
+        <result column="cus_fax" property="cusFax"/>
+        <result column="website" property="website"/>
+        <result column="social_credit_code" property="socialCreditCode"/>
+        <result column="artificial_person" property="artificialPerson"/>
+        <result column="registered_capital" property="registeredCapital"/>
+        <result column="annual_turnover" property="annualTurnover"/>
+        <result column="account_bank" property="accountBank"/>
+        <result column="account_num" property="accountNum"/>
+        <result column="loss_status" property="lossStatus"/>
+        <result column="is_valid" property="isValid"/>
+        <result column="create_date" property="createDate"/>
+        <result column="update_date" property="updateDate"/>
     </resultMap>
 
     <!--查询流失客户
@@ -58,13 +58,14 @@
     </select>
 
     <!-- 批量更新客户流失状态 -->
-    <update id="updateCusLossStatusByIds" >
+    <update id="updateCusLossStatusByIds">
         UPDATE t_cus
         SET loss_status = 1
         WHERE
         id IN
-        <foreach collection="list" item="item" open="(" close=")" separator="," >
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
             #{item}
         </foreach>
     </update>
+
 </mapper>

@@ -7,6 +7,7 @@
       <el-breadcrumb-item>{{ activeName }}</el-breadcrumb-item>
       <div style="font-size: 25px; float: right; margin-right: 25px"></div>
     </el-breadcrumb>
+    <div class="table-div">
     <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="修改资料" name="修改资料">
         <span slot="label"><i class="el-icon-user-solid"></i>修改资料</span>
@@ -140,7 +141,7 @@
 
       <el-tab-pane label="修改密码" name="修改密码">
         <span slot="label"><i class="el-icon-edit"></i>修改密码</span>
-        <div>
+        <div class="table-div">
           <el-row :gutter="15">
             <el-form
               ref="formData"
@@ -195,6 +196,7 @@
         </div>
       </el-tab-pane>
     </el-tabs>
+  </div>
   </div>
 </template>
 <script>
@@ -441,3 +443,10 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+  .table-div {
+    background: #ffffff;
+    min-height: 90vh;
+  }
+</style>

@@ -34,4 +34,6 @@ public interface TUserService extends IService<TUser> {
      boolean updateById(String ids);
 
      boolean updatePart(TUser tUser, Wrapper<TUser> updateWrapper);
+
+     List<Map<String,Object>> queryUserRoleName();
 }

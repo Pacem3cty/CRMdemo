@@ -303,5 +303,14 @@ public class TUserController {
         return CommonResult.success(tUserService.updateById(ids));
     }
 
+    @ApiOperation(value = "查询用户角色信息")
+    @RequestMapping(value = "/queryUserRole", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult queryUserRole() {
+       List<Map<String,Object>> userRoleList = tUserService.queryUserRoleName();
+
+        return CommonResult.success(userRoleList);
+    }
+
 }
 

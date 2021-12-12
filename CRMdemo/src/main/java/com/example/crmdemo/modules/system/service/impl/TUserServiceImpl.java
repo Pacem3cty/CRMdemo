@@ -109,4 +109,9 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
         }
         return flg.get();
     }
+
+    @Override
+    public List<Map<String, Object>> queryUserRoleName() {
+        return tUserMapper.listUserRoleName();
+    }
 }

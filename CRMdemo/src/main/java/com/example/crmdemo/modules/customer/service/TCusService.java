@@ -38,4 +38,6 @@ public interface TCusService extends IService<TCus> {
     List<TCus> queryLossCus();
 
     Integer updateCusLossStatusByIds(List<Integer> cusIds);
+
+
 }

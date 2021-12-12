@@ -147,14 +147,14 @@ public class TCusController {
     @ResponseBody
     public CommonResult listCusName() {
         QueryWrapper<TCus> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("cus_name as cusName").eq("is_valid", 0).groupBy("cus_name");//GROUP BY 较 DISTINCT 性能更优
+        queryWrapper.select("cus_num as cusNum,cus_name as cusName").eq("is_valid", 0).groupBy("cus_name");//GROUP BY 较 DISTINCT 性能更优
         List<Map<String, Object>> tCusList = tCusService.query(queryWrapper);
         return CommonResult.success(tCusList);
     }
 
     @ApiOperation(value = "更新客户流失及状态")
     @Scheduled(cron = "* * 9 * * ?")//设定每天9时执行
-//    @RequestMapping(value = "/updateCusState", method = RequestMethod.POST)
+    @RequestMapping(value = "/updateCusState", method = RequestMethod.POST)
 //    @ResponseBody
     public void updateCusState() {
         System.err.println("=====开始更新客户流失及状态=====");
@@ -172,9 +172,7 @@ public class TCusController {
             List<TCusOrder> tCusOrderList = tCusOrderService.queryLastOrderDate(lossCusIds);//批量查询待流失客户最后下单时间
 
             for (TCusOrder tCusOrder : tCusOrderList) {//遍历List 并放入相应Map中 Map中键为客户编号 值为最后下单时间
-                Integer cusId = tCusOrder.getCusId();
-                Date lastOrderDate = tCusOrder.getOrderDate();
-                lastOrderDateMap.put(cusId, lastOrderDate);
+                lastOrderDateMap.put(tCusOrder.getCusId(), tCusOrder.getOrderDate());
             }
 
             //遍历待流失客户数据

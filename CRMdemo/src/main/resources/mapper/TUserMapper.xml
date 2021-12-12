@@ -16,4 +16,14 @@
         <result column="update_date" property="updateDate" />
     </resultMap>
 
+    <!-- 查询用户真实姓名-对应角色名 -->
+    <select id="listUserRoleName" resultType="java.util.Map">
+        SELECT
+            t_user.true_name AS trueName,
+            t_role.role_name AS roleName
+        FROM
+            t_user
+                INNER JOIN t_user_role ON t_user_role.user_id = t_user.id
+                INNER JOIN t_role ON t_role.id = t_user_role.role_id
+    </select>
 </mapper>

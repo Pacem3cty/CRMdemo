@@ -12,4 +12,23 @@
         <result column="update_date" property="updateDate" />
     </resultMap>
 
+
+    <!-- 通过角色编号查询权限记录数 -->
+    <select id="countPermissionByRoleId" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            t_permission
+        WHERE
+            role_id = #{roleId}
+    </select>
+
+    <!-- 通过角色编号删除相应权限记录 -->
+    <delete id="deletePermissionByRoleId" parameterType="int">
+        DELETE
+        FROM
+            t_permission
+        WHERE
+            role_id = #{roleId}
+    </delete>
 </mapper>

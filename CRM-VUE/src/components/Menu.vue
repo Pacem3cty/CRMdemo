@@ -43,19 +43,19 @@
           <i class="el-icon-service"></i>
           <span >服务管理</span>
         </template>
-        <el-menu-item index="/equipment">
+        <el-menu-item index="/ServiceCreate">
           <span slot="title"><i class="el-icon-plus"></i>服务创建</span>
         </el-menu-item>
-         <el-menu-item index="/dict">
+         <el-menu-item index="/ServiceDisp">
           <span slot="title"><i class="el-icon-s-order"></i>服务分配</span>
         </el-menu-item>
-        <el-menu-item index="/equipment">
+        <el-menu-item index="/ServiceHandle">
           <span slot="title"><i class="el-icon-finished"></i>服务处理</span>
         </el-menu-item>
-        <el-menu-item index="/equipment">
+        <el-menu-item index="/ServiceFeedback">
           <span slot="title"><i class="el-icon-receiving"></i>服务反馈</span>
         </el-menu-item>
-        <el-menu-item index="/equipment">
+        <el-menu-item index="/ServiceFile">
           <span slot="title"><i class="el-icon-collection"></i>服务归档</span>
         </el-menu-item>
       </el-submenu>
@@ -68,7 +68,7 @@
         <el-menu-item index="/CusCTRB">
           <span slot="title"><i class="el-icon-data-line"></i>客户贡献分析</span>
         </el-menu-item>
-         <el-menu-item index="/dict">
+         <el-menu-item index="/CusConsist">
           <span slot="title"><i class="el-icon-pie-chart"></i>客户构成分析</span>
         </el-menu-item>
         <el-menu-item index="/dict">

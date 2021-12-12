@@ -15,7 +15,7 @@
           class="el-icon-edit-outline"
           style="margin-right: 6px; cursor: pointer"
           @click="ondetails"
-          title="暂缓流失措施"
+          title="暂缓措施维护"
         ></i>
         <!-- <i
           class="el-icon-delete"
@@ -55,6 +55,19 @@
           @select="handleSelect"
         >
         </el-autocomplete>
+      </div>
+
+      <div class="i-div">
+        <label class="i-label">流失状态</label>
+        <el-select v-model="state" placeholder="请选择流失状态" @change="$forceUpdate()">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
       </div>
 
       <div class="i-div">
@@ -119,52 +132,67 @@
         <el-button type="primary" @click="onDel">确定</el-button>
       </span>
     </el-dialog>
-    <!-- 新增 -->
-    <!-- <el-dialog
-      title="新增用户信息"
+    <!-- 客户流失详情 -->
+    <el-dialog
+      title="客户管理-客户流失详情"
       :visible.sync="outerVisible"
       v-if="outerVisible"
       :close-on-click-modal="false"
     >
-      <UserAdd @onAdd="onAdd" @reInit="reInit"></UserAdd>
-    </el-dialog> -->
-    <!-- 修改 -->
-    <!-- <el-dialog
-      title="修改用户信息"
+      <CusReprieveInfo @onAdd="onAdd" @reInit="reInit" :multiple="this.multipleSelection"></CusReprieveInfo>
+    </el-dialog>
+    <!-- 客户管理-暂缓措施维护 -->
+    <el-dialog
+      title="客户管理-暂缓措施维护"
       :visible.sync="outerUpdateVisible"
+      v-if="outerUpdateVisible"
       :close-on-click-modal="false"
     >
-      <UserUpdate
+      <CusReprieveMainten
         @onAdd="onAdd"
         @reInit="reInit"
         :multiple="this.multipleSelection"
-      ></UserUpdate>
-    </el-dialog> -->
+      ></CusReprieveMainten>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-// import UserAdd from "../management/UserAdd.vue";
-// import UserUpdate from "../management/UserUpdate.vue";
+import CusReprieveInfo from "../basicData/CusReprieveInfo.vue";
+import CusReprieveMainten from "../management/CusReprieveMainten.vue";
 
 export default {
   components: {
-    // UserAdd,
-    // UserUpdate,
+    CusReprieveInfo,
+    CusReprieveMainten,
   },
   data() {
     return {
+       options: [
+         {
+          value: null,
+          label: "所有流失状态",
+        },
+        {
+          value: 0,
+          label: "暂缓流失",
+        },
+        {
+          value: 1,
+          label: "确认流失",
+        }
+      ],
       restaurantsCusName: [],
       restaurantsCusManager: [],
       value: "",
       tableData: [],
       tableColumns: [
         { key: "id", name: "序号", width: 50 },
-        { key: "cusNum", name: "客户序号", width: 160 },
+        { key: "cusNum", name: "客户编号", width: 160 },
         { key: "cusName", name: "客户名称", width: 200 },
         { key: "cusManager", name: "客户经理", width: 80 },
         { key: "lastOrderTime", name: "最后下单时间", width: 120 },
-        { key: "lossReason", name: "流失原因", width: 533 },
+        { key: "lossReason", name: "流失原因", width: 380 },
         { key: "createDate", name: "创建日期", width: 100 },
         { key: "updateDate", name: "修改日期", width: 100 },
       ],
@@ -178,6 +206,7 @@ export default {
       cusManager: "",
       createDate: "",
       updateDate: "",
+      state:"",
       currentPage: 1,
       size: 5,
       total: 0,
@@ -392,14 +421,21 @@ export default {
         this.multipleSelection.length === 0
       ) {
         this.$message({
-          message: "请选择一条信息执行修改操作",
+          message: "请选择一条信息执行暂缓流失措施维护操作",
           type: "warning",
         });
         return;
       }
       if (this.multipleSelection.length > 1) {
         this.$message({
-          message: "最多只能选择一条信息执行修改操作",
+          message: "最多只能选择一条信息执行暂缓流失措施维护操作",
+          type: "warning",
+        });
+        return;
+      }
+      if (this.multipleSelection[0].state === 1) {
+        this.$message({
+          message: "确认流失客户无法进行维护",
           type: "warning",
         });
         return;
@@ -412,21 +448,21 @@ export default {
         this.multipleSelection.length === 0
       ) {
         this.$message({
-          message: "请选择一条信息查看订单详情",
+          message: "请选择一条信息查看客户流失详情",
           type: "warning",
         });
         return;
       }
       if (this.multipleSelection.length > 1) {
         this.$message({
-          message: "最多只能选择一条信息查看订单详情",
+          message: "最多只能选择一条信息查看客户流失详情",
           type: "warning",
         });
         return;
       }
       if (this.multipleSelection[0].state === 0) {
         this.$message({
-          message: "未支付订单无法查看详情",
+          message: "暂缓流失客户无法查看详情",
           type: "warning",
         });
         return;

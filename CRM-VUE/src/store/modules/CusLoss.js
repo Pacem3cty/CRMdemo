@@ -1,9 +1,10 @@
-import { queryAllCusLossInfo,listCusManager,listCusName } from '../../api/CusLoss'
+import { queryAllCusLossInfo,listCusManager,listCusName,update } from '../../api/CusLoss'
 
 const state = {
     cusLossInfo: {},
     cusNameInfo:{},
-    cusManagerInfo:{}
+    cusManagerInfo:{},
+    updateInfo:{}
   }
   
   
@@ -16,6 +17,9 @@ const state = {
     },
     SET_CUSMANAGERINFO: (state, cusManagerInfo) => {
       state.cusManagerInfo = cusManagerInfo
+    },
+    SET_UPDATEINFO: (state, updateInfo) => {
+      state.updateInfo = updateInfo
     },
   }
   
@@ -54,7 +58,17 @@ const state = {
         })
       })
     },
-  
+    update({ commit }, param) {
+      return new Promise((resolve, reject) => {
+        update(param).then(response => {
+          //   const { data } = response
+          commit('SET_UPDATEINFO', response)
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
   }
   
   

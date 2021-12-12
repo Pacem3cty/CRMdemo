@@ -87,13 +87,28 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="客户级别" prop="level">
-            <el-input
+             <el-select
+              v-model="updateForm.level"
+              placeholder="请选择客户等级"
+              clearable
+              :style="{ width: '100%' }"
+              @change="$forceUpdate()"
+            >
+              <el-option
+                v-for="(item, index) in levelOptions"
+                :key="index"
+                :label="item.label"
+                :value="item.value"
+                :disabled="item.disabled"
+              ></el-option>
+            </el-select>
+            <!-- <el-input
               v-model="updateForm.level"
               placeholder="请输入客户级别"
               clearable
               :style="{ width: '100%' }"
             >
-            </el-input>
+            </el-input> -->
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -221,6 +236,24 @@ export default {
     props: ["multiple"],
   data() {
     return {
+      levelOptions: [
+        {
+          label: "A级",
+          value: "A级",
+        },
+        {
+          label: "B级",
+          value: "B级",
+        },
+        {
+          label: "C级",
+          value: "C级",
+        },
+        {
+          label: "D级",
+          value: "D级",
+        },
+      ],
       updateForm: {
         id: this.$props.multiple[0].id,
         cusNum: this.$props.multiple[0].cusNum,

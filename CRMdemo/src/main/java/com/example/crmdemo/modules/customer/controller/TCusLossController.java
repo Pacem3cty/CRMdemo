@@ -1,7 +1,9 @@
 package com.example.crmdemo.modules.customer.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.crmdemo.common.api.CommonResult;
@@ -15,6 +17,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -52,7 +55,10 @@ public class TCusLossController {
         if (tCusLossDTO.getCusManager() != null && !tCusLossDTO.getCusManager().equals("")) {
             queryWrapper.eq("cus_manager", tCusLossDTO.getCusManager());
         }
-
+        //客户经理
+        if (tCusLossDTO.getState() != null && !tCusLossDTO.getState().equals("")) {
+            queryWrapper.eq("state", tCusLossDTO.getState());
+        }
 
         queryWrapper.eq("is_valid", 0); //查询没有被软删除的记录
         queryWrapper.orderByAsc("id");//按升序排序
@@ -84,5 +90,30 @@ public class TCusLossController {
         return CommonResult.success(tCusLossList);
     }
 
+//    @ApiOperation(value = "标记为已流失")
+//    @RequestMapping(value = "/updatePart", method = RequestMethod.POST)
+//    @ResponseBody
+//    public CommonResult updatePart(@RequestBody String jsonStr) {
+//        TCusLoss tCusLoss = new TCusLoss();
+//
+//        JSONObject jsonObject = JSONObject.parseObject(jsonStr);
+//        Integer id = jsonObject.getInteger("id");//流失编号
+//
+//        String lossReason = jsonObject.getString("lossReason");//流失原因
+//
+//        UpdateWrapper<TCusLoss> updateWrapper = new UpdateWrapper<>();
+//
+//        updateWrapper.set("loss_reason",lossReason);
+//        updateWrapper.set("state", 1).eq("id", id).set("update_date",new Date()).eq("is_valid", 0);
+//
+//        return CommonResult.success(tCusLossService.updatePart(tCusLoss,updateWrapper));
+//    }
+
+    @ApiOperation(value = "修改客户流失记录信息")
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult<Boolean> update(@RequestBody TCusLoss tCusLoss) {
+        return CommonResult.success(tCusLossService.update(tCusLoss));
+    }
 }
 

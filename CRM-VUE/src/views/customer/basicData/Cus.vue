@@ -39,6 +39,10 @@
           placeholder="请输入客户名称"
           @select="handleSelect"
         >
+          <template slot-scope="{ item }">
+            <div class="name">{{ item.cusName }}</div>
+            <span class="num">{{ item.cusNum }}</span>
+          </template>
         </el-autocomplete>
       </div>
 
@@ -51,24 +55,21 @@
         <el-button type="primary" style="margin-top: 9px" @click="this.queryAll"
           >查询</el-button
         >
-          <el-button
-            type="primary"
-            style="margin-top: 9px"
-            @click="this.onlinkman"
-            >联系人管理</el-button
-          >
-           <el-button
-            type="primary"
-            style="margin-top: 9px"
-            @click="this.oncontact"
-            >交往记录管理</el-button
-          >
-           <el-button
-            type="primary"
-            style="margin-top: 9px"
-            @click="this.onorder"
-            >订单管理</el-button
-          >
+        <el-button
+          type="primary"
+          style="margin-top: 9px"
+          @click="this.onlinkman"
+          >联系人管理</el-button
+        >
+        <el-button
+          type="primary"
+          style="margin-top: 9px"
+          @click="this.oncontact"
+          >交往记录管理</el-button
+        >
+        <el-button type="primary" style="margin-top: 9px" @click="this.onorder"
+          >订单管理</el-button
+        >
       </div>
     </div>
     <div class="table-div">
@@ -91,7 +92,7 @@
           :width="item.width"
         >
         </el-table-column>
-         <el-table-column prop="lossStatus" label="流失状态" width="85">
+        <el-table-column prop="lossStatus" label="流失状态" width="85">
           <template slot-scope="scope">
             <span v-if="scope.row.lossStatus === 0"
               ><el-tag type="success">未流失</el-tag></span
@@ -207,7 +208,7 @@ export default {
     CusUpdate,
     CusContactMainten,
     CusLinkmanMainten,
-    CusOrderMainten
+    CusOrderMainten,
   },
   data() {
     return {
@@ -243,7 +244,7 @@ export default {
       outerVisible: false,
       outerLinkmanVisible: false,
       outerContactVisible: false,
-      outerOrderVisible:false,
+      outerOrderVisible: false,
       outerUpdateVisible: false,
       cusName: "",
       cusNum: "",
@@ -319,6 +320,7 @@ export default {
               const records = {
                 //可根据需求更改
                 cusName: e.cusName,
+                cusNum: e.cusNum,
               };
               this.restaurantsCusName.push(records);
             });
@@ -550,10 +552,18 @@ $hc: #409eff;
 }
 .el-form-item__label {
   line-height: 4em;
-}，
-.i-div-r {
+}
+， .i-div-r {
   float: right;
   margin-right: 45px;
   margin-bottom: 10px;
+}
+.name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.num {
+  font-size: 12px;
+  color: #b4b4b4;
 }
 </style>

@@ -1,4 +1,4 @@
-import { updatePwd, listUserInfo, updateUserInfo, queryAllUserInfo, listUserNameInfo, listTrueNameInfo, add, update, getCurrentId, del } from '../../api/User'
+import { updatePwd, listUserInfo, updateUserInfo, queryAllUserInfo, listUserNameInfo, listTrueNameInfo, add, update, getCurrentId, del,queryRoleName } from '../../api/User'
 
 
 
@@ -10,8 +10,8 @@ const state = {
   delInfo: {},
   userNameInfo: {},
   trueNameInfo: {},
-  currentIdInfo: {}
-
+  currentIdInfo: {},
+  userRoleNameInfo:{}
 }
 
 
@@ -40,7 +40,9 @@ const mutations = {
   SET_CURRENTIDINFO: (state, currentIdInfo) => {
     state.currentIdInfo = currentIdInfo
   },
-
+  SET_USERROLENAMEINFO: (state, userRoleNameInfo) => {
+    state.userRoleNameInfo = userRoleNameInfo
+  },
 }
 
 
@@ -156,7 +158,17 @@ const actions = {
       })
     })
   },
-
+  queryRoleName({ commit }, param) {
+    return new Promise((resolve, reject) => {
+      queryRoleName(param).then(response => {
+        //   const { data } = response
+        commit('SET_USERROLENAMEINFO', response)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
 }
 
 

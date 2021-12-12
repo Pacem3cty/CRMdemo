@@ -33,11 +33,11 @@ public class TCusService implements Serializable {
     @ApiModelProperty(value = "概述")
     private String overview;
 
-    @ApiModelProperty(value = "客户")
+    @ApiModelProperty(value = "客户名称")
     private String customer;
 
-    @ApiModelProperty(value = "服务状态")
-    private String state;
+    @ApiModelProperty(value = "服务状态 0 分配状态 | 1 处理状态 | 2 反馈状态 | 3 归档状态")
+    private Integer state;
 
     @ApiModelProperty(value = "服务请求")
     private String serviceRequest;

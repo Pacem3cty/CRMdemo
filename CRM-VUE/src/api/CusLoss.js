@@ -12,3 +12,7 @@ export function queryAllCusLossInfo(params) {
     return post("/api/cusLoss/listCusManager", params)
   }
 
+  export function update(params) {
+    return post("/api/cusLoss/update", params)
+  }
+

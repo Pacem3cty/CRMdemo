@@ -69,18 +69,20 @@ public class TPermissionController {
         AtomicBoolean flg = new AtomicBoolean(true);
 
         List<TPermission> tPermissionList = new ArrayList<>();
-        List<TModule> tModuleList = new ArrayList<>();
+        List<TModule> tModuleList;
 
         Integer currentId;
 
         JSONObject jsonObject = JSONObject.parseObject(jsonStr);
         Integer roleId = jsonObject.getInteger("roleId");//角色编号
 
-        QueryWrapper<TPermission> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("role_id", roleId);
-        Integer count = tPermissionService.selectCount(queryWrapper);
+//        QueryWrapper<TPermission> queryWrapper = new QueryWrapper<>();
+//        queryWrapper.eq("role_id", roleId);
+//        Integer count = tPermissionService.selectCount(queryWrapper);
+        Integer count = tPermissionService.countPermissionByRoleId(roleId);
         if (count > 0) {//操作表中已授权的记录时 先将表中已有的删除
-            tPermissionService.delete(String.valueOf(roleId));
+//            tPermissionService.delete(String.valueOf(roleId));
+                tPermissionService.deletePermissionByRoleId(roleId);
         }
 
         QueryWrapper<TPermission> queryWrapper0 = new QueryWrapper<>();
@@ -106,9 +108,7 @@ public class TPermissionController {
                 tModuleList = tModuleService.queryOptValue(mIds);
 
                 for (TModule tModule : tModuleList) {//遍历List 并放入相应Map中 Map中键为资源编号 值为资源权限码
-                    Integer id = tModule.getId();
-                    String optValue = tModule.getOptValue();
-                    optValueMap.put(id, optValue);
+                    optValueMap.put(tModule.getId(), tModule.getOptValue());
                 }
 
                 for (Integer mId : mIds) {

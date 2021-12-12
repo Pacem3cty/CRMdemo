@@ -22,6 +22,10 @@ export function listUserNameInfo(params) {
   return post("/api/user/listUserName",params)
 }
 
+export function queryUserRoleName(params) {
+  return post("/api/user/queryUserRole", params)
+}
+
 export function listTrueNameInfo(params) {
   return post("/api/user/listTrueName",params)
 }
@@ -40,6 +44,10 @@ export function getCurrentId(params) {
 
 export function del(params) {
   return post("/api/user/delete",params)
+}
+
+export function queryRoleName(params) {
+  return post("/api/user/queryUserRole", params)
 }
 
 

@@ -2,22 +2,161 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.crmdemo.modules.stats.mapper.CusCTRBMapper">
-    <select id="pageListCusCTRB" parameterType="com.baomidou.mybatisplus.extension.plugins.pagination.Page"
-            resultType="com.example.crmdemo.modules.stats.model.CusCTRB">
-        SELECT t_cus.id,
-               cus_num,
-               cus_name,
-               cus_phone,
-               cus_manager,
-               SUM(order_total)                         AS ctrb,
-               COUNT(t_cus_order.id)                    AS orderCount,
-               SUM(order_total) / COUNT(t_cus_order.id) as aov
-        FROM t_cus_order,
-             t_cus
-        WHERE t_cus_order.state = 1
+
+
+    <!--    <select id="pageListCusCTRB" parameterType="com.baomidou.mybatisplus.extension.plugins.pagination.Page"-->
+    <!--            resultType="com.example.crmdemo.modules.stats.model.CusCTRB">-->
+    <!--        SELECT t_cus.id AS id,-->
+    <!--        cus_num AS cusNum,-->
+    <!--        cus_name AS cusName,-->
+    <!--        cus_phone AS cusPhone,-->
+    <!--        cus_manager AS cusManager,-->
+    <!--        SUM(order_total) AS ctrb,-->
+    <!--        COUNT(t_cus_order.id) AS orderCount,-->
+    <!--        SUM(order_total) / COUNT(t_cus_order.id) as aov-->
+    <!--        FROM t_cus_order,-->
+    <!--        t_cus-->
+    <!--        WHERE t_cus_order.state = 1-->
+    <!--        AND t_cus.is_valid = 0-->
+    <!--        AND t_cus_order.is_valid = 0-->
+    <!--        AND t_cus.id = cus_id-->
+
+    <!--        <if test="cusNum !='' and cusNum != null">-->
+    <!--            AND t_cus.cus_num = #{cusNum}-->
+    <!--        </if>-->
+    <!--          -->
+    <!--        <if test="cusName !='' and cusName != null">-->
+    <!--            AND t_cus.cus_name = #{cusName}-->
+    <!--        </if>-->
+
+    <!--        <if test="cusPhone !='' and cusPhone != null">-->
+    <!--            AND t_cus.cus_phone = #{cusPhone}-->
+    <!--        </if>-->
+
+    <!--        <if test="cusManager !='' and cusManager != null">-->
+    <!--            AND t_cus.cus_manager = #{cusManager}-->
+    <!--        </if>-->
+    <!--       -->
+    <!--        GROUP BY t_cus_order.cus_id-->
+    <!--    </select>-->
+
+    <!-- 查询客户贡献 已弃用 条件构造器无法正常使用-->
+<!--    <select id="pageListCusCTRB"-->
+<!--            resultType="com.example.crmdemo.modules.stats.model.CusCTRB">-->
+<!--        SELECT t_cus.id                                 AS id,-->
+<!--               cus_num                                  AS cusNum,-->
+<!--               cus_name                                 AS cusName,-->
+<!--               cus_phone                                AS cusPhone,-->
+<!--               cus_manager                              AS cusManager,-->
+<!--               SUM(order_total)                         AS ctrb,-->
+<!--               COUNT(t_cus_order.id)                    AS orderCount,-->
+<!--               SUM(order_total) / COUNT(t_cus_order.id) as aov-->
+<!--        FROM t_cus_order,-->
+<!--             t_cus-->
+<!--            ${ew.customSqlSegment}-->
+
+<!--    </select>-->
+
+    <!-- 查询客户贡献统计 传入Page及Dto对象实现分页及查询-->
+        <select id="pageListCusStats"
+                resultType="com.example.crmdemo.modules.stats.model.CusCTRB">
+            SELECT
+                t_cus.id AS id,
+                cus_num AS cusNum,
+                cus_name AS cusName,
+                cus_phone AS cusPhone,
+                cus_manager AS cusManager,
+                SUM(order_total) AS ctrb,
+                COUNT(t_cus_order.id) AS orderCount,
+                SUM(order_total) / COUNT(t_cus_order.id) AS aov
+            FROM
+                t_cus_order,
+                t_cus
+            WHERE
+                t_cus_order.state = 1
+              AND t_cus.is_valid = 0
+              AND t_cus_order.is_valid = 0
+              AND t_cus.id = cus_id
+
+            <if test="cusCTRBDto.cusName != '' and cusCTRBDto.cusName != null">
+                AND t_cus.cus_name like CONCAT('%',#{cusCTRBDto.cusName},'%')
+            </if>
+
+            <if test="cusCTRBDto.cusNum != '' and cusCTRBDto.cusNum != null">
+                AND t_cus.cus_num = #{cusCTRBDto.cusNum}
+            </if>
+
+            <if test="cusCTRBDto.cusManager != '' and cusCTRBDto.cusManager != null">
+                AND t_cus.cus_manager = #{cusCTRBDto.cusManager}
+            </if>
+
+            <if test="cusCTRBDto.cusPhone != '' and cusCTRBDto.cusPhone != null">
+                AND t_cus.cus_phone = #{cusCTRBDto.cusPhone}
+            </if>
+
+            GROUP BY
+                t_cus_order.cus_id
+        </select>
+
+    <!-- 查询客户有效订单数统计-->
+    <select id="queryOrderStats" resultType="com.example.crmdemo.modules.stats.model.EchartsPiePojo">
+        SELECT
+            cus_name AS `name`,
+            COUNT(t_cus_order.id) AS `value`
+        FROM
+            t_cus_order,
+            t_cus
+        WHERE
+            t_cus_order.state = 1
           AND t_cus.is_valid = 0
           AND t_cus_order.is_valid = 0
           AND t_cus.id = cus_id
-        GROUP BY t_cus_order.cus_id
+        GROUP BY
+            t_cus_order.cus_id
+    </select>
+
+    <!-- 查询客户订单总额统计-->
+    <select id="queryTotalStats" resultType="com.example.crmdemo.modules.stats.model.EchartsPiePojo">
+        SELECT
+            cus_name AS `name`,
+            SUM(order_total) AS `value`
+        FROM
+            t_cus_order,
+            t_cus
+        WHERE
+            t_cus_order.state = 1
+          AND t_cus.is_valid = 0
+          AND t_cus_order.is_valid = 0
+          AND t_cus.id = cus_id
+        GROUP BY
+            t_cus_order.cus_id
+    </select>
+
+    <!-- 查询客户平均订单价值统计-->
+    <select id="queryAovStats" resultType="com.example.crmdemo.modules.stats.model.EchartsPiePojo">
+        SELECT
+            cus_name AS `name`,
+            SUM(order_total) / COUNT(t_cus_order.id) AS `value`
+        FROM
+            t_cus_order,
+            t_cus
+        WHERE
+            t_cus_order.state = 1
+          AND t_cus.is_valid = 0
+          AND t_cus_order.is_valid = 0
+          AND t_cus.id = cus_id
+        GROUP BY
+            t_cus_order.cus_id
+    </select>
+
+    <!-- 查询客户构成信息 -->
+    <select id="queryLevelStats" resultType="com.example.crmdemo.modules.stats.model.EchartsPiePojo">
+        SELECT
+            `level` AS `name`,
+            count(id) AS `value`
+        FROM
+            t_cus
+        GROUP BY
+            `level`
     </select>
 </mapper>

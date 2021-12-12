@@ -1,24 +1,71 @@
 <template>
-    <div>
+  <div>
     <el-breadcrumb separator="/" class="main-nav">
       <el-breadcrumb-item>首页</el-breadcrumb-item>
       <el-breadcrumb-item>统计报表</el-breadcrumb-item>
       <el-breadcrumb-item>客户贡献分析</el-breadcrumb-item>
       <div style="font-size: 25px; float: right; margin-right: 25px">
-       <i
-        class="el-icon-refresh-left"
-        style="margin-right: 6px; cursor: pointer"
-        title="刷新"
-      ></i>
-      <i
-        class="el-icon-document"
-        style="margin-right: 6px; cursor: pointer"
-        title="导出为PDF"
-      ></i>
+        <i
+          class="el-icon-refresh-left"
+          style="margin-right: 6px; cursor: pointer"
+          title="刷新"
+          @click="refresh"
+        ></i>
+        <i
+          class="el-icon-document"
+          style="margin-right: 6px; cursor: pointer"
+          title="导出为PDF"
+        ></i>
       </div>
     </el-breadcrumb>
-    
-    <div id="myChart" :style="{width: '300px', height: '300px'}"></div>
+
+    <div class="demo-input-size">
+      <!-- <div class="i-div">
+        <label class="i-label">客户名称</label>
+        <el-autocomplete
+          popper-class="my-autocomplete"
+          v-model="cusName"
+          value-key="cusName"
+          :fetch-suggestions="querySearchCusName"
+          :trigger-on-focus="false"
+          :clearable="false"
+          placeholder="请输入客户名称"
+          @select="handleSelect"
+        >
+          <template slot-scope="{ item }">
+            <div class="name">{{ item.cusName }}</div>
+            <span class="num">{{ item.cusNum }}</span>
+          </template>
+        </el-autocomplete>
+      </div> -->
+
+      <div class="i-div">
+        <label class="i-label">客户编号</label>
+        <el-input v-model="cusNum" placeholder="请输入客户编号"></el-input>
+      </div>
+
+      <div class="i-div">
+        <label class="i-label">客户名称</label>
+        <el-input v-model="cusName" placeholder="请输入客户名称"></el-input>
+      </div>
+
+      <div class="i-div">
+        <label class="i-label">客户电话</label>
+        <el-input v-model="cusPhone" placeholder="请输入客户电话"></el-input>
+      </div>
+
+      <div class="i-div">
+        <label class="i-label">客户经理</label>
+        <el-input v-model="cusManager" placeholder="请输入客户经理"></el-input>
+      </div>
+
+      <div class="i-div-r">
+        <el-button type="primary" style="margin-top: 9px" @click="this.queryAll"
+          >查询</el-button
+        >
+      </div>
+    </div>
+
     <div class="table-div">
       <el-table
         v-loading="loading"
@@ -52,8 +99,23 @@
         >
         </el-pagination>
       </div>
+      <br /><br /><br /><br />
+      <h1 :style="{ margin: '0 auto' }">客户贡献分析图表</h1>
+      <br /><br /><br /><br />
+      <div
+        id="orderChart"
+        :style="{ width: '500px', height: '500px', margin: '0 auto' }"
+      ></div>
+      <div
+        id="totalChart"
+        :style="{ width: '500px', height: '500px', margin: '0 auto' }"
+      ></div>
+      <div
+        id="aovChart"
+        :style="{ width: '500px', height: '500px', margin: '0 auto' }"
+      ></div>
     </div>
-    </div>
+  </div>
 </template>
 <script>
 // 引入基本模板
@@ -66,21 +128,26 @@ require("echarts/lib/component/tooltip");
 require("echarts/lib/component/title");
 
 export default {
-  name: "hello",
   data() {
     return {
-      msg: "Welcome to Your Vue.js App",
+      orderChart: undefined,
+      totalChart: undefined,
+      aovChart: undefined,
       tableData: [],
       tableColumns: [
         { key: "id", name: "序号", width: 50 },
-        { key: "cusNum", name: "客户编号", width: 150 },
-        { key: "cusName", name: "客户名称", width: 200 },
-        { key: "cusPhone", name: "客户电话", width: 110 },
-        { key: "cusManager", name: "客户经理", width: 90 },
+        { key: "cusNum", name: "客户编号", width: 200 },
+        { key: "cusName", name: "客户名称", width: 465 },
+        { key: "cusPhone", name: "客户电话", width: 150 },
+        { key: "cusManager", name: "客户经理", width: 100 },
         { key: "ctrb", name: "订单总金额", width: 100 },
         { key: "orderCount", name: "有效订单数", width: 100 },
         { key: "aov", name: "平均订单价值", width: 120 },
       ],
+      cusNum: "",
+      cusName: "",
+      cusPhone: "",
+      cusManager: "",
       loading: false,
       currentPage: 1,
       size: 5,
@@ -92,9 +159,97 @@ export default {
     this.queryAll();
   },
   mounted() {
+    this.getOrderStatsData();
+    this.getTotalStatsData();
+    this.getAovStatsData();
     this.drawLine();
   },
   methods: {
+    refresh() {
+      this.queryAll();
+      this.getOrderStatsData();
+      this.getTotalStatsData();
+      this.getAovStatsData();
+      this.drawLine();
+    },
+    getOrderStatsData() {
+      this.$store
+        .dispatch("CusCTRB/queryOrderStatsInfo", null)
+        .then(() => {
+          if (this.$store.state.CusCTRB.orderStatsInfo.code === 200) {
+            // this.orderStatsData = this.$store.state.CusCTRB.orderStatsInfo.data;
+            this.orderChart.setOption({
+              series: [
+                {
+                  data: this.$store.state.CusCTRB.orderStatsInfo.data,
+                },
+              ],
+            });
+          }
+          if (this.$store.state.CusCTRB.orderStatsInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            return;
+          }
+        })
+        .catch((e) => {
+          this.$message.error("发生错误：" + e);
+        });
+    },
+    getTotalStatsData() {
+      this.$store
+        .dispatch("CusCTRB/queryTotalStatsInfo", null)
+        .then(() => {
+          if (this.$store.state.CusCTRB.totalStatsInfo.code === 200) {
+            // this.orderStatsData = this.$store.state.CusCTRB.orderStatsInfo.data;
+            this.totalChart.setOption({
+              series: [
+                {
+                  data: this.$store.state.CusCTRB.totalStatsInfo.data,
+                },
+              ],
+            });
+          }
+          if (this.$store.state.CusCTRB.totalStatsInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            return;
+          }
+        })
+        .catch((e) => {
+          this.$message.error("发生错误：" + e);
+        });
+    },
+    getAovStatsData() {
+      this.$store
+        .dispatch("CusCTRB/queryAovStatsInfo", null)
+        .then(() => {
+          if (this.$store.state.CusCTRB.aovStatsInfo.code === 200) {
+            // this.orderStatsData = this.$store.state.CusCTRB.orderStatsInfo.data;
+            this.aovChart.setOption({
+              series: [
+                {
+                  data: this.$store.state.CusCTRB.aovStatsInfo.data,
+                },
+              ],
+            });
+          }
+          if (this.$store.state.CusCTRB.aovStatsInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            return;
+          }
+        })
+        .catch((e) => {
+          this.$message.error("发生错误：" + e);
+        });
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.size = val;
@@ -112,6 +267,10 @@ export default {
     queryAll() {
       this.loading = true;
       const params = {
+        cusNum: this.cusNum,
+        cusName: this.cusName,
+        cusPhone: this.cusPhone,
+        cusManager: this.cusManager,
         current: 1,
         pageSize: 5,
       };
@@ -123,7 +282,8 @@ export default {
             this.tableData = this.$store.state.CusCTRB.cusCTRBInfo.data.records;
 
             this.total = this.$store.state.CusCTRB.cusCTRBInfo.data.total;
-            this.currentPage = this.$store.state.CusCTRB.cusCTRBInfo.data.current;
+            this.currentPage =
+              this.$store.state.CusCTRB.cusCTRBInfo.data.current;
             this.size = this.$store.state.CusCTRB.cusCTRBInfo.data.size;
           }
           if (this.$store.state.CusCTRB.cusCTRBInfo.code === 403) {
@@ -137,46 +297,106 @@ export default {
         .catch((e) => {
           this.loading = false;
           this.$message.error("发生错误：" + e);
-        });},
+        });
+    },
     drawLine() {
       // 基于准备好的dom，初始化echarts实例
-      let myChart = echarts.init(document.getElementById("myChart"));
+      this.orderChart = echarts.init(document.getElementById("orderChart"));
+      this.totalChart = echarts.init(document.getElementById("totalChart"));
+      this.aovChart = echarts.init(document.getElementById("aovChart"));
+
       // 绘制图表
-      myChart.setOption({
+      this.orderChart.setOption({
         title: {
-    text: 'Referer of a Website',
-    subtext: 'Fake Data',
-    left: 'center'
-  },
-  tooltip: {
-    trigger: 'item'
-  },
-  legend: {
-    orient: 'vertical',
-    left: 'left'
-  },
-  series: [
-    {
-      name: 'Access From',
-      type: 'pie',
-      radius: '50%',
-      data: [
-        { value: 1048, name: 'Search Engine' },
-        { value: 735, name: 'Direct' },
-        { value: 580, name: 'Email' },
-        { value: 484, name: 'Union Ads' },
-        { value: 300, name: 'Video Ads' }
-      ],
-      emphasis: {
-        itemStyle: {
-          shadowBlur: 10,
-          shadowOffsetX: 0,
-          shadowColor: 'rgba(0, 0, 0, 0.5)'
-        }
-      }
-    }
-  ]
-      });
+          text: "客户有效订单数统计",
+          subtext: "单位 单",
+          left: "center",
+        },
+        tooltip: {
+          trigger: "item",
+          formatter: "{a} <br/>{b} : {c} ({d}%)",
+        },
+        legend: {
+          orient: "vertical",
+          left: "left",
+        },
+        series: [
+          {
+            name: "有效订单数",
+            type: "pie",
+            radius: "50%",
+            data: [],
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: "rgba(0, 0, 0, 0.5)",
+              },
+            },
+          },
+        ],
+      }),
+        // 绘制图表
+        this.totalChart.setOption({
+          title: {
+            text: "客户订单总额统计",
+            subtext: "单位 ¥",
+            left: "center",
+          },
+          tooltip: {
+            trigger: "item",
+            formatter: "{a} <br/>{b} : {c} ({d}%)",
+          },
+          legend: {
+            orient: "vertical",
+            left: "left",
+          },
+          series: [
+            {
+              name: "订单总额",
+              type: "pie",
+              radius: "50%",
+              data: [],
+              emphasis: {
+                itemStyle: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: "rgba(0, 0, 0, 0.5)",
+                },
+              },
+            },
+          ],
+        }),
+        this.aovChart.setOption({
+          title: {
+            text: "客户平均订单价值统计",
+            subtext: "单位 ¥/单",
+            left: "center",
+          },
+          tooltip: {
+            trigger: "item",
+            formatter: "{a} <br/>{b} : {c} ({d}%)",
+          },
+          legend: {
+            orient: "vertical",
+            left: "left",
+          },
+          series: [
+            {
+              name: "平均订单价值",
+              type: "pie",
+              radius: "50%",
+              data: [],
+              emphasis: {
+                itemStyle: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: "rgba(0, 0, 0, 0.5)",
+                },
+              },
+            },
+          ],
+        });
     },
   },
 };

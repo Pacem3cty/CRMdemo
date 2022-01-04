@@ -1,4 +1,4 @@
-package com.example.crmdemo.util;
+package com.example.crmdemo.utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;

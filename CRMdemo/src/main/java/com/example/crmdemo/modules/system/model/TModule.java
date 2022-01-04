@@ -3,9 +3,7 @@ package com.example.crmdemo.modules.system.model;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
 import java.io.Serializable;
-import java.util.List;
 
-import com.example.crmdemo.util.TreeTable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.example.crmdemo.util;
+package com.example.crmdemo.utils;
 
 
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,7 @@ import java.util.Map;
  * 登录Token密钥工具类
  */
 @Slf4j
-public class TokenUtils {
+public class TokenUtil {
     private static final long EXPIRE_TIME = 15 * 60 * 1000;         // 设置过期时间为15分钟
     private static final String TOKEN_SECRET = "JNVCOR&$@)_(#VSZ+_?CV}{XNVM^&";  // 设置签名私钥
     /**

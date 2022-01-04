@@ -124,6 +124,8 @@ export default {
                 //   message: this.$store.state.Login.loginInfo.data[0].loginTip,
                 //   type: "success",
                 // });
+                this.$cookie.set('token', this.$store.state.Login.loginInfo.data[0].token, { expires: '30m' });//设置名为token的cookie 30分钟后过期
+                // console.log(this.$cookie.get('token'));
                 localStorage.setItem(
                   "token",
                   this.$store.state.Login.loginInfo.data[0].token
@@ -176,7 +178,7 @@ export default {
                   )
                   .then(() => {
                     if (this.$store.state.Role.queryRoleNameInfo.code === 200) {
-                      console.log(    this.$store.state.Role.queryRoleNameInfo.data)
+                      // console.log(this.$store.state.Role.queryRoleNameInfo.data)
                       localStorage.setItem(
                         "roleName",
                         this.$store.state.Role.queryRoleNameInfo.data

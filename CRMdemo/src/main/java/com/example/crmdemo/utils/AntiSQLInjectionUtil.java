@@ -1,4 +1,4 @@
-package com.example.crmdemo.util;
+package com.example.crmdemo.utils;
 
 /**
  * 防止SQL注入工具类

@@ -1,10 +1,9 @@
 package com.example.crmdemo.modules.system.model;
 
-import com.example.crmdemo.util.TreeTable;
+import com.example.crmdemo.utils.TreeTable;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.util.Date;
 import java.util.List;
 
 @Data

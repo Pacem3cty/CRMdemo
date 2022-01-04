@@ -1,6 +1,6 @@
 package com.example.crmdemo.modules.system.model;
 
-import com.example.crmdemo.util.TreeControl;
+import com.example.crmdemo.utils.TreeControl;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

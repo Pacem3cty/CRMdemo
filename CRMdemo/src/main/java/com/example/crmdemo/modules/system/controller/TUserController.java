@@ -1,6 +1,7 @@
 package com.example.crmdemo.modules.system.controller;
 
 
+import cn.hutool.crypto.symmetric.AES;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
@@ -8,28 +9,22 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.crmdemo.common.api.CommonResult;
 
-import com.example.crmdemo.modules.customer.model.TCus;
-import com.example.crmdemo.modules.customer.model.TCusOrder;
 import com.example.crmdemo.modules.system.dto.TUserDTO;
-import com.example.crmdemo.modules.system.model.TPermission;
 import com.example.crmdemo.modules.system.model.TUser;
-import com.example.crmdemo.modules.system.model.TUserRole;
-import com.example.crmdemo.modules.system.service.TPermissionService;
-import com.example.crmdemo.modules.system.service.TUserRoleService;
 import com.example.crmdemo.modules.system.service.TUserService;
-import com.example.crmdemo.util.AntiSQLInjectionUtil;
-import com.example.crmdemo.util.Md5Util;
-import com.example.crmdemo.util.TokenUtils;
+import com.example.crmdemo.utils.AESUtil;
+import com.example.crmdemo.utils.AntiSQLInjectionUtil;
+import com.example.crmdemo.utils.Md5Util;
+import com.example.crmdemo.utils.TokenUtil;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import java.security.InvalidKeyException;
 import java.util.*;
 
 /**
@@ -70,7 +65,7 @@ public class TUserController {
     @ApiOperation(value = "用戶登錄")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult userLogin(@RequestBody String jsonStr) {
+    public CommonResult userLogin(@RequestBody String jsonStr) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
         QueryWrapper<TUser> queryWrapper = new QueryWrapper<>();
 
         JSONObject jsonObject = JSONObject.parseObject(jsonStr);
@@ -101,7 +96,8 @@ public class TUserController {
             trueName = "";//防止在登录错误时暴露真实姓名
         } else {
             loginTip = "登录成功！";
-            token = TokenUtils.sign(userName, userPwd);
+//            token = TokenUtil.sign(userName, userPwd);
+            token = AESUtil.encrypt(id.toString());
         }
 
         List<Map<String, Object>> loginInfo = new ArrayList<>();
@@ -154,7 +150,7 @@ public class TUserController {
         if (!Md5Util.passwordIsTrue(userPwd, dbPwd)) {
             result = 2;
         } else {
-            updateWrapper.set("user_pwd", Md5Util.string2MD5(newPwd)).eq("user_name", userName).eq("is_valid", 0);
+            updateWrapper.set("user_pwd", Md5Util.string32MD5(newPwd)).eq("user_name", userName).eq("is_valid", 0);
         }
         if (!tUserService.updatePart(tUser, updateWrapper)) {
             result = 3;

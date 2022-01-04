@@ -1,4 +1,4 @@
-package com.example.crmdemo.util;
+package com.example.crmdemo.utils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -9,7 +9,7 @@ public class Md5Util {
     /***
      * MD5加码 生成32位md5码
      */
-    public static String string2MD5(String inStr) {
+    public static String string32MD5(String inStr) {
         MessageDigest md5 = null;
         try {
             md5 = MessageDigest.getInstance("MD5");
@@ -57,7 +57,7 @@ public class Md5Util {
      */
     public static boolean passwordIsTrue(String inputPassword,String md5DB) {
 
-        String md5 = string2MD5(inputPassword);
+        String md5 = string32MD5(inputPassword);
         return md5DB.equals(md5);
     }
 

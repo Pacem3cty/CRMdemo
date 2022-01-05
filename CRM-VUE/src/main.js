@@ -18,6 +18,10 @@ Vue.prototype.$echarts = echarts
 Vue.prototype.$md5 = md5
 Vue.prototype.$axios = axios    //全局注册，使用方法为:this.$axios
 
+axios.interceptors.request.use(function (config) {// 为请求头添加Authorization字段为服务端返回的token
+  config.headers.token = localStorage.getItem('token')//请求头中cookies携带token
+  return config// return config是固定用法 必须有返回值
+  })
 
 Vue.use(ElementUI,{locale})
 
@@ -27,7 +31,7 @@ Vue.config.devtools = false
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)){ // 判断该路由是否需要登录权限
    console.log('需要登录');
-   if (localStorage.token) { // 判断当前的token是否存在 ； 登录存入的token
+   if (localStorage.token) { // 判断当前的token是否存在  登录存入的token
     next();
    }
    else {

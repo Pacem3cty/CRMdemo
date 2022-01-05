@@ -42,6 +42,7 @@ export default {
       localStorage.removeItem("roleName");
       localStorage.removeItem("token");
       localStorage.removeItem("userName");
+      this.$cookie.delete('token');
       this.$router.push("/");
     },
     reload() {

@@ -26,7 +26,7 @@ public class PermissionProxy {
     @Resource
     private HttpSession session;
 
-    @Around(value = "@annotation(com.example.crmdemo.common.annoation.RequiredPermission)")//增强动作织入切点位置
+    @Around(value = "@annotation(com.example.crmdemo.common.annoation.RequiredPermission)")//增强动作织入切点位置为注解
     public Object around(ProceedingJoinPoint pjp) throws Throwable{
         Object result;
         List<String> permissions = (List<String>) session.getAttribute("permissionsList");//得到当前登录用户的权限
@@ -42,7 +42,7 @@ public class PermissionProxy {
             throw new ApiException(ResultCode.FORBIDDEN);
         }
 
-        result = pjp.proceed();
+        result = pjp.proceed();//若权限校验通过 则启动目标方法执行
         return  result;
     }
 }

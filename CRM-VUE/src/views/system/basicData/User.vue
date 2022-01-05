@@ -42,10 +42,10 @@
         </el-autocomplete>
       </div>
 
-      <div class="i-div">
+      <!-- <div class="i-div">
         <label class="i-label">邮箱</label>
         <el-input v-model="email" placeholder="请输入邮箱"></el-input>
-      </div>
+      </div> -->
 
       <div class="i-div">
         <label class="i-label">电话</label>

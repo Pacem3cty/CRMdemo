@@ -3,6 +3,7 @@ package com.example.crmdemo.modules.system.service;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.crmdemo.modules.system.dto.TUserDTO;
 import com.example.crmdemo.modules.system.model.TUser;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -36,4 +37,6 @@ public interface TUserService extends IService<TUser> {
      boolean updatePart(TUser tUser, Wrapper<TUser> updateWrapper);
 
      List<Map<String,Object>> queryUserRoleName();
+
+     List<Map<String, Object>> queryUserInfo(Page page, TUserDTO tUserDTO);
 }

@@ -26,4 +26,31 @@
                 INNER JOIN t_user_role ON t_user_role.user_id = t_user.id
                 INNER JOIN t_role ON t_role.id = t_user_role.role_id
     </select>
+
+    <!-- 查询用户信息视图（带用户角色） -->
+    <select id="pageListUser" resultType="java.util.HashMap">
+        SELECT
+            t_user.id,
+            t_user.user_name,
+            t_user.user_pwd,
+            t_user.true_name,
+            t_user.email,
+            t_user.phone,
+            t_user.remark,
+            t_role.role_name,
+            t_user.create_date,
+            t_user.update_date
+        FROM
+            t_user
+                LEFT JOIN
+            t_user_role
+            ON
+                t_user_role.user_id = t_user.id
+                LEFT JOIN
+            t_role
+            ON
+                t_role.id = t_user_role.role_id
+        WHERE
+            t_user.is_valid = 0
+    </select>
 </mapper>

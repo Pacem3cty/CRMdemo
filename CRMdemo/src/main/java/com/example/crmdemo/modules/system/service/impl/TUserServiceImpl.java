@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
+import com.example.crmdemo.modules.system.dto.TUserDTO;
 import com.example.crmdemo.modules.system.model.TUser;
 import com.example.crmdemo.modules.system.mapper.TUserMapper;
 import com.example.crmdemo.modules.system.service.TUserService;
@@ -22,7 +23,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author crm
@@ -36,7 +37,7 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
 
     @Override
     public IPage findAll(Page page, Wrapper<TUser> queryWrapper) {
-        IPage iPage = tUserMapper.selectPage(page,queryWrapper);
+        IPage iPage = tUserMapper.selectPage(page, queryWrapper);
         return iPage;
     }
 
@@ -54,7 +55,7 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
     public boolean update(TUser tUser) {
         tUser.setUpdateDate(new Date());
         int n = tUserMapper.updateById(tUser);
-        if(n == 0 ){
+        if (n == 0) {
             return false;
         }
         return true;
@@ -65,7 +66,7 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
     public boolean add(TUser tUser) {
         tUser.setCreateDate(new Date());
         int n = tUserMapper.insert(tUser);
-        if(n == 0 ){
+        if (n == 0) {
             return false;
         }
         return true;
@@ -73,12 +74,12 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
 
     @Override
     public boolean delete(String ids) {
-        AtomicBoolean flg= new AtomicBoolean(true);
+        AtomicBoolean flg = new AtomicBoolean(true);
         String[] array = ids.split(",");
         Arrays.stream(array).forEach(m -> {
             TUser tUser = tUserMapper.selectById(m);
             int n = tUserMapper.deleteById(tUser.getId());
-            if(n == 0 ){
+            if (n == 0) {
                 flg.set(false);
             }
         });
@@ -87,13 +88,13 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
 
     @Override
     public boolean updateById(String ids) {
-        AtomicBoolean flg= new AtomicBoolean(true);
+        AtomicBoolean flg = new AtomicBoolean(true);
         String[] array = ids.split(",");
         Arrays.stream(array).forEach(m -> {
             TUser tUser = tUserMapper.selectById(m);
             tUser.setIsValid(1);
             int n = tUserMapper.updateById(tUser);
-            if(n == 0 ){
+            if (n == 0) {
                 flg.set(false);
             }
         });
@@ -102,9 +103,9 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
 
     @Override
     public boolean updatePart(TUser tUser, Wrapper<TUser> updateWrapper) {
-        AtomicBoolean flg= new AtomicBoolean(true);
-        int n = tUserMapper.update(tUser,updateWrapper);
-        if(n == 0 ){
+        AtomicBoolean flg = new AtomicBoolean(true);
+        int n = tUserMapper.update(tUser, updateWrapper);
+        if (n == 0) {
             flg.set(false);
         }
         return flg.get();
@@ -113,5 +114,11 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
     @Override
     public List<Map<String, Object>> queryUserRoleName() {
         return tUserMapper.listUserRoleName();
+    }
+
+    @Override
+    public List<Map<String, Object>> queryUserInfo(Page page, TUserDTO tUserDTO) {
+        List<Map<String, Object>> result = tUserMapper.pageListUser(page, tUserDTO);
+        return result;
     }
 }

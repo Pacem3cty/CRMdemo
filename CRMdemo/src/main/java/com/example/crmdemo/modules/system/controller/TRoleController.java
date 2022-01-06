@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.crmdemo.common.annoation.RequiredPermission;
 import com.example.crmdemo.common.api.CommonResult;
 import com.example.crmdemo.modules.system.dto.TRoleDTO;
 import com.example.crmdemo.modules.system.dto.TUserDTO;
@@ -38,13 +39,14 @@ public class TRoleController {
         this.tRoleService = tRoleService;
     }
 
+    @RequiredPermission(code = "05031")
     @ApiOperation(value = "查询角色信息")
     @RequestMapping(value = "/queryAll", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult queryAll(@RequestBody TRoleDTO tRoleDTO) {
         QueryWrapper<TRole> queryWrapper = new QueryWrapper<>();
 
-        //用户名称
+        //角色名称
         if (tRoleDTO.getRoleName() != null && !tRoleDTO.getRoleName().equals("")) {
             queryWrapper.like("role_name", tRoleDTO.getRoleName());
         }
@@ -59,6 +61,7 @@ public class TRoleController {
         return CommonResult.success(pageResult);
     }
 
+    @RequiredPermission(code = "05031")
     @ApiOperation(value = "查询角色编号、角色名称信息")
     @RequestMapping(value = "/listRoleName", method = RequestMethod.POST)
     @ResponseBody
@@ -69,6 +72,7 @@ public class TRoleController {
         return CommonResult.success(tRoleList);
     }
 
+    @RequiredPermission(code = "05032")
     @ApiOperation(value = "新增角色信息")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
@@ -76,6 +80,7 @@ public class TRoleController {
         return CommonResult.success(tRoleService.add(tRole));
     }
 
+    @RequiredPermission(code = "05033")
     @ApiOperation(value = "修改角色信息")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
@@ -83,6 +88,7 @@ public class TRoleController {
         return CommonResult.success(tRoleService.update(tRole));
     }
 
+    @RequiredPermission(code = "05032")
     @ApiOperation(value = "获取新增角色编号")
     @RequestMapping(value = "/getCurrentId", method = RequestMethod.POST)
     @ResponseBody
@@ -101,6 +107,7 @@ public class TRoleController {
         return CommonResult.success(currentId);
     }
 
+    @RequiredPermission(code = "05034")
     @ApiOperation(value = "软删除角色信息")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
@@ -110,6 +117,7 @@ public class TRoleController {
         return CommonResult.success(tRoleService.updateById(ids));
     }
 
+    @RequiredPermission(code = "05031")
     @ApiOperation(value = "查询角色名称")
     @RequestMapping(value = "/queryRoleName", method = RequestMethod.POST)
     @ResponseBody

@@ -4,6 +4,7 @@ package com.example.crmdemo.modules.system.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.crmdemo.common.annoation.RequiredPermission;
 import com.example.crmdemo.common.api.CommonResult;
 import com.example.crmdemo.modules.system.model.TModule;
 import com.example.crmdemo.modules.system.model.TPermission;
@@ -42,6 +43,7 @@ public class TPermissionController {
         this.tModuleService = tModuleService;
     }
 
+    @RequiredPermission(code = "0503P1")
     @ApiOperation(value = "查询已授权角色资源信息（加载树形控件中默认选框）")
     @RequestMapping(value = "/loadData", method = RequestMethod.POST)
     @ResponseBody
@@ -62,6 +64,7 @@ public class TPermissionController {
         return CommonResult.success(moduleIdArray);
     }
 
+    @RequiredPermission(code = "0503P2")
     @ApiOperation(value = "角色授权资源")
     @RequestMapping(value = "/authModules", method = RequestMethod.POST)
     @ResponseBody

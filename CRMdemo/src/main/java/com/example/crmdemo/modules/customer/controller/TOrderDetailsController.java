@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.crmdemo.common.annoation.RequiredPermission;
 import com.example.crmdemo.common.api.CommonResult;
 import com.example.crmdemo.modules.customer.dto.TOrderDetailsDTO;
 import com.example.crmdemo.modules.customer.model.TOrderDetails;
@@ -35,6 +36,7 @@ public class TOrderDetailsController {
         this.tOrderDetailsService = tOrderDetailsService;
     }
 
+    @RequiredPermission(code = "0201OD1")
     @ApiOperation(value = "查询客户订单详情信息")
     @RequestMapping(value = "/queryAll", method = RequestMethod.POST)
     @ResponseBody
@@ -56,6 +58,7 @@ public class TOrderDetailsController {
         return CommonResult.success(pageResult);
     }
 
+    @RequiredPermission(code = "0201OD2")
     @ApiOperation(value = "新增客户订单详情信息")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
@@ -63,6 +66,7 @@ public class TOrderDetailsController {
         return CommonResult.success(tOrderDetailsService.add(tOrderDetails));
     }
 
+    @RequiredPermission(code = "0201OD3")
     @ApiOperation(value = "修改客户订单详情信息")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
@@ -70,6 +74,7 @@ public class TOrderDetailsController {
         return CommonResult.success(tOrderDetailsService.update(tOrderDetails));
     }
 
+    @RequiredPermission(code = "0201OD4")
     @ApiOperation(value = "软删除客户订单详情信息")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
@@ -79,6 +84,7 @@ public class TOrderDetailsController {
         return CommonResult.success(tOrderDetailsService.updateById(ids));
     }
 
+    @RequiredPermission(code = "0201OD2")
     @ApiOperation(value = "获取新增客户订单详情序号")
     @RequestMapping(value = "/getCurrentId", method = RequestMethod.POST)
     @ResponseBody
@@ -99,6 +105,7 @@ public class TOrderDetailsController {
         return CommonResult.success(currentId);
     }
 
+    @RequiredPermission(code = "0201OD1")
     @ApiOperation(value = "获取订单总额")
     @RequestMapping(value = "/getOrderTotal", method = RequestMethod.POST)
     @ResponseBody

@@ -3,6 +3,7 @@ package com.example.crmdemo.modules.stats.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.crmdemo.common.annoation.RequiredPermission;
 import com.example.crmdemo.common.api.CommonResult;
 
 import com.example.crmdemo.modules.stats.dto.CusCTRBDto;
@@ -25,6 +26,7 @@ public class StatsController {
         this.cusCTRBService = cusCTRBService;
     }
 
+    @RequiredPermission(code = "0401")
     @ApiOperation(value = "查询客户贡献度信息")
     @RequestMapping(value = "/listCusCTRB", method = RequestMethod.POST)
     @ResponseBody
@@ -61,6 +63,7 @@ public class StatsController {
         return CommonResult.success(page);
     }
 
+    @RequiredPermission(code = "0401")
     @ApiOperation(value = "查询客户统计信息")
     @RequestMapping(value = "/listOrderStats", method = RequestMethod.POST)
     @ResponseBody
@@ -68,6 +71,7 @@ public class StatsController {
         return CommonResult.success(cusCTRBService.getOrderStats());
     }
 
+    @RequiredPermission(code = "0401")
     @ApiOperation(value = "查询客户订单总金额统计信息")
     @RequestMapping(value = "/listTotalStats", method = RequestMethod.POST)
     @ResponseBody
@@ -75,6 +79,7 @@ public class StatsController {
         return CommonResult.success(cusCTRBService.getTotalStats());
     }
 
+    @RequiredPermission(code = "0401")
     @ApiOperation(value = "查询客户平均订单价值统计信息")
     @RequestMapping(value = "/listAovStats", method = RequestMethod.POST)
     @ResponseBody
@@ -82,6 +87,7 @@ public class StatsController {
         return CommonResult.success(cusCTRBService.getAovStats());
     }
 
+    @RequiredPermission(code = "0402")
     @ApiOperation(value = "查询客户构成统计信息")
     @RequestMapping(value = "/listConsistStats", method = RequestMethod.POST)
     @ResponseBody

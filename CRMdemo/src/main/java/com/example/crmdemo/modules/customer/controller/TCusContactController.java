@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.crmdemo.common.annoation.RequiredPermission;
 import com.example.crmdemo.common.api.CommonResult;
 import com.example.crmdemo.modules.customer.dto.TCusContactDTO;
 import com.example.crmdemo.modules.customer.model.TCusContact;
@@ -34,6 +35,7 @@ public class TCusContactController {
         this.tCusContactService = tCusContactService;
     }
 
+    @RequiredPermission(code = "0201C1")
     @ApiOperation(value = "查询客户交往记录信息")
     @RequestMapping(value = "/queryAll", method = RequestMethod.POST)
     @ResponseBody
@@ -55,6 +57,7 @@ public class TCusContactController {
         return CommonResult.success(pageResult);
     }
 
+    @RequiredPermission(code = "0201C2")
     @ApiOperation(value = "新增客户交往记录信息")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
@@ -62,6 +65,7 @@ public class TCusContactController {
         return CommonResult.success(tCusContactService.add(tCusContact));
     }
 
+    @RequiredPermission(code = "0201C3")
     @ApiOperation(value = "修改客户交往记录信息")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
@@ -69,6 +73,7 @@ public class TCusContactController {
         return CommonResult.success(tCusContactService.update(tCusContact));
     }
 
+    @RequiredPermission(code = "0201C4")
     @ApiOperation(value = "软删除客户交往记录信息")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
@@ -78,6 +83,7 @@ public class TCusContactController {
         return CommonResult.success(tCusContactService.updateById(ids));
     }
 
+    @RequiredPermission(code = "0201C2")
     @ApiOperation(value = "获取新增客户交往记录序号")
     @RequestMapping(value = "/getCurrentId", method = RequestMethod.POST)
     @ResponseBody

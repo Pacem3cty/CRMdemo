@@ -38,7 +38,7 @@ public class TSaleChanceController {
         this.tSaleChanceService = tSaleChanceService;
     }
 
-    @RequiredPermission(code = "01012")
+    @RequiredPermission(code = "01011")
     @ApiOperation(value = "查询创建人信息")
     @RequestMapping(value = "/listCreatePerson", method = RequestMethod.POST)
     @ResponseBody
@@ -52,7 +52,7 @@ public class TSaleChanceController {
     }
 
 
-    @RequiredPermission(code = "01012")
+    @RequiredPermission(code = "01011")
     @ApiOperation(value = "查询客户名称信息")
     @RequestMapping(value = "/listCustomerName", method = RequestMethod.POST)
     @ResponseBody
@@ -82,7 +82,7 @@ public class TSaleChanceController {
         return CommonResult.success(currentId);
     }
 
-    @RequiredPermission(code = "01012")
+    @RequiredPermission(code = "01011")
     @ApiOperation(value = "查询营销机会信息")
     @RequestMapping(value = "/queryAll", method = RequestMethod.POST)
     @ResponseBody
@@ -120,7 +120,7 @@ public class TSaleChanceController {
         return CommonResult.success(pageResult);
     }
 
-    @RequiredPermission(code = "01013")
+    @RequiredPermission(code = "01012")
     @ApiOperation(value = "新增营销机会信息")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
@@ -128,7 +128,7 @@ public class TSaleChanceController {
         return CommonResult.success(tSaleChanceService.add(tSaleChance));
     }
 
-    @RequiredPermission(code = "01014")
+    @RequiredPermission(code = "01013")
     @ApiOperation(value = "修改营销机会信息")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
@@ -136,7 +136,7 @@ public class TSaleChanceController {
         return CommonResult.success(tSaleChanceService.update(tSaleChance));
     }
 
-    @RequiredPermission(code = "01015")
+    @RequiredPermission(code = "01014")
     @ApiOperation(value = "物理删除营销机会信息")
     @RequestMapping(value = "/deletePhysical", method = RequestMethod.POST)
     @ResponseBody
@@ -146,7 +146,7 @@ public class TSaleChanceController {
         return CommonResult.success(tSaleChanceService.delete(ids));
     }
 
-    @RequiredPermission(code = "01015")
+    @RequiredPermission(code = "01014")
     @ApiOperation(value = "软删除营销机会信息")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
@@ -156,7 +156,7 @@ public class TSaleChanceController {
         return CommonResult.success(tSaleChanceService.updateById(ids));
     }
 
-    @RequiredPermission(code = "01012")
+    @RequiredPermission(code = "01011")
     @ApiOperation(value = "查询营销机会信息（分配状态为已分配）")
     @RequestMapping(value = "/queryIsAssigned", method = RequestMethod.POST)
     @ResponseBody

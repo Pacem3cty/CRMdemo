@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.crmdemo.common.annoation.RequiredPermission;
 import com.example.crmdemo.common.api.CommonResult;
 import com.example.crmdemo.modules.customer.dto.TCusOrderDTO;
 
@@ -42,6 +43,7 @@ public class TCusOrderController {
         this.tCusOrderService = tCusOrderService;
     }
 
+    @RequiredPermission(code = "0201O1")
     @ApiOperation(value = "查询客户订单记录信息")
     @RequestMapping(value = "/queryAll", method = RequestMethod.POST)
     @ResponseBody
@@ -63,6 +65,7 @@ public class TCusOrderController {
         return CommonResult.success(pageResult);
     }
 
+    @RequiredPermission(code = "0201O2")
     @ApiOperation(value = "新增客户订单记录信息")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
@@ -70,6 +73,7 @@ public class TCusOrderController {
         return CommonResult.success(tCusOrderService.add(tCusOrder));
     }
 
+    @RequiredPermission(code = "0201O3")
     @ApiOperation(value = "修改客户订单记录信息")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
@@ -77,6 +81,7 @@ public class TCusOrderController {
         return CommonResult.success(tCusOrderService.update(tCusOrder));
     }
 
+    @RequiredPermission(code = "0201O4")
     @ApiOperation(value = "软删除客户订单记录信息")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
@@ -86,6 +91,7 @@ public class TCusOrderController {
         return CommonResult.success(tCusOrderService.updateById(ids));
     }
 
+    @RequiredPermission(code = "0201O2")
     @ApiOperation(value = "获取新增客户订单记录序号")
     @RequestMapping(value = "/getCurrentId", method = RequestMethod.POST)
     @ResponseBody
@@ -103,6 +109,7 @@ public class TCusOrderController {
         return CommonResult.success(currentId);
     }
 
+    @RequiredPermission(code = "0201O3")
     @ApiOperation(value = "标记为已支付")
     @RequestMapping(value = "/signPaid", method = RequestMethod.POST)
     @ResponseBody
@@ -120,6 +127,7 @@ public class TCusOrderController {
         return CommonResult.success(tCusOrderService.updatePart(tCusOrder,updateWrapper));
     }
 
+    @RequiredPermission(code = "0201O2")
     @ApiOperation(value = "获取新增订单编号")
     @RequestMapping(value = "/getOrderNum", method = RequestMethod.POST)
     @ResponseBody

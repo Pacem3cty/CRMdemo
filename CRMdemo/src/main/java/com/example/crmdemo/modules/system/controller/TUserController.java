@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.crmdemo.common.annoation.RequiredPermission;
 import com.example.crmdemo.common.api.CommonResult;
 
 import com.example.crmdemo.modules.system.dto.TUserDTO;
@@ -196,6 +197,7 @@ public class TUserController {
         return CommonResult.success(result);
     }
 
+    @RequiredPermission(code = "05021")
     @ApiOperation(value = "查询用户信息")
     @RequestMapping(value = "/queryAll", method = RequestMethod.POST)
     @ResponseBody
@@ -238,6 +240,7 @@ public class TUserController {
         return CommonResult.success(pageResult);
     }
 
+    @RequiredPermission(code = "05021")
     @ApiOperation(value = "查询用户名称信息")
     @RequestMapping(value = "/listUserName", method = RequestMethod.POST)
     @ResponseBody
@@ -248,6 +251,7 @@ public class TUserController {
         return CommonResult.success(tUserList);
     }
 
+    @RequiredPermission(code = "05021")
     @ApiOperation(value = "查询真实姓名信息")
     @RequestMapping(value = "/listTrueName", method = RequestMethod.POST)
     @ResponseBody
@@ -258,6 +262,7 @@ public class TUserController {
         return CommonResult.success(tUserList);
     }
 
+    @RequiredPermission(code = "05022")
     @ApiOperation(value = "新增用户信息")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
@@ -265,6 +270,7 @@ public class TUserController {
         return CommonResult.success(tUserService.add(tUser));
     }
 
+    @RequiredPermission(code = "05023")
     @ApiOperation(value = "修改用户信息")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
@@ -272,6 +278,7 @@ public class TUserController {
         return CommonResult.success(tUserService.update(tUser));
     }
 
+    @RequiredPermission(code = "05022")
     @ApiOperation(value = "获取新增用户编号")
     @RequestMapping(value = "/getCurrentId", method = RequestMethod.POST)
     @ResponseBody
@@ -290,7 +297,8 @@ public class TUserController {
         return CommonResult.success(currentId);
     }
 
-    @ApiOperation(value = "软删除营销机会信息")
+    @RequiredPermission(code = "05024")
+    @ApiOperation(value = "软删除用户信息")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult<Boolean> delete(@RequestBody String ids) {
@@ -299,7 +307,8 @@ public class TUserController {
         return CommonResult.success(tUserService.updateById(ids));
     }
 
-    @ApiOperation(value = "查询用户角色信息")
+    @RequiredPermission(code = "0502R1")
+    @ApiOperation(value = "查询角色信息")
     @RequestMapping(value = "/queryUserRole", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult queryUserRole() {

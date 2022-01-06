@@ -3,6 +3,7 @@ package com.example.crmdemo.modules.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.crmdemo.common.annoation.RequiredPermission;
 import com.example.crmdemo.common.api.CommonResult;
 import com.example.crmdemo.modules.system.model.TModule;
 import com.example.crmdemo.modules.system.model.TreeControlPojo;
@@ -36,6 +37,7 @@ public class TModuleController {
         this.tModuleService = tModuleService;
     }
 
+    @RequiredPermission(code = "05041")
     @ApiOperation(value = "查询所有资源信息（加载前端树形表格）")
     @RequestMapping(value = "/queryAll", method = RequestMethod.POST)
     @ResponseBody
@@ -57,6 +59,7 @@ public class TModuleController {
         return CommonResult.success(treeTableList);
     }
 
+    @RequiredPermission(code = "05041")
     @ApiOperation(value = "查询所有资源信息（加载前端树形控件）")
     @RequestMapping(value = "/loadData", method = RequestMethod.POST)
     @ResponseBody
@@ -84,6 +87,7 @@ public class TModuleController {
         return CommonResult.success(childList);
     }
 
+    @RequiredPermission(code = "05042")
     @ApiOperation(value = "新增资源信息")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
@@ -91,6 +95,7 @@ public class TModuleController {
         return CommonResult.success(tModuleService.add(tModule));
     }
 
+    @RequiredPermission(code = "05043")
     @ApiOperation(value = "修改资源信息")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
@@ -98,6 +103,7 @@ public class TModuleController {
         return CommonResult.success(tModuleService.update(tModule));
     }
 
+    @RequiredPermission(code = "05044")
     @ApiOperation(value = "软删除资源信息")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
@@ -107,6 +113,7 @@ public class TModuleController {
         return CommonResult.success(tModuleService.updateById(ids));
     }
 
+    @RequiredPermission(code = "05042")
     @ApiOperation(value = "获取新增资源编号")
     @RequestMapping(value = "/getCurrentId", method = RequestMethod.POST)
     @ResponseBody

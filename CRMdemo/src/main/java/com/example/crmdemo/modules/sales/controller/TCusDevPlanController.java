@@ -37,7 +37,8 @@ public class TCusDevPlanController {
         this.tCusDevPlanService = tCusDevPlanService;
     }
 
-    @ApiOperation(value = "获取新增营销机会编号")
+    @RequiredPermission(code = "01022")
+    @ApiOperation(value = "获取新增计划项信息编号")
     @RequestMapping(value = "/getCurrentId", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult getCurrentId() {
@@ -77,22 +78,24 @@ public class TCusDevPlanController {
         return CommonResult.success(pageResult);
     }
 
-
-    @ApiOperation(value = "新增营销机会信息")
+    @RequiredPermission(code = "01022")
+    @ApiOperation(value = "新增计划项信息")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult<Boolean> add(@RequestBody TCusDevPlan tCusDevPlan) {
         return CommonResult.success(tCusDevPlanService.add(tCusDevPlan));
     }
 
-    @ApiOperation(value = "修改营销机会信息")
+    @RequiredPermission(code = "01023")
+    @ApiOperation(value = "修改计划项信息")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult<Boolean> update(@RequestBody TCusDevPlan tCusDevPlan) {
         return CommonResult.success(tCusDevPlanService.update(tCusDevPlan));
     }
 
-    @ApiOperation(value = "软删除营销机会信息")
+    @RequiredPermission(code = "01024")
+    @ApiOperation(value = "软删除计划项信息")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult<Boolean> delete(@RequestBody String ids) {

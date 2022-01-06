@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.crmdemo.common.annoation.RequiredPermission;
 import com.example.crmdemo.common.api.CommonResult;
 
 import com.example.crmdemo.modules.customer.dto.TCusLinkmanDTO;
@@ -36,6 +37,7 @@ public class TCusLinkmanController {
         this.tCusLinkmanService = tCusLinkmanService;
     }
 
+    @RequiredPermission(code = "0201L1")
     @ApiOperation(value = "查询客户联系人信息")
     @RequestMapping(value = "/queryAll", method = RequestMethod.POST)
     @ResponseBody
@@ -57,6 +59,7 @@ public class TCusLinkmanController {
         return CommonResult.success(pageResult);
     }
 
+    @RequiredPermission(code = "0201L2")
     @ApiOperation(value = "新增客户联系人信息")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
@@ -64,6 +67,7 @@ public class TCusLinkmanController {
         return CommonResult.success(tCusLinkmanService.add(tCusLinkman));
     }
 
+    @RequiredPermission(code = "0201L3")
     @ApiOperation(value = "修改客户联系人信息")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
@@ -71,6 +75,7 @@ public class TCusLinkmanController {
         return CommonResult.success(tCusLinkmanService.update(tCusLinkman));
     }
 
+    @RequiredPermission(code = "0201L4")
     @ApiOperation(value = "软删除客户联系人信息")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
@@ -80,6 +85,7 @@ public class TCusLinkmanController {
         return CommonResult.success(tCusLinkmanService.updateById(ids));
     }
 
+    @RequiredPermission(code = "0201L2")
     @ApiOperation(value = "获取新增客户联系人序号")
     @RequestMapping(value = "/getCurrentId", method = RequestMethod.POST)
     @ResponseBody

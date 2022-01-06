@@ -4,6 +4,7 @@ package com.example.crmdemo.modules.system.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.crmdemo.common.annoation.RequiredPermission;
 import com.example.crmdemo.common.api.CommonResult;
 import com.example.crmdemo.modules.sales.dto.TSaleChanceDto;
 import com.example.crmdemo.modules.sales.model.TSaleChance;
@@ -35,6 +36,7 @@ public class TUserRoleController {
         this.tUserRoleService = tUserRoleService;
     }
 
+    @RequiredPermission(code = "0502R1")
     @ApiOperation(value = "查询用户-角色信息（返回角色编号")
     @RequestMapping(value = "/queryRoleId", method = RequestMethod.POST)
     @ResponseBody
@@ -53,6 +55,7 @@ public class TUserRoleController {
         return CommonResult.success(roleId);
     }
 
+    @RequiredPermission(code = "0502R2")
     @ApiOperation(value = "新增用户-角色信息")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
@@ -60,6 +63,7 @@ public class TUserRoleController {
         return CommonResult.success(tUserRoleService.add(tUserRole));
     }
 
+    @RequiredPermission(code = "0502R3")
     @ApiOperation(value = "修改用户-角色信息")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody

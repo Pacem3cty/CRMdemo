@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.crmdemo.common.annoation.RequiredPermission;
 import com.example.crmdemo.common.api.CommonResult;
 
 import com.example.crmdemo.modules.customer.dto.TCusLossDTO;
@@ -40,6 +41,7 @@ public class TCusLossController {
         this.tCusLossService = tCusLossService;
     }
 
+    @RequiredPermission(code = "02021")
     @ApiOperation(value = "查询客户流失信息")
     @RequestMapping(value = "/queryAll", method = RequestMethod.POST)
     @ResponseBody
@@ -70,6 +72,7 @@ public class TCusLossController {
         return CommonResult.success(pageResult);
     }
 
+    @RequiredPermission(code = "02021")
     @ApiOperation(value = "查询客户名称信息")
     @RequestMapping(value = "/listCusName", method = RequestMethod.POST)
     @ResponseBody
@@ -80,6 +83,7 @@ public class TCusLossController {
         return CommonResult.success(tCusLossList);
     }
 
+    @RequiredPermission(code = "02021")
     @ApiOperation(value = "查询客户名称信息")
     @RequestMapping(value = "/listCusManager", method = RequestMethod.POST)
     @ResponseBody
@@ -109,6 +113,7 @@ public class TCusLossController {
 //        return CommonResult.success(tCusLossService.updatePart(tCusLoss,updateWrapper));
 //    }
 
+    @RequiredPermission(code = "02022")
     @ApiOperation(value = "修改客户流失记录信息")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody

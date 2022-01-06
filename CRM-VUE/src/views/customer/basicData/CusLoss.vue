@@ -192,7 +192,7 @@ export default {
         { key: "cusName", name: "客户名称", width: 200 },
         { key: "cusManager", name: "客户经理", width: 80 },
         { key: "lastOrderTime", name: "最后下单时间", width: 120 },
-        { key: "lossReason", name: "流失原因", width: 380 },
+        { key: "lossReason", name: "流失原因", width: 535 },
         { key: "createDate", name: "创建日期", width: 100 },
         { key: "updateDate", name: "修改日期", width: 100 },
       ],

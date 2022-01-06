@@ -10,10 +10,13 @@ import axios from 'axios'
 import md5 from 'js-md5';
 import * as echarts from 'echarts';
 
-var VueCookie = require('vue-cookie');
-Vue.use(VueCookie);
+import VueCookies from 'vue-cookies'
+Vue.use(VueCookies)
 
-Vue.prototype.VueCookie = VueCookie
+// var VueCookie = require('vue-cookie');
+// Vue.use(VueCookie);
+
+// Vue.prototype.VueCookie = VueCookie
 Vue.prototype.$echarts = echarts 
 Vue.prototype.$md5 = md5
 Vue.prototype.$axios = axios    //全局注册，使用方法为:this.$axios
@@ -30,7 +33,7 @@ Vue.config.devtools = false
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)){ // 判断该路由是否需要登录权限
-   console.log('需要登录');
+  //  console.log('需要登录');
    if (localStorage.token) { // 判断当前的token是否存在  登录存入的token
     next();
    }

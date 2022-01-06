@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.crmdemo.common.annoation.RequiredPermission;
 import com.example.crmdemo.common.api.CommonResult;
 import com.example.crmdemo.modules.customer.dto.TCusDTO;
 import com.example.crmdemo.modules.customer.model.TCus;
@@ -57,8 +58,7 @@ public class TCusController {
         this.tCusOrderService = tCusOrderService;
     }
 
-
-
+    @RequiredPermission(code = "01021")
     @ApiOperation(value = "查询客户信息")
     @RequestMapping(value = "/queryAll", method = RequestMethod.POST)
     @ResponseBody
@@ -85,6 +85,7 @@ public class TCusController {
         return CommonResult.success(pageResult);
     }
 
+    @RequiredPermission(code = "01022")
     @ApiOperation(value = "新增客户信息")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
@@ -92,6 +93,7 @@ public class TCusController {
         return CommonResult.success(tCusService.add(tCus));
     }
 
+    @RequiredPermission(code = "01023")
     @ApiOperation(value = "修改客户信息")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
@@ -99,6 +101,7 @@ public class TCusController {
         return CommonResult.success(tCusService.update(tCus));
     }
 
+    @RequiredPermission(code = "01024")
     @ApiOperation(value = "软删除客户信息")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
@@ -108,6 +111,7 @@ public class TCusController {
         return CommonResult.success(tCusService.updateById(ids));
     }
 
+    @RequiredPermission(code = "01022")
     @ApiOperation(value = "获取新增客户序号")
     @RequestMapping(value = "/getCurrentId", method = RequestMethod.POST)
     @ResponseBody
@@ -124,6 +128,7 @@ public class TCusController {
         return CommonResult.success(currentId);
     }
 
+    @RequiredPermission(code = "01022")
     @ApiOperation(value = "获取新增客户编号")
     @RequestMapping(value = "/getCusNum", method = RequestMethod.POST)
     @ResponseBody
@@ -142,6 +147,7 @@ public class TCusController {
         return CommonResult.success(cusNum);
     }
 
+    @RequiredPermission(code = "01021")
     @ApiOperation(value = "查询客户名称信息")
     @RequestMapping(value = "/listCusName", method = RequestMethod.POST)
     @ResponseBody
@@ -152,12 +158,12 @@ public class TCusController {
         return CommonResult.success(tCusList);
     }
 
-    @ApiOperation(value = "更新客户流失及状态")
-    @Scheduled(cron = "* * 9 * * ?")//设定每天9时执行
-    @RequestMapping(value = "/updateCusState", method = RequestMethod.POST)
+    @ApiOperation(value = "自动更新客户流失及状态")
+    @Scheduled(cron = "0 0 9 * * ?")//设定每天9时自动执行
+//    @RequestMapping(value = "/updateCusState", method = RequestMethod.POST)
 //    @ResponseBody
     public void updateCusState() {
-        System.err.println("=====开始更新客户流失及状态=====");
+        System.err.println("=====开始自动更新客户流失及状态=====");
 
         List<TCus> lossCusList = tCusService.queryLossCus();//查询待流失客户
         List<Integer> lossCusIds = new ArrayList<>();//待流失客户序号集合
@@ -209,10 +215,10 @@ public class TCusController {
                 System.err.println("=====批量添加流失客户记录失败=====");
             }
 
-            System.err.println("=====更新客户流失及状态成功=====");
+            System.err.println("=====自动更新客户流失及状态成功=====");
         }
         else {
-            System.err.println("=====查询到当前无待流失客户 更新结束=====");
+            System.err.println("=====查询到当前无待流失客户 自动更新结束=====");
         }
     }
 

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.crmdemo.common.annoation.RequiredPermission;
 import com.example.crmdemo.common.api.CommonResult;
 
 
@@ -41,6 +42,7 @@ public class TCusServiceController {
         this.tCusServiceService = tCusServiceService;
     }
 
+    @RequiredPermission(code = "0301")
     @ApiOperation(value = "查询客户名称信息")
     @RequestMapping(value = "/listCustomerName", method = RequestMethod.POST)
     @ResponseBody
@@ -51,6 +53,7 @@ public class TCusServiceController {
         return CommonResult.success(tServiceList);
     }
 
+    @RequiredPermission(code = "0302")
     @ApiOperation(value = "获取新增服务编号")
     @RequestMapping(value = "/getCurrentId", method = RequestMethod.POST)
     @ResponseBody
@@ -71,6 +74,7 @@ public class TCusServiceController {
         return CommonResult.success(currentId);
     }
 
+    @RequiredPermission(code = "0301")
     @ApiOperation(value = "查询服务信息")
     @RequestMapping(value = "/queryAll", method = RequestMethod.POST)
     @ResponseBody
@@ -107,6 +111,7 @@ public class TCusServiceController {
         return CommonResult.success(pageResult);
     }
 
+    @RequiredPermission(code = "0302")
     @ApiOperation(value = "新增服务信息")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
@@ -115,6 +120,7 @@ public class TCusServiceController {
     }
 
 
+    @RequiredPermission(code = "0303")
     @ApiOperation(value = "修改服务信息")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
@@ -123,6 +129,7 @@ public class TCusServiceController {
     }
 
 
+    @RequiredPermission(code = "0304")
     @ApiOperation(value = "软删除服务信息")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
@@ -132,6 +139,7 @@ public class TCusServiceController {
         return CommonResult.success(tCusServiceService.updateById(ids));
     }
 
+    @RequiredPermission(code = "0303")
     @ApiOperation(value = "分配/处理/反馈/归档操作")
     @RequestMapping(value = "/updatePart", method = RequestMethod.POST)
     @ResponseBody

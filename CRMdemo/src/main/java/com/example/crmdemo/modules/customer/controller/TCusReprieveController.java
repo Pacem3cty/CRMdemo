@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.crmdemo.common.annoation.RequiredPermission;
 import com.example.crmdemo.common.api.CommonResult;
 import com.example.crmdemo.modules.customer.dto.TCusReprieveDTO;
 import com.example.crmdemo.modules.customer.model.TCusReprieve;
@@ -38,6 +39,7 @@ public class TCusReprieveController {
         this.tCusReprieveService = tCusReprieveService;
     }
 
+    @RequiredPermission(code = "0202R1")
     @ApiOperation(value = "查询客户暂缓流失信息")
     @RequestMapping(value = "/queryAll", method = RequestMethod.POST)
     @ResponseBody
@@ -59,6 +61,7 @@ public class TCusReprieveController {
         return CommonResult.success(pageResult);
     }
 
+    @RequiredPermission(code = "0202R2")
     @ApiOperation(value = "新增暂缓流失详情信息")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
@@ -66,6 +69,7 @@ public class TCusReprieveController {
         return CommonResult.success(tCusReprieveService.add(tCusReprieve));
     }
 
+    @RequiredPermission(code = "0202R3")
     @ApiOperation(value = "修改暂缓流失详情信息")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
@@ -73,6 +77,7 @@ public class TCusReprieveController {
         return CommonResult.success(tCusReprieveService.update(tCusReprieve));
     }
 
+    @RequiredPermission(code = "0202R4")
     @ApiOperation(value = "软删除暂缓流失详情信息")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
@@ -82,6 +87,7 @@ public class TCusReprieveController {
         return CommonResult.success(tCusReprieveService.updateById(ids));
     }
 
+    @RequiredPermission(code = "0202R2")
     @ApiOperation(value = "获取新增暂缓流失详情序号")
     @RequestMapping(value = "/getCurrentId", method = RequestMethod.POST)
     @ResponseBody

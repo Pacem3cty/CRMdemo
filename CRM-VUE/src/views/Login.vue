@@ -124,7 +124,7 @@ export default {
                 //   message: this.$store.state.Login.loginInfo.data[0].loginTip,
                 //   type: "success",
                 // });
-                this.$cookie.set('token', this.$store.state.Login.loginInfo.data[0].token, { expires: '15m' });//设置名为token的cookie 15分钟后过期
+                this.$cookies.set('token', this.$store.state.Login.loginInfo.data[0].token, "0");//设置名为token的cookie 15分钟后过期
                 // console.log(this.$cookie.get('token'));
                 localStorage.setItem(
                   "token",

@@ -204,7 +204,6 @@ public class TUserController {
     public CommonResult queryAll(@RequestBody TUserDTO tUserDTO) {
         QueryWrapper<TUser> queryWrapper = new QueryWrapper<>();
 
-
         //用户名称
         if (tUserDTO.getUserName() != null && !tUserDTO.getUserName().equals("")) {
             queryWrapper.like("user_name", tUserDTO.getUserName());
@@ -236,7 +235,8 @@ public class TUserController {
         Page page = new Page();//分页查询page类
         page.setCurrent(tUserDTO.getCurrent());//获取当前页
         page.setSize(tUserDTO.getPageSize());//获取每页显示条目
-        IPage<TUser> pageResult = tUserService.findAll(page, queryWrapper);
+//        IPage<TUser> pageResult = tUserService.findAll(page, queryWrapper);
+        List<Map<String,Object>> pageResult = tUserService.queryUserInfo(page,tUserDTO);//返回含用户角色数据
         return CommonResult.success(pageResult);
     }
 

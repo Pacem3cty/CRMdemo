@@ -27,19 +27,19 @@
                 INNER JOIN t_role ON t_role.id = t_user_role.role_id
     </select>
 
-    <!-- 查询用户信息视图（带用户角色） -->
-    <select id="pageListUser" resultType="java.util.HashMap">
+    <!-- 查询用户信息视图（含用户角色） -->
+    <select id="pageListUser" resultType="java.util.Map">
         SELECT
-            t_user.id,
-            t_user.user_name,
-            t_user.user_pwd,
-            t_user.true_name,
-            t_user.email,
-            t_user.phone,
-            t_user.remark,
-            t_role.role_name,
-            t_user.create_date,
-            t_user.update_date
+            t_user.id as id,
+            t_user.user_name as userName,
+            t_user.user_pwd as userPwd,
+            t_user.true_name as trueName,
+            t_user.email as email,
+            t_user.phone as phone,
+            t_user.remark as remark,
+            t_role.role_name as roleName,
+            t_user.create_date as createDate,
+            t_user.update_date as updateDate
         FROM
             t_user
                 LEFT JOIN
@@ -52,5 +52,24 @@
                 t_role.id = t_user_role.role_id
         WHERE
             t_user.is_valid = 0
+        <if test="tUserDTO.userName != '' and tUserDTO.userName != null">
+            AND t_user.user_name like CONCAT('%',#{tUserDTO.userName},'%')
+        </if>
+
+        <if test="tUserDTO.email != '' and tUserDTO.email != null">
+            AND t_user.email = #{tUserDTO.email}
+        </if>
+
+        <if test="tUserDTO.phone != '' and tUserDTO.phone != null">
+            AND t_user.phone = #{tUserDTO.phone}
+        </if>
+
+        <if test="tUserDTO.trueName != '' and tUserDTO.trueName != null">
+            AND t_user.true_name like CONCAT('%',#{tUserDTO.trueName},'%')
+        </if>
+
+        <if test="tUserDTO.remark != '' and tUserDTO.remark != null">
+            AND t_user.remark like CONCAT('%',#{tUserDTO.remark},'%')
+        </if>
     </select>
 </mapper>

@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * <p>
@@ -48,9 +49,11 @@ public class TUser implements Serializable {
     @ApiModelProperty(value = "是否删除 0 未删除 1 已删除")
     private Integer isValid;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     @ApiModelProperty(value = "建档日期")
     private Date createDate;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     @ApiModelProperty(value = "修改日期")
     private Date updateDate;
 

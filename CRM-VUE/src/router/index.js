@@ -38,6 +38,7 @@ const routes = [
       { path: '/ServiceHandle' , component: () => import( '../views/service/basicData/ServiceHandle.vue') ,name: '服务处理', meta: { requiresAuth: true }},
       { path: '/ServiceFeedback' , component: () => import( '../views/service/basicData/ServiceFeedback.vue') ,name: '服务反馈', meta: { requiresAuth: true }},
       { path: '/ServiceFile' , component: () => import( '../views/service/basicData/ServiceFile.vue') ,name: '服务归档', meta: { requiresAuth: true }},
+      { path: '/Dict', component: () => import('../views/system/basicData/Dict.vue'), name: '字典管理', meta: { requiresAuth: true } },
       { path: '/Role', component: () => import('../views/system/basicData/Role.vue'), name: '角色管理', meta: { requiresAuth: true } },
       { path: '/Module', component: () => import('../views/system/basicData/Module.vue'), name: '资源管理', meta: { requiresAuth: true } },
       { path: '/Account', component: () => import('../views/system/management/AccountUpdate.vue'), name: '账号管理', meta: { requiresAuth: true } },

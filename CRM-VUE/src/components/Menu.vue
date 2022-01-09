@@ -88,7 +88,7 @@
           <span slot="title"><i class="el-icon-s-tools"></i>资料修改</span>
         </el-menu-item>
         
-         <el-menu-item index="/Dict">
+         <el-menu-item index="/Account">
           <span slot="title"><i class="el-icon-notebook-2"></i>字典管理</span>
         </el-menu-item>
 

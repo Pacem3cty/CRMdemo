@@ -76,13 +76,14 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="满意度" prop="csr">
-            <el-input
+            <!-- <el-input         
               v-model="addForm.csr"
               placeholder="请输入满意度"
               clearable
               :style="{ width: '100%' }"
             >
-            </el-input>
+            </el-input> -->
+             <el-rate v-model="addForm.csr" :texts="this.texts" show-text></el-rate>
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -112,14 +113,15 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="信用度" prop="cct">
-            <el-input
-              v-model="addForm.cct"
+          <el-form-item label="信用度" prop="ccr">
+            <!-- <el-input
+              v-model="addForm.ccr"
               placeholder="请输入信用度"
               clearable
               :style="{ width: '100%' }"
             >
-            </el-input>
+            </el-input> -->
+            <el-rate v-model="addForm.ccr" :texts="this.ccrTexts" show-text></el-rate>
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -235,6 +237,8 @@
 export default {
   data() {
     return {
+      ccrTexts:["恶劣","较差","一般","良好","优秀"],
+      texts:["不满意","较不满意","一般","较满意","非常满意"],
       levelOptions: [
         {
           label: "A级",
@@ -263,7 +267,7 @@ export default {
         cusManager: "",
         csr: "",
         level: "",
-        cct: "",
+        ccr: "",
         cusAddress: "",
         postalCode: "",
         cusPhone: "",
@@ -324,7 +328,7 @@ export default {
         ],
         csr: [],
         level: [],
-        cct: [],
+        ccr: [],
         cusAddress: [],
         postalCode: [
           {
@@ -446,6 +450,36 @@ export default {
         });
     },
     submitForm() {
+      let cusCsr = "";
+      if (this.addForm.csr == 1) {
+        cusCsr = "不满意";
+      } else if (this.addForm.csr == 2) {
+        cusCsr = "较不满意";
+      } else if (this.addForm.csr == 3) {
+        cusCsr = "一般";
+      } else if (this.addForm.csr == 4) {
+        cusCsr = "较满意";
+      } else if (this.addForm.csr == 5) {
+        cusCsr = "非常满意";
+      } else {
+        cusCsr = "未作评价";
+      }
+
+      let cusCcr = "";
+      if (this.addForm.ccr == 1) {
+        cusCcr = "恶劣";
+      } else if (this.addForm.ccr == 2) {
+        cusCcr = "较差";
+      } else if (this.addForm.ccr == 3) {
+        cusCcr = "一般";
+      } else if (this.addForm.ccr == 4) {
+        cusCcr = "良好";
+      } else if (this.addForm.ccr == 5) {
+        cusCcr = "优秀";
+      } else {
+        cusCcr = "待定";
+      }
+      
       let date = new Date();
       this.createDate =
         date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
@@ -458,9 +492,9 @@ export default {
             artificialPerson: this.addForm.artificialPerson,
             area: this.addForm.area,
             cusManager: this.addForm.cusManager,
-            csr: this.addForm.csr,
+            csr: cusCsr,
             level: this.addForm.level,
-            cct: this.addForm.cct,
+            ccr: cusCcr,
             cusAddress: this.addForm.cusAddress,
             postalCode: this.addForm.postalCode,
             cusPhone: this.addForm.cusPhone,
@@ -519,7 +553,7 @@ export default {
       this.addForm.cusManager = "";
       this.addForm.csr = "";
       this.addForm.level = "";
-      this.addForm.cct = "";
+      this.addForm.ccr = "";
       this.addForm.cusAddress = "";
       this.addForm.postalCode = "";
       this.addForm.cusPhone = "";

@@ -224,7 +224,7 @@ export default {
         { key: "cusManager", name: "客户经理", width: 80 },
         { key: "csr", name: "满意度", width: 80 },
         { key: "level", name: "客户级别", width: 120 },
-        { key: "cct", name: "信用度", width: 80 },
+        { key: "ccr", name: "信用度", width: 80 },
         { key: "cusAddress", name: "详细地址", width: 200 },
         { key: "postalCode", name: "邮编", width: 80 },
         { key: "cusPhone", name: "客户电话", width: 150 },

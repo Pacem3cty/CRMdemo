@@ -76,13 +76,14 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="满意度" prop="csr">
-            <el-input
+            <!-- <el-input
               v-model="updateForm.csr"
               placeholder="请输入满意度"
               clearable
               :style="{ width: '100%' }"
             >
-            </el-input>
+            </el-input> -->
+            <el-rate v-model="updateForm.csr" :texts="this.texts" show-text></el-rate>
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -112,14 +113,15 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="信用度" prop="cct">
-            <el-input
-              v-model="updateForm.cct"
+          <el-form-item label="信用度" prop="ccr">
+            <!-- <el-input
+              v-model="updateForm.ccr"
               placeholder="请输入信用度"
               clearable
               :style="{ width: '100%' }"
             >
-            </el-input>
+            </el-input> -->
+            <el-rate v-model="updateForm.ccr" :texts="this.ccrTexts" show-text></el-rate>
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -236,6 +238,8 @@ export default {
     props: ["multiple"],
   data() {
     return {
+      ccrTexts:["恶劣","较差","一般","良好","优秀"],
+      texts:["不满意","较不满意","一般","较满意","非常满意"],
       levelOptions: [
         {
           label: "A级",
@@ -263,7 +267,7 @@ export default {
         cusManager: this.$props.multiple[0].cusManager,
         csr: this.$props.multiple[0].csr,
         level: this.$props.multiple[0].level,
-        cct: this.$props.multiple[0].cct,
+        ccr: this.$props.multiple[0].ccr,
         cusAddress: this.$props.multiple[0].cusAddress,
         postalCode: this.$props.multiple[0].postalCode,
         cusPhone: this.$props.multiple[0].cusPhone,
@@ -326,7 +330,7 @@ export default {
         ],
         csr: [],
         level: [],
-        cct: [],
+        ccr: [],
         cusAddress: [],
         postalCode: [
           {
@@ -386,12 +390,70 @@ export default {
     this.init();
   },
   methods: {
+    // init(){
+    //   if (this.$props.multiple[0].csr == "不满意") {
+    //     this.updateForm.csr = 1;
+    //   } else if (this.$props.multiple[0].csr == "较不满意") {
+    //     this.updateForm.csr = 2
+    //   } else if (this.$props.multiple[0].csr == "一般") {
+    //     this.updateForm.csr = 3;
+    //   } else if (this.$props.multiple[0].csr == "较满意") {
+    //     this.updateForm.csr = 4;
+    //   } else if (this.$props.multiple[0].csr == "非常满意") {
+    //     this.updateForm.csr = 5;
+    //   } else {
+    //     this.updateForm.csr = "";
+    //   }
+
+    //    if (this.$props.multiple[0].ccr == "恶劣") {
+    //     this.updateForm.ccr = 1;
+    //   } else if (this.$props.multiple[0].ccr == "较差") {
+    //     this.updateForm.ccr = 2
+    //   } else if (this.$props.multiple[0].ccr == "一般") {
+    //     this.updateForm.ccr = 3;
+    //   } else if (this.$props.multiple[0].ccr == "良好") {
+    //     this.updateForm.ccr = 4;
+    //   } else if (this.$props.multiple[0].ccr == "优秀") {
+    //     this.updateForm.ccr = 5;
+    //   } else {
+    //     this.updateForm.ccr = "";
+    //   }
+    // },
       setUpdateDate() {
       let date = new Date();
       this.updateDate =
         date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     },
     submitForm() {
+      let cusCsr = "";
+      if (this.updateForm.csr == 1) {
+        cusCsr = "不满意";
+      } else if (this.updateForm.csr == 2) {
+        cusCsr = "较不满意";
+      } else if (this.updateForm.csr == 3) {
+        cusCsr = "一般";
+      } else if (this.updateForm.csr == 4) {
+        cusCsr = "较满意";
+      } else if (this.updateForm.csr == 5) {
+        cusCsr = "非常满意";
+      } else {
+        cusCsr = "未作评价";
+      }
+      
+      let cusCcr = "";
+      if (this.updateForm.ccr == 1) {
+        cusCcr = "恶劣";
+      } else if (this.updateForm.ccr == 2) {
+        cusCcr = "较差";
+      } else if (this.updateForm.ccr == 3) {
+        cusCcr = "一般";
+      } else if (this.updateForm.ccr == 4) {
+        cusCcr = "良好";
+      } else if (this.updateForm.ccr == 5) {
+        cusCcr = "优秀";
+      } else {
+        cusCcr = "待定";
+      }
       this.setUpdateDate();
       this.$refs["updateForm"].validate((valid) => {
         if (valid) {
@@ -402,9 +464,9 @@ export default {
             artificialPerson: this.updateForm.artificialPerson,
             area: this.updateForm.area,
             cusManager: this.updateForm.cusManager,
-            csr: this.updateForm.csr,
+            csr: cusCsr,
             level: this.updateForm.level,
-            cct: this.updateForm.cct,
+            ccr: cusCcr,
             cusAddress: this.updateForm.cusAddress,
             postalCode: this.updateForm.postalCode,
             cusPhone: this.updateForm.cusPhone,
@@ -463,7 +525,7 @@ export default {
       this.updateForm.cusManager = this.$props.multiple[0].cusManager;
       this.updateForm.csr = this.$props.multiple[0].csr;
       this.updateForm.level = this.$props.multiple[0].level;
-      this.updateForm.cct = this.$props.multiple[0].cct;
+      this.updateForm.ccr = this.$props.multiple[0].ccr;
       this.updateForm.cusAddress = this.$props.multiple[0].cusAddress;
       this.updateForm.postalCode = this.$props.multiple[0].postalCode;
       this.updateForm.cusPhone = this.$props.multiple[0].cusPhone;

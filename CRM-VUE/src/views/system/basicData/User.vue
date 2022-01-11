@@ -169,6 +169,7 @@ export default {
         { key: "userName", name: "用户名称", width: 150 },
         { key: "userPwd", name: "用户密码", width: 265 },
         { key: "trueName", name: "真实姓名", width: 80 },
+        { key: "roleName", name: "角色名称", width: 100 },
         { key: "email", name: "邮箱", width: 240 },
         { key: "phone", name: "电话", width: 150 },
         { key: "remark", name: "备注", width: 290 },
@@ -334,8 +335,8 @@ export default {
         .then(() => {
           if (this.$store.state.User.userInfo.code === 200) {
             this.loading = false; //取消加载状态
-            this.tableData = this.$store.state.User.userInfo.data.records;
-
+            // this.tableData = this.$store.state.User.userInfo.data.records;
+            this.tableData = this.$store.state.User.userInfo.data;
             this.total = this.$store.state.User.userInfo.data.total;
             this.currentPage = this.$store.state.User.userInfo.data.current;
             this.size = this.$store.state.User.userInfo.data.size;

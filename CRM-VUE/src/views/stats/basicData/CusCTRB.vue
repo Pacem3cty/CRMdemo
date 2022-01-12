@@ -106,10 +106,12 @@
         id="orderChart"
         :style="{ width: '500px', height: '500px', margin: '0 auto' }"
       ></div>
+      <br /><br /><br /><br />
       <div
         id="totalChart"
         :style="{ width: '500px', height: '500px', margin: '0 auto' }"
       ></div>
+      <br /><br /><br /><br />
       <div
         id="aovChart"
         :style="{ width: '500px', height: '500px', margin: '0 auto' }"

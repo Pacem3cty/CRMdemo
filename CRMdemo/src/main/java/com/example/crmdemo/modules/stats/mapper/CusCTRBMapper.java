@@ -42,4 +42,8 @@ public interface CusCTRBMapper extends BaseMapper<CusCTRB> {
     List<EchartsPiePojo> queryAovStats();//联表查询各客户平均订单价值统计
 
     List<EchartsPiePojo> queryLevelStats();//查询客户构成信息
+
+    List<EchartsPiePojo> queryCsrStats();//查询客户满意度统计
+
+    List<EchartsPiePojo> queryCcrStats();//查询客户信用度统计
 }

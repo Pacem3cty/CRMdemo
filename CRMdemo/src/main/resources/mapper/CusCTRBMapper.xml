@@ -159,4 +159,26 @@
         GROUP BY
             `level`
     </select>
+
+    <!-- 查询客户满意度信息 -->
+    <select id="queryCsrStats" resultType="com.example.crmdemo.modules.stats.model.EchartsPiePojo">
+        SELECT
+            `csr` AS `name`,
+            count(id) AS `value`
+        FROM
+            t_cus
+        GROUP BY
+            `csr`
+    </select>
+
+    <!-- 查询客户满意度信息 -->
+    <select id="queryCcrStats" resultType="com.example.crmdemo.modules.stats.model.EchartsPiePojo">
+        SELECT
+            `ccr` AS `name`,
+            count(id) AS `value`
+        FROM
+            t_cus
+        GROUP BY
+            `ccr`
+    </select>
 </mapper>

@@ -13,6 +13,16 @@
         id="consistChart"
         :style="{ width: '500px', height: '500px', margin: '0 auto' }"
       ></div>
+      <br /><br /><br /><br />
+       <div
+        id="csrChart"
+        :style="{ width: '500px', height: '500px', margin: '0 auto' }"
+      ></div>
+      <br /><br /><br /><br />
+       <div
+        id="ccrChart"
+        :style="{ width: '500px', height: '500px', margin: '0 auto' }"
+      ></div>
     </div>
   </div>
 </template>
@@ -30,6 +40,8 @@ export default {
   data() {
     return {
       consistChart: undefined,
+      csrChart:undefined,
+      ccrChart:undefined
       // tableData: [],
       // tableColumns: [
       //   { key: "id", name: "序号", width: 50 },
@@ -57,6 +69,8 @@ export default {
   },
   mounted() {
     this.getConsistStatsData();
+    this.getCsrStatsData();
+    this.getCcrStatsData();
     this.drawLine();
   },
   methods: {
@@ -79,6 +93,58 @@ export default {
             });
           }
           if (this.$store.state.CusConsist.cusConsistInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            return;
+          }
+        })
+        .catch((e) => {
+          this.$message.error("发生错误：" + e);
+        });
+    },
+    getCsrStatsData() {
+      this.$store
+        .dispatch("CusConsist/queryCusCsrInfo", null)
+        .then(() => {
+          if (this.$store.state.CusConsist.cusCsrInfo.code === 200) {
+            // this.orderStatsData = this.$store.state.CusCTRB.orderStatsInfo.data;
+            this.csrChart.setOption({
+              series: [
+                {
+                  data: this.$store.state.CusConsist.cusCsrInfo.data,
+                },
+              ],
+            });
+          }
+          if (this.$store.state.CusConsist.cusCsrInfo.code === 403) {
+            this.$message({
+              message: "当前角色无相关权限",
+              type: "warning",
+            });
+            return;
+          }
+        })
+        .catch((e) => {
+          this.$message.error("发生错误：" + e);
+        });
+    },
+    getCcrStatsData() {
+      this.$store
+        .dispatch("CusConsist/queryCusCcrInfo", null)
+        .then(() => {
+          if (this.$store.state.CusConsist.cusCcrInfo.code === 200) {
+            // this.orderStatsData = this.$store.state.CusCTRB.orderStatsInfo.data;
+            this.ccrChart.setOption({
+              series: [
+                {
+                  data: this.$store.state.CusConsist.cusCcrInfo.data,
+                },
+              ],
+            });
+          }
+          if (this.$store.state.CusConsist.cusCcrInfo.code === 403) {
             this.$message({
               message: "当前角色无相关权限",
               type: "warning",
@@ -124,8 +190,74 @@ export default {
               },
             },
           ],
+      }),
+       this.csrChart = echarts.init(document.getElementById("csrChart"));
+
+       // 绘制图表
+      this.csrChart.setOption({
+        title: {
+            text: "客户满意度分析",
+            subtext: "单位 位",
+            left: "center",
+          },
+          tooltip: {
+            trigger: "item",
+            formatter: "{a} <br/>{b} : {c} ({d}%)",
+          },
+          legend: {
+            orient: "vertical",
+            left: "left",
+          },
+          series: [
+            {
+              name: "客户满意度",
+              type: "pie",
+              radius: "50%",
+              data: [],
+              emphasis: {
+                itemStyle: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: "rgba(0, 0, 0, 0.5)",
+                },
+              },
+            },
+          ],
+      }),
+      this.ccrChart = echarts.init(document.getElementById("ccrChart"));
+
+       // 绘制图表
+      this.ccrChart.setOption({
+        title: {
+            text: "客户信用度分析",
+            subtext: "单位 位",
+            left: "center",
+          },
+          tooltip: {
+            trigger: "item",
+            formatter: "{a} <br/>{b} : {c} ({d}%)",
+          },
+          legend: {
+            orient: "vertical",
+            left: "left",
+          },
+          series: [
+            {
+              name: "客户信用度",
+              type: "pie",
+              radius: "50%",
+              data: [],
+              emphasis: {
+                itemStyle: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: "rgba(0, 0, 0, 0.5)",
+                },
+              },
+            },
+          ],
       });
-    },
+    }
   },
 };
 </script>

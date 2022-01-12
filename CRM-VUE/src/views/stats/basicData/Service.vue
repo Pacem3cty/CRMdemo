@@ -13,6 +13,7 @@
         id="serviceTypeChart"
         :style="{ width: '500px', height: '500px', margin: '0 auto' }"
       ></div>
+      <br /><br /><br /><br />
        <div
         id="csrChart"
         :style="{ width: '500px', height: '500px', margin: '0 auto' }"

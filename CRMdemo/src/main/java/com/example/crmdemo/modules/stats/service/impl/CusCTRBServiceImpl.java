@@ -54,4 +54,10 @@ public class CusCTRBServiceImpl extends ServiceImpl<CusCTRBMapper, CusCTRB> impl
     public List<EchartsPiePojo> getConsistStats() {
         return cusCTRBMapper.queryLevelStats();
     }
+
+    @Override
+    public List<EchartsPiePojo> getCsrStats() {return cusCTRBMapper.queryCsrStats();}
+
+    @Override
+    public List<EchartsPiePojo> getCcrStats() {return cusCTRBMapper.queryCcrStats();}
 }

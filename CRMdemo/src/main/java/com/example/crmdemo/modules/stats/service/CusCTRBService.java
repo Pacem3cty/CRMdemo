@@ -23,5 +23,9 @@ public interface CusCTRBService extends IService<CusCTRB> {
 
     List<EchartsPiePojo> getAovStats();//联表查询各客户平均订单价值统计
 
-    List<EchartsPiePojo> getConsistStats();
+    List<EchartsPiePojo> getConsistStats();//查询客户等级构成
+
+    List<EchartsPiePojo> getCsrStats();//查询客户满意度统计
+
+    List<EchartsPiePojo> getCcrStats();//查询客户信用度统计
 }

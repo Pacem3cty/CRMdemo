@@ -9,6 +9,7 @@ import com.example.crmdemo.common.api.CommonResult;
 import com.example.crmdemo.modules.stats.dto.CusCTRBDto;
 import com.example.crmdemo.modules.stats.model.CusCTRB;
 import com.example.crmdemo.modules.stats.service.CusCTRBService;
+import com.example.crmdemo.modules.stats.service.ServiceCTRBService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +22,15 @@ public class StatsController {
 
     private CusCTRBService cusCTRBService;
 
+    private ServiceCTRBService serviceCTRBService;
+
     @Autowired
     public void setCusCTRBService(CusCTRBService cusCTRBService){
         this.cusCTRBService = cusCTRBService;
     }
+
+    @Autowired
+    public void setServiceCTRBService(ServiceCTRBService serviceCTRBService){this.serviceCTRBService = serviceCTRBService;}
 
     @RequiredPermission(code = "0401")
     @ApiOperation(value = "查询客户贡献度信息")
@@ -93,5 +99,20 @@ public class StatsController {
     @ResponseBody
     public CommonResult queryConsistStats(){
         return CommonResult.success(cusCTRBService.getConsistStats());
+    }
+
+
+    @ApiOperation(value = "查询服务类型统计信息")
+    @RequestMapping(value = "/listServiceTypeStats", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult queryServiceStats(){
+        return CommonResult.success(serviceCTRBService.getServiceTypeStats());
+    }
+
+    @ApiOperation(value = "查询服务满意度统计信息")
+    @RequestMapping(value = "/listCsrStats", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult queryCsrStats(){
+        return CommonResult.success(serviceCTRBService.getCsrStats());
     }
 }

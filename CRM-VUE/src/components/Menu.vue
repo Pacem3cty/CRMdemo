@@ -71,7 +71,7 @@
          <el-menu-item index="/CusConsist">
           <span slot="title"><i class="el-icon-pie-chart"></i>客户构成分析</span>
         </el-menu-item>
-        <el-menu-item index="/dict">
+        <el-menu-item index="/ServiceStats">
           <span slot="title"><i class="el-icon-data-line"></i>客户服务分析</span>
         </el-menu-item>
         <el-menu-item index="/dict">

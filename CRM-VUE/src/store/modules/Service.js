@@ -1,4 +1,4 @@
-import { queryAll, del,getCurrentId,add,listCustomerName,update,updatePart} from '../../api/Service'
+import { queryAll, del,getCurrentId,add,listCustomerName,update,updatePart,queryCsrInfo,queryServiceTypeInfo} from '../../api/Service'
 
 
 const state = {
@@ -8,7 +8,9 @@ const state = {
   delInfo: {},
   currentIdInfo:{},
   customerNameInfo:{},
-  updatePartInfo:{}
+  updatePartInfo:{},
+  serviceTypeInfo:{},
+  csrInfo:{}
 }
 
 
@@ -33,6 +35,12 @@ const mutations = {
   },
   SET_UPDATEPARTINFO: (state, updatePartInfo) => {
     state.updatePartInfo = updatePartInfo
+  },
+  SET_SERVICETYPEINFO: (state, serviceTypeInfo) => {
+    state.serviceTypeInfo = serviceTypeInfo
+  },
+  SET_CSRINFO: (state, csrInfo) => {
+    state.csrInfo = csrInfo
   },
 }
 
@@ -109,6 +117,28 @@ const actions = {
       update(param).then(response => {
         //   const { data } = response
         commit('SET_UPDATEINFO', response)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  queryCsrInfo({ commit }, param) {
+    return new Promise((resolve, reject) => {
+      queryCsrInfo(param).then(response => {
+        //   const { data } = response
+        commit('SET_CSRINFO', response)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  queryServiceTypeInfo({ commit }, param) {
+    return new Promise((resolve, reject) => {
+      queryServiceTypeInfo(param).then(response => {
+        //   const { data } = response
+        commit('SET_SERVICETYPEINFO', response)
         resolve()
       }).catch(error => {
         reject(error)

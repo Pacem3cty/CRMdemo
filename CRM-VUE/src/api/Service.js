@@ -29,3 +29,11 @@ export function listCustomerName(params) {
   return post("/api/service/listCustomerName", params)
 }
 
+export function queryServiceTypeInfo(params) {
+  return post("/api/stats/listServiceTypeStats", params)
+}
+
+export function queryCsrInfo(params) {
+  return post("/api/stats/listCsrStats", params)
+}
+

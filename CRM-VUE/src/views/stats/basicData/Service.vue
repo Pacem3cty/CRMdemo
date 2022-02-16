@@ -36,26 +36,6 @@ export default {
     return {
       serviceTypeChart: undefined,
       csrChart:undefined
-      // tableData: [],
-      // tableColumns: [
-      //   { key: "id", name: "序号", width: 50 },
-      //   { key: "cusNum", name: "客户编号", width: 200 },
-      //   { key: "cusName", name: "客户名称", width: 465 },
-      //   { key: "cusPhone", name: "客户电话", width: 150 },
-      //   { key: "cusManager", name: "客户经理", width: 100 },
-      //   { key: "ctrb", name: "订单总金额", width: 100 },
-      //   { key: "orderCount", name: "有效订单数", width: 100 },
-      //   { key: "aov", name: "平均订单价值", width: 120 },
-      // ],
-      // cusNum: "",
-      // cusName: "",
-      // cusPhone: "",
-      // cusManager: "",
-      // loading: false,
-      // currentPage: 1,
-      // size: 5,
-      // total: 0,
-      // multipleSelection: [],
     };
   },
   created() {

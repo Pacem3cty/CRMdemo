@@ -66,9 +66,9 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="联系人" prop="contractPerson">
+          <el-form-item label="联系人" prop="contactPerson">
             <el-input
-              v-model="updateForm.contractPerson"
+              v-model="updateForm.contactPerson"
               placeholder="请输入联系人"
               clearable
               :style="{ width: '100%' }"
@@ -76,9 +76,9 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="联系电话" prop="contractPhone">
+          <el-form-item label="联系电话" prop="contactPhone">
             <el-input
-              v-model="updateForm.contractPhone"
+              v-model="updateForm.contactPhone"
               placeholder="请输入联系电话"
               clearable
               :style="{ width: '100%' }"
@@ -132,8 +132,8 @@ export default {
         customerName: "",
         probability: "",
         overview: "",
-        contractPerson: "",
-        contractPhone: "",
+        contactPerson: "",
+        contactPhone: "",
         description: "",
         assignPerson: "",
       },
@@ -176,14 +176,14 @@ export default {
           },
         ],
         overview: [],
-        contractPerson: [
+        contactPerson: [
           {
             required: true,
             message: "请输入联系人",
             trigger: "blur",
           },
         ],
-        contractPhone: [
+        contactPhone: [
           {
             required: true,
             message: "请输入联系电话",
@@ -227,9 +227,9 @@ export default {
         (this.updateForm.customerName = this.$props.multiple[0].customerName),
         (this.updateForm.probability = this.$props.multiple[0].probability),
         (this.updateForm.overview = this.$props.multiple[0].overview),
-        (this.updateForm.contractPerson =
-          this.$props.multiple[0].contractPerson),
-        (this.updateForm.contractPhone = this.$props.multiple[0].contractPhone),
+        (this.updateForm.contactPerson =
+          this.$props.multiple[0].contactPerson),
+        (this.updateForm.contactPhone = this.$props.multiple[0].contactPhone),
         (this.updateForm.description = this.$props.multiple[0].description),
         (this.updateForm.assignPerson = this.$props.multiple[0].assignPerson);
     },
@@ -247,8 +247,8 @@ export default {
             customerName: this.updateForm.customerName,
             probability: this.updateForm.probability,
             overview: this.updateForm.overview,
-            contractPerson: this.updateForm.contractPerson,
-            contractPhone: this.updateForm.contractPhone,
+            contactPerson: this.updateForm.contactPerson,
+            contactPhone: this.updateForm.contactPhone,
             description: this.updateForm.description,
             createPerson: this.$props.multiple[0].createPerson,
             createDate: this.$props.multiple[0].createDate,
@@ -301,8 +301,8 @@ export default {
       this.updateForm.customerName = this.$props.multiple[0].customerName;
       this.updateForm.probability = this.$props.multiple[0].probability;
       this.updateForm.overview = this.$props.multiple[0].overview;
-      this.updateForm.contractPerson = this.$props.multiple[0].contractPerson;
-      this.updateForm.contractPhone = this.$props.multiple[0].contractPhone;
+      this.updateForm.contactPerson = this.$props.multiple[0].contactPerson;
+      this.updateForm.contactPhone = this.$props.multiple[0].contactPhone;
       this.updateForm.description = this.$props.multiple[0].description;
       this.updateForm.assignPerson = this.$props.multiple[0].assignPerson;
     },

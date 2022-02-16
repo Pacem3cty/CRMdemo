@@ -65,9 +65,9 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="联系人" prop="contractPerson">
+          <el-form-item label="联系人" prop="contactPerson">
             <el-input
-              v-model="addForm.contractPerson"
+              v-model="addForm.contactPerson"
               placeholder="请输入联系人"
               clearable
               :style="{ width: '100%' }"
@@ -75,9 +75,9 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="联系电话" prop="contractPhone">
+          <el-form-item label="联系电话" prop="contactPhone">
             <el-input
-              v-model="addForm.contractPhone"
+              v-model="addForm.contactPhone"
               placeholder="请输入联系电话"
               clearable
               :style="{ width: '100%' }"
@@ -129,8 +129,8 @@ export default {
         customerName: "",
         probability: "",
         overview: "",
-        contractPerson: "",
-        contractPhone: "",
+        contactPerson: "",
+        contactPhone: "",
         description: "",
         assignPerson: "",
       },
@@ -173,14 +173,14 @@ export default {
           },
         ],
         overview: [],
-        contractPerson: [
+        contactPerson: [
           {
             required: true,
             message: "请输入联系人",
             trigger: "blur",
           },
         ],
-        contractPhone: [
+        contactPhone: [
           {
             required: true,
             message: "请输入联系电话",
@@ -257,8 +257,8 @@ export default {
             customerName: this.addForm.customerName,
             probability: this.addForm.probability,
             overview: this.addForm.overview,
-            contractPerson: this.addForm.contractPerson,
-            contractPhone: this.addForm.contractPhone,
+            contactPerson: this.addForm.contactPerson,
+            contactPhone: this.addForm.contactPhone,
             description: this.addForm.description,
             createPerson: localStorage.getItem("trueName"),
             createDate: this.createDate,
@@ -310,8 +310,8 @@ export default {
       this.addForm.customerName = "";
       this.addForm.probability = "";
       this.addForm.overview = "";
-      this.addForm.contractPerson = "";
-      this.addForm.contractPhone = "";
+      this.addForm.contactPerson = "";
+      this.addForm.contactPhone = "";
       this.addForm.description = "";
       this.addForm.assignPerson = "";
     },

@@ -160,8 +160,8 @@ public class TCusController {
 
     @ApiOperation(value = "自动更新客户流失及状态")
     @Scheduled(cron = "0 0 9 * * ?")//设定每天9时自动执行
-//    @RequestMapping(value = "/updateCusState", method = RequestMethod.POST)
-//    @ResponseBody
+    @RequestMapping(value = "/updateCusState", method = RequestMethod.POST)
+    @ResponseBody
     public void updateCusState() {
         System.err.println("=====开始自动更新客户流失及状态=====");
 

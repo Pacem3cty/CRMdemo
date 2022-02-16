@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80026
 File Encoding         : 65001
 
-Date: 2022-01-07 16:31:40
+Date: 2022-02-16 10:09:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -323,8 +323,8 @@ INSERT INTO `t_module` VALUES ('45', '服务信息修改', null, '/service/updat
 INSERT INTO `t_module` VALUES ('46', '服务信息删除', null, '/service/delete', '42', '030', null, '0304', null, '0', '2022-01-06 14:01:50', null);
 INSERT INTO `t_module` VALUES ('47', '统计分析', null, '#', '-1', null, null, '040', null, '0', '2022-01-06 14:06:03', null);
 INSERT INTO `t_module` VALUES ('48', '客户贡献分析查询', null, '/stats/listCusCTRB', '47', '040', null, '0401', null, '0', '2022-01-06 14:23:18', null);
-INSERT INTO `t_module` VALUES ('49', '客户构成分析查询', null, '/stats//listConsistStats', '47', '040', null, '0402', null, '0', '2022-01-06 14:32:56', null);
-INSERT INTO `t_module` VALUES ('50', '客户服务分析查询', null, null, '47', '040', null, null, null, null, '2022-01-06 14:33:24', null);
+INSERT INTO `t_module` VALUES ('49', '客户构成分析查询', null, '/stats/listConsistStats', '47', '040', null, '0402', null, '0', '2022-01-06 14:32:56', null);
+INSERT INTO `t_module` VALUES ('50', '客户服务分析查询', null, '/stats/listServiceTypeStats', '47', '040', null, '0403', null, '0', '2022-01-06 14:33:24', null);
 INSERT INTO `t_module` VALUES ('51', '客户流失分析查询', null, null, '47', '040', null, null, null, null, '2022-01-06 14:52:45', null);
 INSERT INTO `t_module` VALUES ('52', '系统设置', null, '#', '-1', null, null, '050', null, '0', '2022-01-06 14:37:26', null);
 INSERT INTO `t_module` VALUES ('53', '字典管理', null, '/dict/*', '52', '050', null, '0501', null, '0', '2022-01-06 14:43:04', null);
@@ -397,7 +397,7 @@ CREATE TABLE `t_permission` (
   KEY `t_permission_ibfk_2` (`module_id`),
   CONSTRAINT `t_permission_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `t_role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `t_permission_ibfk_2` FOREIGN KEY (`module_id`) REFERENCES `t_module` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=254 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=329 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of t_permission
@@ -464,78 +464,6 @@ INSERT INTO `t_permission` VALUES ('168', '3', '45', '0303', '2022-01-06 16:11:1
 INSERT INTO `t_permission` VALUES ('169', '3', '46', '0304', '2022-01-06 16:11:15', '2022-01-06 16:11:15');
 INSERT INTO `t_permission` VALUES ('170', '3', '47', '040', '2022-01-06 16:11:15', '2022-01-06 16:11:15');
 INSERT INTO `t_permission` VALUES ('171', '3', '48', '0401', '2022-01-06 16:11:15', '2022-01-06 16:11:15');
-INSERT INTO `t_permission` VALUES ('172', '1', '1', '010', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('173', '1', '2', '0101', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('174', '1', '3', '01011', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('175', '1', '4', '01012', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('176', '1', '5', '01013', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('177', '1', '6', '01014', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('178', '1', '7', '0102', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('179', '1', '8', '01021', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('180', '1', '9', '01022', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('181', '1', '10', '01023', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('182', '1', '11', '01024', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('183', '1', '12', '020', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('184', '1', '13', '0201', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('185', '1', '14', '02011', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('186', '1', '15', '02012', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('187', '1', '16', '02013', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('188', '1', '17', '02014', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('189', '1', '18', '0201C1', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('190', '1', '19', '0201C2', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('191', '1', '20', '0201C3', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('192', '1', '21', '0201C4', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('193', '1', '22', '0201L1', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('194', '1', '23', '0201L2', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('195', '1', '24', '0201L3', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('196', '1', '25', '0201L4', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('197', '1', '26', '0201O1', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('198', '1', '27', '0201O2', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('199', '1', '28', '0201O3', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('200', '1', '29', '0201O4', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('201', '1', '30', '0201OD1', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('202', '1', '31', '0201OD2', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('203', '1', '32', '0201OD3', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('204', '1', '33', '0201OD4', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('205', '1', '34', '0202', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('206', '1', '35', '02021', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('207', '1', '36', '02022', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('208', '1', '37', '0202R1', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('209', '1', '38', '0202R2', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('210', '1', '39', '0202R3', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('211', '1', '40', '0202R4', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('212', '1', '42', '030', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('213', '1', '43', '0301', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('214', '1', '44', '0302', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('215', '1', '45', '0303', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('216', '1', '46', '0304', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('217', '1', '48', '0401', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('218', '1', '52', '050', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('219', '1', '53', '0501', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('220', '1', '54', '05011', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('221', '1', '55', '05012', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('222', '1', '56', '05013', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('223', '1', '57', '05014', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('224', '1', '58', '0502', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('225', '1', '59', '05021', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('226', '1', '60', '05022', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('227', '1', '61', '05023', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('228', '1', '62', '05024', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('229', '1', '63', '0502R1', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('230', '1', '64', '0502R2', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('231', '1', '65', '0502R3', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('232', '1', '66', '0503', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('233', '1', '67', '05031', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('234', '1', '68', '05032', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('235', '1', '69', '05033', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('236', '1', '70', '05034', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('237', '1', '71', '0503P1', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('238', '1', '72', '0503P2', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('239', '1', '73', '0504', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('240', '1', '74', '05041', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('241', '1', '75', '05042', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('242', '1', '76', '05043', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
-INSERT INTO `t_permission` VALUES ('243', '1', '77', '05044', '2022-01-07 11:07:59', '2022-01-07 11:07:59');
 INSERT INTO `t_permission` VALUES ('244', '4', '53', '0501', '2022-01-07 11:08:27', '2022-01-07 11:08:27');
 INSERT INTO `t_permission` VALUES ('245', '4', '54', '05011', '2022-01-07 11:08:27', '2022-01-07 11:08:27');
 INSERT INTO `t_permission` VALUES ('246', '4', '55', '05012', '2022-01-07 11:08:27', '2022-01-07 11:08:27');
@@ -546,6 +474,81 @@ INSERT INTO `t_permission` VALUES ('250', '4', '74', '05041', '2022-01-07 11:08:
 INSERT INTO `t_permission` VALUES ('251', '4', '75', '05042', '2022-01-07 11:08:27', '2022-01-07 11:08:27');
 INSERT INTO `t_permission` VALUES ('252', '4', '76', '05043', '2022-01-07 11:08:27', '2022-01-07 11:08:27');
 INSERT INTO `t_permission` VALUES ('253', '4', '77', '05044', '2022-01-07 11:08:27', '2022-01-07 11:08:27');
+INSERT INTO `t_permission` VALUES ('254', '1', '1', '010', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('255', '1', '2', '0101', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('256', '1', '3', '01011', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('257', '1', '4', '01012', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('258', '1', '5', '01013', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('259', '1', '6', '01014', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('260', '1', '7', '0102', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('261', '1', '8', '01021', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('262', '1', '9', '01022', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('263', '1', '10', '01023', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('264', '1', '11', '01024', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('265', '1', '12', '020', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('266', '1', '13', '0201', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('267', '1', '14', '02011', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('268', '1', '15', '02012', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('269', '1', '16', '02013', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('270', '1', '17', '02014', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('271', '1', '18', '0201C1', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('272', '1', '19', '0201C2', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('273', '1', '20', '0201C3', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('274', '1', '21', '0201C4', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('275', '1', '22', '0201L1', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('276', '1', '23', '0201L2', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('277', '1', '24', '0201L3', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('278', '1', '25', '0201L4', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('279', '1', '26', '0201O1', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('280', '1', '27', '0201O2', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('281', '1', '28', '0201O3', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('282', '1', '29', '0201O4', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('283', '1', '30', '0201OD1', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('284', '1', '31', '0201OD2', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('285', '1', '32', '0201OD3', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('286', '1', '33', '0201OD4', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('287', '1', '34', '0202', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('288', '1', '35', '02021', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('289', '1', '36', '02022', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('290', '1', '37', '0202R1', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('291', '1', '38', '0202R2', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('292', '1', '39', '0202R3', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('293', '1', '40', '0202R4', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('294', '1', '42', '030', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('295', '1', '43', '0301', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('296', '1', '44', '0302', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('297', '1', '45', '0303', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('298', '1', '46', '0304', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('299', '1', '47', '040', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('300', '1', '48', '0401', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('301', '1', '49', '0402', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('302', '1', '50', '0403', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('303', '1', '52', '050', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('304', '1', '53', '0501', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('305', '1', '54', '05011', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('306', '1', '55', '05012', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('307', '1', '56', '05013', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('308', '1', '57', '05014', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('309', '1', '58', '0502', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('310', '1', '59', '05021', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('311', '1', '60', '05022', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('312', '1', '61', '05023', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('313', '1', '62', '05024', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('314', '1', '63', '0502R1', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('315', '1', '64', '0502R2', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('316', '1', '65', '0502R3', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('317', '1', '66', '0503', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('318', '1', '67', '05031', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('319', '1', '68', '05032', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('320', '1', '69', '05033', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('321', '1', '70', '05034', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('322', '1', '71', '0503P1', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('323', '1', '72', '0503P2', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('324', '1', '73', '0504', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('325', '1', '74', '05041', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('326', '1', '75', '05042', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('327', '1', '76', '05043', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
+INSERT INTO `t_permission` VALUES ('328', '1', '77', '05044', '2022-02-16 09:50:12', '2022-02-16 09:50:12');
 
 -- ----------------------------
 -- Table structure for t_role
@@ -580,8 +583,8 @@ CREATE TABLE `t_sale_chance` (
   `customer_name` varchar(255) DEFAULT NULL COMMENT '客户名称',
   `probability` int DEFAULT NULL COMMENT '成功几率',
   `overview` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '' COMMENT '概要',
-  `contract_person` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '',
-  `contract_phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '',
+  `contact_person` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '',
+  `contact_phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '',
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '' COMMENT '描述',
   `create_person` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `create_date` datetime DEFAULT CURRENT_TIMESTAMP,

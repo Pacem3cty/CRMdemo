@@ -9,8 +9,8 @@
         <result column="customer_name" property="customerName" />
         <result column="probability" property="probability" />
         <result column="overview" property="overview" />
-        <result column="contract_person" property="contractPerson" />
-        <result column="contract_phone" property="contractPhone" />
+        <result column="contact_person" property="contactPerson" />
+        <result column="contact_phone" property="contactPhone" />
         <result column="description" property="description" />
         <result column="create_person" property="createPerson" />
         <result column="create_date" property="createDate" />

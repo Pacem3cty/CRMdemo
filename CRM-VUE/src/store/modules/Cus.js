@@ -1,4 +1,4 @@
-import { queryAllCusInfo, getCurrentId, getCusNum,update,add,del,listCusName } from '../../api/Cus'
+import { queryAllCusInfo, getCurrentId, getCusNum,update,add,del,listCusName,updateCusState } from '../../api/Cus'
 
 const state = {
   cusInfo: {},
@@ -8,6 +8,7 @@ const state = {
   updateInfo: {},
   addInfo: {},
   cusNameInfo:{},
+  updateCusStateInfo:{}
 }
 
 
@@ -32,6 +33,9 @@ const mutations = {
   },
   SET_CUSNAMEINFO: (state, cusNameInfo) => {
     state.cusNameInfo = cusNameInfo
+  },
+  SET_UPDATECUSSTATEINFO: (state, updateCusStateInfo) => {
+    state.updateCusStateInfo = updateCusStateInfo
   },
 }
 
@@ -108,6 +112,17 @@ const actions = {
       listCusName(param).then(response => {
         //   const { data } = response
         commit('SET_CUSNAMEINFO', response)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  updateCusState({ commit }, param) {
+    return new Promise((resolve, reject) => {
+      updateCusState(param).then(response => {
+        //   const { data } = response
+        commit('SET_UPDATECUSSTATEINFO', response)
         resolve()
       }).catch(error => {
         reject(error)

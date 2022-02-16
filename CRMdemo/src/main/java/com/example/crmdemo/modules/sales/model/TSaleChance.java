@@ -42,10 +42,10 @@ public class TSaleChance implements Serializable {
     private String overview;
 
     @ApiModelProperty(value = "联系人")
-    private String contractPerson;
+    private String contactPerson;
 
     @ApiModelProperty(value = "修改日期")
-    private String contractPhone;
+    private String contactPhone;
 
     @ApiModelProperty(value = "描述")
     private String description;

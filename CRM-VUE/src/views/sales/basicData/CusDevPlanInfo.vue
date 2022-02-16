@@ -22,12 +22,12 @@
         <el-descriptions-item>
           <template slot="label">
             <i class="el-icon-s-custom"></i>联系人</template
-          >{{ this.$props.multiple[0].contractPerson }}
+          >{{ this.$props.multiple[0].contactPerson }}
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label">
             <i class="el-icon-mobile-phone"></i>联系电话</template
-          >{{ this.$props.multiple[0].contractPhone }}
+          >{{ this.$props.multiple[0].contactPhone }}
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label">

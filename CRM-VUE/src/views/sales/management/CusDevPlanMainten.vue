@@ -21,12 +21,12 @@
         <el-descriptions-item>
           <template slot="label">
             <i class="el-icon-s-custom"></i>联系人</template
-          >{{ this.$props.multiple[0].contractPerson }}
+          >{{ this.$props.multiple[0].contactPerson }}
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label">
             <i class="el-icon-mobile-phone"></i>联系电话</template
-          >{{ this.$props.multiple[0].contractPhone }}
+          >{{ this.$props.multiple[0].contactPhone }}
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label">
@@ -347,8 +347,8 @@ export default {
         customerName: this.$props.multiple[0].customerName,
         probability: this.$props.multiple[0].probability,
         overview: this.$props.multiple[0].overview,
-        contractPerson: this.$props.multiple[0].contractPerson,
-        contractPhone: this.$props.multiple[0].contractPhone,
+        contactPerson: this.$props.multiple[0].contactPerson,
+        contactPhone: this.$props.multiple[0].contactPhone,
         description: this.$props.multiple[0].description,
         createPerson: this.$props.multiple[0].createPerson,
         createDate: this.$props.multiple[0].createDate,
@@ -400,8 +400,8 @@ export default {
         customerName: this.$props.multiple[0].customerName,
         probability: this.$props.multiple[0].probability,
         overview: this.$props.multiple[0].overview,
-        contractPerson: this.$props.multiple[0].contractPerson,
-        contractPhone: this.$props.multiple[0].contractPhone,
+        contactPerson: this.$props.multiple[0].contactPerson,
+        contactPhone: this.$props.multiple[0].contactPhone,
         description: this.$props.multiple[0].description,
         createPerson: this.$props.multiple[0].createPerson,
         createDate: this.$props.multiple[0].createDate,

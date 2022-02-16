@@ -75,6 +75,10 @@
           >查询</el-button
         >
       </div>
+
+      <div class="i-div-r">
+        <el-button type="primary" style="margin-top: 9px" @click="this.updateLossCus">手动更新</el-button>
+      </div>
     </div>
     <div class="table-div">
       <el-table
@@ -282,6 +286,22 @@ export default {
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
+    },
+    updateLossCus(){
+      this.$store
+        .dispatch("Cus/updateCusState", null)
+        .then(() => {
+          if (this.$store.state.CusLoss.cusNameInfo.code === 200) {
+            this.$message({
+              message: "手动更新流失客户信息成功！",
+              type: "success",
+            });
+           this.reInit();
+          }
+        })
+        .catch((e) => {
+          this.$message.error("发生错误：" + e);
+        });
     },
     listCusName() {
       this.restaurantsCusName = []; //清空数组 否则将导致后续记录添加导致重复
@@ -518,5 +538,9 @@ $hc: #409eff;
 }
 .el-form-item__label {
   line-height: 4em;
+}
+.i-div-r {
+  float: right;
+  margin-right: 45px;
 }
 </style>

@@ -27,3 +27,7 @@ export function del(params) {
 export function listCusName(params) {
   return post("/api/cus/listCusName", params)
 }
+
+export function updateCusState(params) {
+  return post("/api/cus/updateCusState", params)
+}

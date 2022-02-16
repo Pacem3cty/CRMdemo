@@ -117,6 +117,7 @@ public class StatsController {
         return CommonResult.success(cusCTRBService.getCcrStats());
     }
 
+    @RequiredPermission(code = "0403")
     @ApiOperation(value = "查询服务类型统计信息")
     @RequestMapping(value = "/listServiceTypeStats", method = RequestMethod.POST)
     @ResponseBody
@@ -124,6 +125,7 @@ public class StatsController {
         return CommonResult.success(serviceCTRBService.getServiceTypeStats());
     }
 
+    @RequiredPermission(code = "0403")
     @ApiOperation(value = "查询服务满意度统计信息")
     @RequestMapping(value = "/listCsrStats", method = RequestMethod.POST)
     @ResponseBody

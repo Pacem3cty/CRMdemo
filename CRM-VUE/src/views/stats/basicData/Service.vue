@@ -61,7 +61,7 @@ export default {
             this.serviceTypeChart.setOption({
               series: [
                 {
-                  data: this.$store.state.Service.csrInfo.data,
+                  data: this.$store.state.Service.serviceTypeInfo.data,
                 },
               ],
             });

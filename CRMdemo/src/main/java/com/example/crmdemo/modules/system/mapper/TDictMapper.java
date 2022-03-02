@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author wr
- * @since 2022-01-07
+ * @since 2022-03-01
  */
 public interface TDictMapper extends BaseMapper<TDict> {
 

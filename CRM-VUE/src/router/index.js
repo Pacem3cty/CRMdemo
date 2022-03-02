@@ -42,6 +42,7 @@ const routes = [
       { path: '/Module', component: () => import('../views/system/basicData/Module.vue'), name: '资源管理', meta: { requiresAuth: true } },
       { path: '/Account', component: () => import('../views/system/management/AccountUpdate.vue'), name: '账号管理', meta: { requiresAuth: true } },
       { path: '/User', component: () => import('../views/system/basicData/User.vue'), name: '用户管理', meta: { requiresAuth: true } },
+      { path: '/Dict', component: () => import('../views/system/basicData/Dict.vue'), name: '字典管理', meta: { requiresAuth: true } },
       { path: '/CusCTRB', component: () => import('../views/stats/basicData/CusCTRB.vue'), name: '客户贡献分析', meta: { requiresAuth: true } },
       { path: '/CusConsist', component: () => import('../views/stats/basicData/CusConsist.vue'), name: '客户构成分析', meta: { requiresAuth: true } },
       { path: '/ServiceStats', component: () => import('../views/stats/basicData/Service.vue'), name: '客户服务分析', meta: { requiresAuth: true } },

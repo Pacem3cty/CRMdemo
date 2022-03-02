@@ -3,7 +3,7 @@
     <div>
       <el-descriptions
         class="margin-top"
-        title="营销机会信息"
+        title="暂缓流失管理"
         :column="3"
         :size="size"
         border
